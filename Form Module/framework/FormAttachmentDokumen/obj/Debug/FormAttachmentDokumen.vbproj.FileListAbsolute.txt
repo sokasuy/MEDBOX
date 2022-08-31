@@ -1,0 +1,82 @@
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.FormAttachmentDokumen.resources
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDataGridViewManipulation.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBConnection.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBOperation.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFileIO.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFormManipulation.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CMiscFunction.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CShowMessage.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CStringManipulation.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\Npgsql.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.ValueTuple.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Threading.Tasks.Extensions.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Memory.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Text.Json.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Net.Sockets.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\netstandard.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Numerics.Vectors.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Text.Encodings.Web.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDataGridViewManipulation.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDataGridViewManipulation.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBConnection.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBConnection.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBConnection.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBOperation.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBOperation.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CDBOperation.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFileIO.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFileIO.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFormManipulation.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CFormManipulation.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CMiscFunction.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CMiscFunction.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CShowMessage.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CShowMessage.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CStringManipulation.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CStringManipulation.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\CStringManipulation.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\Npgsql.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.ValueTuple.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Threading.Tasks.Extensions.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Memory.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Text.Json.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Numerics.Vectors.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\bin\Debug\System.Text.Encodings.Web.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.CopyComplete
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.FormAttachmentDokumen.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll.config
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.AssemblyReference.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.FormAttachmentDokumen.resources
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.Resources.resources
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentDokumen\obj\Debug\FormAttachmentDokumen.pdb

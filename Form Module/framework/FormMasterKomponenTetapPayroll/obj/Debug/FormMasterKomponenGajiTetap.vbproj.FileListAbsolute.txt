@@ -1,0 +1,12 @@
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\bin\Debug\FormMasterKomponenGajiTetap.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\bin\Debug\FormMasterKomponenGajiTetap.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\bin\Debug\FormMasterKomponenGajiTetap.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\bin\Debug\FormMasterKomponenGajiTetap.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.vbproj.AssemblyReference.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.FormMasterKomponenGajiTetap.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormMasterKomponenGajiTetap\obj\Debug\FormMasterKomponenGajiTetap.pdb

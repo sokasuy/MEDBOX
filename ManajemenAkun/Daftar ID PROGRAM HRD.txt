@@ -1,0 +1,17 @@
+USER: Yusak
+PASS: YusakOS
+
+USER: indri
+pass: indri123
+
+user: faurin
+pass: faurin123
+
+user: Grace
+pass: Grace123
+
+user: Wulan
+pass: Wulandari
+
+user: Rere
+pass: Rere123

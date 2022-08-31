@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FormRegisterNewUser</id>
+    <version>1.0.0</version>
+    <authors>FormRegisterNewUser</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net5.0-windows7.0" />
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net5.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="G:\DESKTOP APPLICATION\PIM\Form Module\net\FormRegisterNewUser\FormRegisterNewUser\bin\Debug\net5.0-windows\FormRegisterNewUser.dll" target="lib\net5.0-windows7.0\FormRegisterNewUser.dll" />
+  </files>
+</package>

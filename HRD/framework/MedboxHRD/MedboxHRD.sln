@@ -1,0 +1,241 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MedboxHRD", "MedboxHRD\MedboxHRD.vbproj", "{7132547E-4DE6-4B29-BFF9-38D1663709C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77590F23-4129-4FA6-95CA-913D2D41E3F4} = {77590F23-4129-4FA6-95CA-913D2D41E3F4}
+		{DDD1432D-552C-4B09-A47D-9DBE2719FD0E} = {DDD1432D-552C-4B09-A47D-9DBE2719FD0E}
+		{0EBB593D-4649-4BD0-905F-BBA1944CF66B} = {0EBB593D-4649-4BD0-905F-BBA1944CF66B}
+		{70534A45-6770-470D-A2B8-59ECF9A91FDB} = {70534A45-6770-470D-A2B8-59ECF9A91FDB}
+		{51F11153-EA5F-4BC9-BB08-3C4B55B82550} = {51F11153-EA5F-4BC9-BB08-3C4B55B82550}
+		{56EA5955-631D-4347-B2C5-D7588F7D4FAD} = {56EA5955-631D-4347-B2C5-D7588F7D4FAD}
+		{AC297861-D70D-452C-8FB3-30436287742A} = {AC297861-D70D-452C-8FB3-30436287742A}
+		{E555AE69-9BE5-4C67-BBC4-14425BFDE451} = {E555AE69-9BE5-4C67-BBC4-14425BFDE451}
+		{1D2F9371-8DD6-4947-97D2-A56F913AB6D1} = {1D2F9371-8DD6-4947-97D2-A56F913AB6D1}
+		{83B6FE79-4970-4E4E-8019-5651D300D59F} = {83B6FE79-4970-4E4E-8019-5651D300D59F}
+		{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E} = {6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}
+		{F0E289A1-2948-4D47-8BE6-B813B25DD447} = {F0E289A1-2948-4D47-8BE6-B813B25DD447}
+		{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E} = {7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}
+		{2DD53AAD-6A56-41B7-8610-8D7ABA740068} = {2DD53AAD-6A56-41B7-8610-8D7ABA740068}
+		{0199FBB0-C034-4721-9108-0ED449FE34F6} = {0199FBB0-C034-4721-9108-0ED449FE34F6}
+		{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F} = {918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}
+		{8D3932C8-D450-476F-9E58-EF90A23CE8EA} = {8D3932C8-D450-476F-9E58-EF90A23CE8EA}
+		{64ADF8D6-12E8-4701-B8EA-F1845CB89B24} = {64ADF8D6-12E8-4701-B8EA-F1845CB89B24}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormAttachmentDokumen", "..\..\..\Form Module\framework\FormAttachmentDokumen\FormAttachmentDokumen.vbproj", "{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormAttachmentKaryawan", "..\..\..\Form Module\framework\FormAttachmentKaryawan\FormAttachmentKaryawan.vbproj", "{596AFB44-7D38-46B6-962B-087AD075B485}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormDisplayReport", "..\..\..\Form Module\framework\FormDisplayReport\FormDisplayReport\FormDisplayReport.vbproj", "{FD62FF03-EAF6-4C03-84BF-A354E3329B10}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormIjinAbsen", "..\..\..\Form Module\framework\FormIjinAbsen\FormIjinAbsen.vbproj", "{DDD1432D-552C-4B09-A47D-9DBE2719FD0E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B} = {C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterKaryawan", "..\..\..\Form Module\framework\FormMasterKaryawan\FormMasterKaryawan.vbproj", "{56EA5955-631D-4347-B2C5-D7588F7D4FAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+		{C0F05791-E83E-4102-A065-E09ED00F1078} = {C0F05791-E83E-4102-A065-E09ED00F1078}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterTanggunganKaryawan", "..\..\..\Form Module\framework\FormMasterTanggunganKaryawan\FormMasterTanggunganKaryawan.vbproj", "{C0F05791-E83E-4102-A065-E09ED00F1078}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterKaryawanAktif", "..\..\..\Form Module\framework\FormMasterKaryawanAktif\FormMasterKaryawanAktif.vbproj", "{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+		{9428B86E-24BC-4D6F-8596-BFAF31FE6585} = {9428B86E-24BC-4D6F-8596-BFAF31FE6585}
+		{14B632BF-17CD-4C04-93EF-12E2A3E7CE27} = {14B632BF-17CD-4C04-93EF-12E2A3E7CE27}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterPosisiKaryawan", "..\..\..\Form Module\framework\FormMasterPosisiKaryawan\FormMasterPosisiKaryawan.vbproj", "{14B632BF-17CD-4C04-93EF-12E2A3E7CE27}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterRekeningKaryawan", "..\..\..\Form Module\framework\FormMasterRekeningKaryawan\FormMasterRekeningKaryawan.vbproj", "{77590F23-4129-4FA6-95CA-913D2D41E3F4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormPengalamanKerjaKaryawan", "..\..\..\Form Module\framework\FormPengalamanKerjaKaryawan\FormPengalamanKerjaKaryawan.vbproj", "{0EBB593D-4649-4BD0-905F-BBA1944CF66B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormSuratPeringatan", "..\..\..\Form Module\framework\FormSuratPeringatan\FormSuratPeringatan.vbproj", "{83B6FE79-4970-4E4E-8019-5651D300D59F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormSuratPerintahLembur", "..\..\..\Form Module\framework\FormSuratPerintahLembur\FormSuratPerintahLembur.vbproj", "{8D3932C8-D450-476F-9E58-EF90A23CE8EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B} = {C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormSuratPerintahKerja", "..\..\..\Form Module\framework\FormSuratPerintahKerja\FormSuratPerintahKerja.vbproj", "{AC297861-D70D-452C-8FB3-30436287742A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B} = {C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormKalenderPerusahaan", "..\..\..\Form Module\framework\FormKalenderPerusahaan\FormKalenderPerusahaan.vbproj", "{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormImportData", "..\..\..\Form Module\framework\FormImportData\FormImportData.vbproj", "{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormProsesPresensi", "..\..\..\Form Module\framework\FormProsesPresensi\FormProsesPresensi.vbproj", "{2DD53AAD-6A56-41B7-8610-8D7ABA740068}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormView", "..\..\..\Form Module\framework\FormView\FormView.vbproj", "{F0E289A1-2948-4D47-8BE6-B813B25DD447}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterSkemaPresensi", "..\..\..\Form Module\framework\FormMasterSkemaPresensi\FormMasterSkemaPresensi.vbproj", "{0199FBB0-C034-4721-9108-0ED449FE34F6}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterGeneral", "..\..\..\Form Module\framework\FormMasterGeneral\FormMasterGeneral.vbproj", "{51F11153-EA5F-4BC9-BB08-3C4B55B82550}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormScheduleShift", "..\..\..\Form Module\framework\FormScheduleShift\FormScheduleShift.vbproj", "{E555AE69-9BE5-4C67-BBC4-14425BFDE451}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B} = {C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterKomponenTetapPayroll", "..\..\..\Form Module\framework\FormMasterKomponenTetapPayroll\FormMasterKomponenTetapPayroll.vbproj", "{9428B86E-24BC-4D6F-8596-BFAF31FE6585}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596AFB44-7D38-46B6-962B-087AD075B485} = {596AFB44-7D38-46B6-962B-087AD075B485}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormProsesPayroll", "..\..\..\Form Module\framework\FormProsesPayroll\FormProsesPayroll.vbproj", "{70534A45-6770-470D-A2B8-59ECF9A91FDB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10} = {FD62FF03-EAF6-4C03-84BF-A354E3329B10}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormGantiGambarBG", "..\..\..\Form Module\framework\FormGantiGambarBG\FormGantiGambarBG.vbproj", "{64ADF8D6-12E8-4701-B8EA-F1845CB89B24}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FormMasterTunjanganMasaKerja", "..\..\..\Form Module\framework\FormMasterTunjanganMasaKerja\FormMasterTunjanganMasaKerja.vbproj", "{1D2F9371-8DD6-4947-97D2-A56F913AB6D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7132547E-4DE6-4B29-BFF9-38D1663709C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7132547E-4DE6-4B29-BFF9-38D1663709C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7132547E-4DE6-4B29-BFF9-38D1663709C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7132547E-4DE6-4B29-BFF9-38D1663709C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37AE6B3-7C9E-4CB5-90F9-684D855EE63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596AFB44-7D38-46B6-962B-087AD075B485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596AFB44-7D38-46B6-962B-087AD075B485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596AFB44-7D38-46B6-962B-087AD075B485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596AFB44-7D38-46B6-962B-087AD075B485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD62FF03-EAF6-4C03-84BF-A354E3329B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD1432D-552C-4B09-A47D-9DBE2719FD0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD1432D-552C-4B09-A47D-9DBE2719FD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD1432D-552C-4B09-A47D-9DBE2719FD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD1432D-552C-4B09-A47D-9DBE2719FD0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EA5955-631D-4347-B2C5-D7588F7D4FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EA5955-631D-4347-B2C5-D7588F7D4FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EA5955-631D-4347-B2C5-D7588F7D4FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EA5955-631D-4347-B2C5-D7588F7D4FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0F05791-E83E-4102-A065-E09ED00F1078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F05791-E83E-4102-A065-E09ED00F1078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F05791-E83E-4102-A065-E09ED00F1078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F05791-E83E-4102-A065-E09ED00F1078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE3F2A4-6E93-4FA4-A725-AB4C8F81F73E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B632BF-17CD-4C04-93EF-12E2A3E7CE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B632BF-17CD-4C04-93EF-12E2A3E7CE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B632BF-17CD-4C04-93EF-12E2A3E7CE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B632BF-17CD-4C04-93EF-12E2A3E7CE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77590F23-4129-4FA6-95CA-913D2D41E3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77590F23-4129-4FA6-95CA-913D2D41E3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77590F23-4129-4FA6-95CA-913D2D41E3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77590F23-4129-4FA6-95CA-913D2D41E3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBB593D-4649-4BD0-905F-BBA1944CF66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBB593D-4649-4BD0-905F-BBA1944CF66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBB593D-4649-4BD0-905F-BBA1944CF66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBB593D-4649-4BD0-905F-BBA1944CF66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B6FE79-4970-4E4E-8019-5651D300D59F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B6FE79-4970-4E4E-8019-5651D300D59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B6FE79-4970-4E4E-8019-5651D300D59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B6FE79-4970-4E4E-8019-5651D300D59F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D3932C8-D450-476F-9E58-EF90A23CE8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D3932C8-D450-476F-9E58-EF90A23CE8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D3932C8-D450-476F-9E58-EF90A23CE8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D3932C8-D450-476F-9E58-EF90A23CE8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC297861-D70D-452C-8FB3-30436287742A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC297861-D70D-452C-8FB3-30436287742A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC297861-D70D-452C-8FB3-30436287742A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC297861-D70D-452C-8FB3-30436287742A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{918FEDC5-0D62-41BC-89A4-5E1DB0E05E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D039983-5C1C-4135-A6F4-F6AB5DA9AB2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DD53AAD-6A56-41B7-8610-8D7ABA740068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD53AAD-6A56-41B7-8610-8D7ABA740068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD53AAD-6A56-41B7-8610-8D7ABA740068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD53AAD-6A56-41B7-8610-8D7ABA740068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E289A1-2948-4D47-8BE6-B813B25DD447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E289A1-2948-4D47-8BE6-B813B25DD447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E289A1-2948-4D47-8BE6-B813B25DD447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E289A1-2948-4D47-8BE6-B813B25DD447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0199FBB0-C034-4721-9108-0ED449FE34F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0199FBB0-C034-4721-9108-0ED449FE34F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0199FBB0-C034-4721-9108-0ED449FE34F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0199FBB0-C034-4721-9108-0ED449FE34F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F11153-EA5F-4BC9-BB08-3C4B55B82550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F11153-EA5F-4BC9-BB08-3C4B55B82550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F11153-EA5F-4BC9-BB08-3C4B55B82550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F11153-EA5F-4BC9-BB08-3C4B55B82550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E555AE69-9BE5-4C67-BBC4-14425BFDE451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E555AE69-9BE5-4C67-BBC4-14425BFDE451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E555AE69-9BE5-4C67-BBC4-14425BFDE451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E555AE69-9BE5-4C67-BBC4-14425BFDE451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9428B86E-24BC-4D6F-8596-BFAF31FE6585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9428B86E-24BC-4D6F-8596-BFAF31FE6585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9428B86E-24BC-4D6F-8596-BFAF31FE6585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9428B86E-24BC-4D6F-8596-BFAF31FE6585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70534A45-6770-470D-A2B8-59ECF9A91FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70534A45-6770-470D-A2B8-59ECF9A91FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70534A45-6770-470D-A2B8-59ECF9A91FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70534A45-6770-470D-A2B8-59ECF9A91FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64ADF8D6-12E8-4701-B8EA-F1845CB89B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64ADF8D6-12E8-4701-B8EA-F1845CB89B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64ADF8D6-12E8-4701-B8EA-F1845CB89B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64ADF8D6-12E8-4701-B8EA-F1845CB89B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D2F9371-8DD6-4947-97D2-A56F913AB6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D2F9371-8DD6-4947-97D2-A56F913AB6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D2F9371-8DD6-4947-97D2-A56F913AB6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D2F9371-8DD6-4947-97D2-A56F913AB6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BD18D32-DD4E-4CDC-AB0D-2F9C8264497E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>FormRegisterNewUser</RootNamespace>
+    <StartupObject></StartupObject>
+    <UseWindowsForms>true</UseWindowsForms>
+    <MyType>WindowsForms</MyType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CDBConnection">
+      <HintPath>..\..\..\..\..\Class Module\net\CDBConnection\CDBConnection\bin\Debug\net5.0-windows\CDBConnection.dll</HintPath>
+    </Reference>
+    <Reference Include="CDBOperation">
+      <HintPath>..\..\..\..\..\Class Module\net\CDBOperation\CDBOperation\bin\Debug\net5.0-windows\CDBOperation.dll</HintPath>
+    </Reference>
+    <Reference Include="CFormManipulation">
+      <HintPath>..\..\..\..\..\Class Module\net\CFormManipulation\CFormManipulation\bin\Debug\net5.0-windows\CFormManipulation.dll</HintPath>
+    </Reference>
+    <Reference Include="CManagementSystem">
+      <HintPath>..\..\..\..\..\Class Module\net\CManagementSystem\CManagementSystem\bin\Debug\net5.0-windows\CManagementSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="CShowMessage">
+      <HintPath>..\..\..\..\..\Class Module\net\CShowMessage\CShowMessage\bin\Debug\net5.0-windows\CShowMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="CStringManipulation">
+      <HintPath>..\..\..\..\..\Class Module\net\CStringManipulation\CStringManipulation\bin\Debug\net5.0-windows\CStringManipulation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

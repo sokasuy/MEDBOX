@@ -1,0 +1,218 @@
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\msvcr120.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\msvcr120.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.exe.config
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.exe
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.SqlServer.Types.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.FormDisplayReport.resources
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.cache
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.compiled
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CopyComplete
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.exe
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Common.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Design.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.WinForms.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\EnvDTE.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.8.0.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\stdole.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.MSXML.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module Framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\msvcr120.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\msvcr120.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Common.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Design.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.WinForms.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.SqlServer.Types.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\EnvDTE.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.8.0.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\stdole.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.MSXML.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.AssemblyReference.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.FormDisplayReport.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.compiled
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CopyComplete
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.FormDisplayReport.resources
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\msvcr120.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\msvcr120.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.dll.config
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Common.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.Design.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.ReportViewer.WinForms.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.SqlServer.Types.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\EnvDTE.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.Shell.Interop.8.0.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\stdole.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\Microsoft.MSXML.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\de\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\es\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\fr\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\it\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ja\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ko\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\pt\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\ru\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.AssemblyReference.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.Resources.resources
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\RdlCompile.compiled
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.vbproj.CopyComplete
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormDisplayReport\FormDisplayReport\obj\Debug\FormDisplayReport.pdb

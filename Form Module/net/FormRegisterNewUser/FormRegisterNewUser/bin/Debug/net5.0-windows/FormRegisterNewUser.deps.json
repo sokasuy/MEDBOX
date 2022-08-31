@@ -1,0 +1,148 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "FormRegisterNewUser/1.0.0": {
+        "dependencies": {
+          "CDBConnection": "2.1.1.0",
+          "CDBOperation": "2.0.1.0",
+          "CFormManipulation": "2.0.1.0",
+          "CManagementSystem": "2.0.0.0",
+          "CShowMessage": "2.0.1.0",
+          "CStringManipulation": "2.0.1.0"
+        },
+        "runtime": {
+          "FormRegisterNewUser.dll": {}
+        }
+      },
+      "CDBConnection/2.1.1.0": {
+        "runtime": {
+          "CDBConnection.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
+          }
+        }
+      },
+      "CDBOperation/2.0.1.0": {
+        "runtime": {
+          "CDBOperation.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "CFormManipulation/2.0.1.0": {
+        "runtime": {
+          "CFormManipulation.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "CManagementSystem/2.0.0.0": {
+        "runtime": {
+          "CManagementSystem.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "CShowMessage/2.0.1.0": {
+        "runtime": {
+          "CShowMessage.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "CStringManipulation/2.0.1.0": {
+        "runtime": {
+          "CStringManipulation.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "CFileIO/2.0.1.0": {
+        "runtime": {
+          "CFileIO.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "CMiscFunction/2.0.1.0": {
+        "runtime": {
+          "CMiscFunction.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "Microsoft.Office.Interop.Excel/15.0.0.0": {
+        "runtime": {
+          "Microsoft.Office.Interop.Excel.dll": {
+            "assemblyVersion": "15.0.0.0",
+            "fileVersion": "15.0.4569.1506"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FormRegisterNewUser/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CDBConnection/2.1.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CDBOperation/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CFormManipulation/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CManagementSystem/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CShowMessage/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CStringManipulation/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CFileIO/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CMiscFunction/2.0.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Office.Interop.Excel/15.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

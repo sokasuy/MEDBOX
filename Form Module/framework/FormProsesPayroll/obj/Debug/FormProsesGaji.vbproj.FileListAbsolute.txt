@@ -1,0 +1,17 @@
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\FormProsesGaji.exe.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\FormProsesGaji.exe
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\FormProsesGaji.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\FormProsesGaji.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\CFileIO.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\CFileIO.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\bin\Debug\CFileIO.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.exe.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.FormProsesGaji.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.vbproj.CopyComplete
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.exe
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesGaji\obj\Debug\FormProsesGaji.vbproj.AssemblyReference.cache

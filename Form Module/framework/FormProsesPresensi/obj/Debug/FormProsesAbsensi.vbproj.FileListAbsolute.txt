@@ -1,0 +1,12 @@
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\bin\Debug\FormProsesAbsensi.dll.config
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\bin\Debug\FormProsesAbsensi.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\bin\Debug\FormProsesAbsensi.pdb
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\bin\Debug\FormProsesAbsensi.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.vbproj.AssemblyReference.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.FormProsesAbsensi.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.Resources.resources
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.vbproj.GenerateResource.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.vbproj.CoreCompileInputs.cache
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.dll
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.xml
+G:\DESKTOP APPLICATION\PIM\Form Module\framework\FormProsesAbsensi\obj\Debug\FormProsesAbsensi.pdb

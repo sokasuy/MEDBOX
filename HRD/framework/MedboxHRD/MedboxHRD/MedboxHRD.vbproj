@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7132547E-4DE6-4B29-BFF9-38D1663709C2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>MedboxHRD.My.MyApplication</StartupObject>
+    <RootNamespace>MedboxHRD</RootNamespace>
+    <AssemblyName>MedboxHRD</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>MedboxHRD.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>MedboxHRD.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>medbox LOGO FINAL - X.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CDataGridViewManipulation">
+      <HintPath>..\..\..\..\..\Class Module\framework\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\CDataGridViewManipulation.dll</HintPath>
+    </Reference>
+    <Reference Include="CDBConnection">
+      <HintPath>..\..\..\..\..\Class Module\framework\CDBConnection\CDBConnection\bin\Debug\CDBConnection.dll</HintPath>
+    </Reference>
+    <Reference Include="CDBOperation">
+      <HintPath>..\..\..\..\..\Class Module\framework\CDBOperation\CDBOperation\bin\Debug\CDBOperation.dll</HintPath>
+    </Reference>
+    <Reference Include="CFileIO">
+      <HintPath>..\..\..\..\..\Class Module\framework\CFileIO\CFileIO\bin\Debug\CFileIO.dll</HintPath>
+    </Reference>
+    <Reference Include="CFormManipulation">
+      <HintPath>..\..\..\..\..\Class Module\framework\CFormManipulation\CFormManipulation\bin\Debug\CFormManipulation.dll</HintPath>
+    </Reference>
+    <Reference Include="CManagementSystem">
+      <HintPath>..\..\..\..\..\Class Module\framework\CManagementSystem\CManagementSystem\bin\Debug\CManagementSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="CMiscFunction">
+      <HintPath>..\..\..\..\..\Class Module\framework\CMiscFunction\CMiscFunction\bin\Debug\CMiscFunction.dll</HintPath>
+    </Reference>
+    <Reference Include="CNetworkOperation">
+      <HintPath>..\..\..\..\..\Class Module\framework\CNetworkOperation\CNetworkOperation\bin\Debug\CNetworkOperation.dll</HintPath>
+    </Reference>
+    <Reference Include="CShowMessage">
+      <HintPath>..\..\..\..\..\Class Module\framework\CShowMessage\CShowMessage\bin\Debug\CShowMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="CStringManipulation">
+      <HintPath>..\..\..\..\..\Class Module\framework\CStringManipulation\CStringManipulation\bin\Debug\CStringManipulation.dll</HintPath>
+    </Reference>
+    <Reference Include="FormAttachmentDokumen">
+      <HintPath>..\..\..\..\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormAttachmentKaryawan">
+      <HintPath>..\..\..\..\Form Module\framework\FormAttachmentKaryawan\bin\Debug\FormAttachmentKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormDisplayReport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormDisplayReport\FormDisplayReport\bin\Debug\FormDisplayReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FormGantiGambarBG">
+      <HintPath>..\..\..\..\Form Module\framework\FormGantiGambarBG\bin\Debug\FormGantiGambarBG.dll</HintPath>
+    </Reference>
+    <Reference Include="FormIjinAbsen">
+      <HintPath>..\..\..\..\Form Module\framework\FormIjinAbsen\bin\Debug\FormIjinAbsen.dll</HintPath>
+    </Reference>
+    <Reference Include="FormImportData">
+      <HintPath>..\..\..\..\Form Module\framework\FormImportData\bin\Debug\FormImportData.dll</HintPath>
+    </Reference>
+    <Reference Include="FormKalenderPerusahaan">
+      <HintPath>..\..\..\..\Form Module\framework\FormKalenderPerusahaan\bin\Debug\FormKalenderPerusahaan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterGeneral">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterGeneral\bin\Debug\FormMasterGeneral.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterKaryawan, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterKaryawan\bin\Debug\FormMasterKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterKaryawanAktif, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterKaryawanAktif\bin\Debug\FormMasterKaryawanAktif.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterKomponenTetapPayroll">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterKomponenTetapPayroll\bin\Debug\FormMasterKomponenTetapPayroll.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterPosisiKaryawan, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterPosisiKaryawan\bin\Debug\FormMasterPosisiKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterRekeningKaryawan">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterRekeningKaryawan\bin\Debug\FormMasterRekeningKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterSkemaPresensi">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterSkemaPresensi\bin\Debug\FormMasterSkemaPresensi.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterTanggunganKaryawan">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterTanggunganKaryawan\bin\Debug\FormMasterTanggunganKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormMasterTunjanganMasaKerja">
+      <HintPath>..\..\..\..\Form Module\framework\FormMasterTunjanganMasaKerja\bin\Debug\FormMasterTunjanganMasaKerja.dll</HintPath>
+    </Reference>
+    <Reference Include="FormPengalamanKerjaKaryawan">
+      <HintPath>..\..\..\..\Form Module\framework\FormPengalamanKerjaKaryawan\bin\Debug\FormPengalamanKerjaKaryawan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormProsesPayroll">
+      <HintPath>..\..\..\..\Form Module\framework\FormProsesPayroll\bin\Debug\FormProsesPayroll.dll</HintPath>
+    </Reference>
+    <Reference Include="FormProsesPresensi">
+      <HintPath>..\..\..\..\Form Module\framework\FormProsesPresensi\bin\Debug\FormProsesPresensi.dll</HintPath>
+    </Reference>
+    <Reference Include="FormScheduleShift, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormScheduleShift\bin\Debug\FormScheduleShift.dll</HintPath>
+    </Reference>
+    <Reference Include="FormSuratPeringatan">
+      <HintPath>..\..\..\..\Form Module\framework\FormSuratPeringatan\bin\Debug\FormSuratPeringatan.dll</HintPath>
+    </Reference>
+    <Reference Include="FormSuratPerintahKerja">
+      <HintPath>..\..\..\..\Form Module\framework\FormSuratPerintahKerja\bin\Debug\FormSuratPerintahKerja.dll</HintPath>
+    </Reference>
+    <Reference Include="FormSuratPerintahLembur">
+      <HintPath>..\..\..\..\Form Module\framework\FormSuratPerintahLembur\bin\Debug\FormSuratPerintahLembur.dll</HintPath>
+    </Reference>
+    <Reference Include="FormView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Form Module\framework\FormView\bin\Debug\FormView.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\Debug\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Globalization" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CLASS\ClassStartup.vb" />
+    <Compile Include="FORMS\FormLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORMS\FormLogin.Designer.vb">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORMS\FormUtama.Designer.vb">
+      <DependentUpon>FormUtama.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FORMS\FormUtama.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MODULE\ModExtension.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FORMS\FormLogin.resx">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FORMS\FormUtama.resx">
+      <DependentUpon>FormUtama.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="medbox LOGO FINAL - X.ico" />
+    <Content Include="us-a_employee_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
