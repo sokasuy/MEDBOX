@@ -4,12 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ManajemenAkun", "ManajemenAkun\ManajemenAkun.vbproj", "{0A874901-8EBC-45D4-BACF-B5E6403CDB9F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{932A1B10-1661-463B-B369-E6864A925062} = {932A1B10-1661-463B-B369-E6864A925062}
+		{84DE7D22-70FF-4B49-B54B-0AF64A7B3506} = {84DE7D22-70FF-4B49-B54B-0AF64A7B3506}
+		{20A11A45-662B-46AA-8DF9-325B2D073867} = {20A11A45-662B-46AA-8DF9-325B2D073867}
+	EndProjectSection
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormRegisterNewUser", "..\Form Module\net\FormRegisterNewUser\FormRegisterNewUser\FormRegisterNewUser.vbproj", "{20A11A45-662B-46AA-8DF9-325B2D073867}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormRegisterNewUser", "..\..\Form Module\net\FormRegisterNewUser\FormRegisterNewUser\FormRegisterNewUser.vbproj", "{20A11A45-662B-46AA-8DF9-325B2D073867}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormReviewUser", "..\Form Module\net\FormReviewUser\FormReviewUser\FormReviewUser.vbproj", "{84DE7D22-70FF-4B49-B54B-0AF64A7B3506}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormReviewUser", "..\..\Form Module\net\FormReviewUser\FormReviewUser\FormReviewUser.vbproj", "{84DE7D22-70FF-4B49-B54B-0AF64A7B3506}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormReviewUserRight", "..\Form Module\net\FormReviewUserRight\FormReviewUserRight\FormReviewUserRight.vbproj", "{932A1B10-1661-463B-B369-E6864A925062}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormReviewUserRight", "..\..\Form Module\net\FormReviewUserRight\FormReviewUserRight\FormReviewUserRight.vbproj", "{932A1B10-1661-463B-B369-E6864A925062}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

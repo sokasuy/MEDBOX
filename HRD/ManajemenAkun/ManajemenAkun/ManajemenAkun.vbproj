@@ -25,55 +25,55 @@
 
   <ItemGroup>
     <Reference Include="CDataGridViewManipulation">
-      <HintPath>..\..\..\Class Module\net\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\net5.0-windows\CDataGridViewManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\net5.0-windows\CDataGridViewManipulation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CDBConnection">
-      <HintPath>..\..\..\Class Module\net\CDBConnection\CDBConnection\bin\Debug\net5.0-windows\CDBConnection.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CDBConnection\CDBConnection\bin\Debug\net5.0-windows\CDBConnection.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CDBOperation">
-      <HintPath>..\..\..\Class Module\net\CDBOperation\CDBOperation\bin\Debug\net5.0-windows\CDBOperation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CDBOperation\CDBOperation\bin\Debug\net5.0-windows\CDBOperation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CFileIO">
-      <HintPath>..\..\..\Class Module\net\CFileIO\CFileIO\bin\Debug\net5.0-windows\CFileIO.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CFileIO\CFileIO\bin\Debug\net5.0-windows\CFileIO.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CFormManipulation">
-      <HintPath>..\..\..\Class Module\net\CFormManipulation\CFormManipulation\bin\Debug\net5.0-windows\CFormManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CFormManipulation\CFormManipulation\bin\Debug\net5.0-windows\CFormManipulation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CManagementSystem">
-      <HintPath>..\..\..\Class Module\net\CManagementSystem\CManagementSystem\bin\Debug\net5.0-windows\CManagementSystem.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CManagementSystem\CManagementSystem\bin\Debug\net5.0-windows\CManagementSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CMiscFunction">
-      <HintPath>..\..\..\Class Module\net\CMiscFunction\CMiscFunction\bin\Debug\net5.0-windows\CMiscFunction.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CMiscFunction\CMiscFunction\bin\Debug\net5.0-windows\CMiscFunction.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CNetworkOperation">
-      <HintPath>..\..\..\Class Module\net\CNetworkOperation\CNetworkOperation\bin\Debug\net5.0-windows\CNetworkOperation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CNetworkOperation\CNetworkOperation\bin\Debug\net5.0-windows\CNetworkOperation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CShowMessage">
-      <HintPath>..\..\..\Class Module\net\CShowMessage\CShowMessage\bin\Debug\net5.0-windows\CShowMessage.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CShowMessage\CShowMessage\bin\Debug\net5.0-windows\CShowMessage.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CStringManipulation">
-      <HintPath>..\..\..\Class Module\net\CStringManipulation\CStringManipulation\bin\Debug\net5.0-windows\CStringManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\net\CStringManipulation\CStringManipulation\bin\Debug\net5.0-windows\CStringManipulation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FormRegisterNewUser">
-      <HintPath>..\..\Form Module\net\FormRegisterNewUser\FormRegisterNewUser\bin\Debug\net5.0-windows\FormRegisterNewUser.dll</HintPath>
+      <HintPath>..\..\..\Form Module\net\FormRegisterNewUser\FormRegisterNewUser\bin\Debug\net5.0-windows\FormRegisterNewUser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FormReviewUser">
-      <HintPath>..\..\Form Module\net\FormReviewUser\FormReviewUser\bin\Debug\net5.0-windows\FormReviewUser.dll</HintPath>
+      <HintPath>..\..\..\Form Module\net\FormReviewUser\FormReviewUser\bin\Debug\net5.0-windows\FormReviewUser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FormReviewUserRight">
-      <HintPath>..\..\Form Module\net\FormReviewUserRight\FormReviewUserRight\bin\Debug\net5.0-windows\FormReviewUserRight.dll</HintPath>
+      <HintPath>..\..\..\Form Module\net\FormReviewUserRight\FormReviewUserRight\bin\Debug\net5.0-windows\FormReviewUserRight.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CGirgC39pSb/36tkqxD0C+OQJaldYBkpl9uPO9EnSYQjY/gip5CppF9I39ym7tkA9NUiU9hJVwsJoz+8Bt3QPQ==",
+  "dgSpecHash": "XQXk/ZsqAAi6Ot5+IADP4EAu4n81zOkE7DleJ05NtiR2eTOUIR+c8gkeaHK5wwk93B4K5Df7VgcTzljT1Y4Z9A==",
   "success": true,
-  "projectFilePath": "G:\\DESKTOP APPLICATION\\MEDBOX\\ManajemenAkun\\ManajemenAkun\\ManajemenAkun.vbproj",
+  "projectFilePath": "G:\\DESKTOP APPLICATION\\MEDBOX\\HRD\\ManajemenAkun\\ManajemenAkun\\ManajemenAkun.vbproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yusak\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\Yusak\\.nuget\\packages\\azure.identity\\1.3.0\\azure.identity.1.3.0.nupkg.sha512",
