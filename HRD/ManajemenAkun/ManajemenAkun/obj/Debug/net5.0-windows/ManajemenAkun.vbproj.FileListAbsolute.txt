@@ -300,3 +300,6 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\obj\Debug\net5.0-w
 G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\obj\Debug\net5.0-windows\ref\ManajemenAkun.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\obj\Debug\net5.0-windows\ManajemenAkun.pdb
 G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\obj\Debug\net5.0-windows\ManajemenAkun.genruntimeconfig.cache
+G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\bin\Debug\net5.0-windows\Microsoft.IdentityModel.Abstractions.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\bin\Debug\net5.0-windows\Microsoft.SqlServer.Server.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\ManajemenAkun\ManajemenAkun\bin\Debug\net5.0-windows\System.Memory.Data.dll
