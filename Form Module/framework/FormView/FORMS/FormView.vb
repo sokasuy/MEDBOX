@@ -750,7 +750,7 @@
                 'Dihitung dari jadwal jam pulang dikurangkan dengan jadwal jam masuknya, khusus untuk security, tanpa dikurangi jam istirahat
                 'Lembur tidak perlu ditambahkan di sini, karena perhitungan gajinya beda
                 'GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, WeekdayName(Weekday(_tanggal)), _isSecurity)) - TimeSpan.Parse(IIf(IsNothing(_terlambat), "00:00:00", _terlambat)) - TimeSpan.Parse(IIf(IsNothing(_pulangCepat), "00:00:00", _pulangCepat))).ToString
-                GetJamKerjaNyata = GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, WeekdayName(Weekday(_tanggal)), _isSecurity)
+                GetJamKerjaNyata = GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, _perusahaan, WeekdayName(Weekday(_tanggal)), _isSecurity)
             Else
                 'Kalau jadwal masuk dan jadwal pulangnya tidak ada, maka langsung dianggap 8 jam kerja dulu
                 'If (_isSecurity) Then
@@ -894,30 +894,31 @@
         End Try
     End Function
 
-    Private Function GetJamKerja(_jamMasuk As String, _jamKeluar As String, _lokasi As String, _hari As String, Optional _isSecurity As Boolean = False) As String
+    Private Function GetJamKerja(_jamMasuk As String, _jamKeluar As String, _lokasi As String, _perusahaan As String, _hari As String, Optional _isSecurity As Boolean = False) As String
         Try
             If Not IsNothing(_jamMasuk) And (_jamMasuk <> "") And Not IsNothing(_jamKeluar) And (_jamKeluar <> "") Then
                 'Jam masuk dan jam keluarnya harus sama2 ada isinya, tidak boleh salah 1 kosong!!
                 'Untuk hitung jam kerja dan banyaknya jam kerjanya
                 Dim jamIstirahat As String
-                If (_isSecurity) Then
-                    'Security jam istirahatnya tidak dihitung
-                    jamIstirahat = "00:00:00"
-                Else
-                    Select Case _lokasi
-                        Case "SIDOARJO"
-                            jamIstirahat = "01:00:00"
-                        Case "PANDAAN"
-                            If (_hari = "Friday") Then
-                                jamIstirahat = "01:00:00"
-                            Else
-                                jamIstirahat = "00:30:00"
-                            End If
-                        Case Else
-                            'Defaultnya kita kasih jam istirahat 1 jam
-                            jamIstirahat = "01:00:00"
-                    End Select
-                End If
+                'If (_isSecurity) Then
+                '    'Security jam istirahatnya tidak dihitung
+                '    jamIstirahat = "00:00:00"
+                'Else
+                '    Select Case _lokasi
+                '        Case "SIDOARJO"
+                '            jamIstirahat = "01:00:00"
+                '        Case "PANDAAN"
+                '            If (_hari = "Friday") Then
+                '                jamIstirahat = "01:00:00"
+                '            Else
+                '                jamIstirahat = "00:30:00"
+                '            End If
+                '        Case Else
+                '            'Defaultnya kita kasih jam istirahat 1 jam
+                '            jamIstirahat = "01:00:00"
+                '    End Select
+                'End If
+                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", CONN_.schemaHRD & ".msdefaultjamistirahat",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
 
                 If (TimeSpan.Parse(_jamKeluar) >= TimeSpan.Parse(_jamMasuk)) Then
                     'kalau jam pulangnya masih lebih besar dari jam masuknya
@@ -1548,10 +1549,10 @@
                                         arrGrup(2) = IIf(IsDBNull(dgvView.CurrentRow.Cells("bagian").Value), Nothing, dgvView.CurrentRow.Cells("bagian").Value)
 
                                         If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
-                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)), True)
+                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)), True)
                                             jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, True, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
                                         Else
-                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)))
+                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)))
                                             jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, False, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
                                         End If
                                         dgvView.CurrentRow.Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)
@@ -1719,8 +1720,8 @@
 
                 Dim hitungCek As UShort
                 Dim updateSukses As Byte = 0
-                Dim jamMasuk As String
-                Dim jamKeluar As String
+                Dim jamMasuk As String = Nothing
+                Dim jamKeluar As String = Nothing
                 stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE cekfp='True';"
                 hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                 If hitungCek > 0 Then
@@ -1787,10 +1788,10 @@
                             End If
 
                             If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
-                                jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, hari, True)
+                                jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, tmpDataPresensi.Rows(i).Item("perusahaan"), hari, True)
                                 jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), True, terlambat, pulangCepat)
                             Else
-                                jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, hari)
+                                jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, tmpDataPresensi.Rows(i).Item("perusahaan"), hari)
                                 jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), False, terlambat, pulangCepat)
                             End If
                             banyakJamKerja = GetBanyakJamKerja(jamKerja)
@@ -2012,10 +2013,10 @@
                                     End If
 
                                     If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
-                                        jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))), True)
+                                        jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))), True)
                                         jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, True, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString)
                                     Else
-                                        jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))))
+                                        jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))))
                                         jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, False, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString)
                                     End If
                                     dgvView.Rows(rowIndex).Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)

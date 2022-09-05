@@ -1217,9 +1217,9 @@
                                     ''Jam masuk dan jam keluarnya harus sama2 ada isinya, tidak boleh salah 1 kosong!!
                                     ''Untuk hitung jam kerja dan banyaknya jam kerjanya
                                     If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
-                                        arrUpdateValues(10) = GetJamKerja(arrUpdateValues(5), arrUpdateValues(6), myDataTablePresensi.Rows(i).Item("lokasi"), WeekdayName(Weekday(myDataTablePresensi.Rows(i).Item("tanggal"))), True)
+                                        arrUpdateValues(10) = GetJamKerja(arrUpdateValues(5), arrUpdateValues(6), myDataTablePresensi.Rows(i).Item("lokasi"), myDataTablePresensi.Rows(i).Item("perusahaan"), WeekdayName(Weekday(myDataTablePresensi.Rows(i).Item("tanggal"))), True)
                                     Else
-                                        arrUpdateValues(10) = GetJamKerja(arrUpdateValues(5), arrUpdateValues(6), myDataTablePresensi.Rows(i).Item("lokasi"), WeekdayName(Weekday(myDataTablePresensi.Rows(i).Item("tanggal"))))
+                                        arrUpdateValues(10) = GetJamKerja(arrUpdateValues(5), arrUpdateValues(6), myDataTablePresensi.Rows(i).Item("lokasi"), myDataTablePresensi.Rows(i).Item("perusahaan"), WeekdayName(Weekday(myDataTablePresensi.Rows(i).Item("tanggal"))))
                                     End If
                                     arrUpdateValues(11) = GetBanyakJamKerja(arrUpdateValues(10))
                                     updateString &= ",jamkerja=" & IIf(IsNothing(arrUpdateValues(10)), "Null", "'" & arrUpdateValues(10) & "'") & ",banyakjamkerja=" & IIf(arrUpdateValues(11) = 0, "Null", arrUpdateValues(11))
@@ -1436,30 +1436,32 @@
         End Try
     End Function
 
-    Private Function GetJamKerja(_jamMasuk As String, _jamKeluar As String, _lokasi As String, _hari As String, Optional _isSecurity As Boolean = False) As String
+    Private Function GetJamKerja(_jamMasuk As String, _jamKeluar As String, _lokasi As String, _perusahaan As String, _hari As String, Optional _isSecurity As Boolean = False) As String
         Try
             If Not IsNothing(_jamMasuk) And (_jamMasuk <> "") And Not IsNothing(_jamKeluar) And (_jamKeluar <> "") Then
                 'Jam masuk dan jam keluarnya harus sama2 ada isinya, tidak boleh salah 1 kosong!!
                 'Untuk hitung jam kerja dan banyaknya jam kerjanya
                 Dim jamIstirahat As String
-                If (_isSecurity) Then
-                    'Security jam istirahatnya tidak dihitung
-                    jamIstirahat = "00:00:00"
-                Else
-                    Select Case _lokasi
-                        Case "SIDOARJO"
-                            jamIstirahat = "00:00:00"
-                        Case "PANDAAN"
-                            If (_hari = "Friday") Then
-                                jamIstirahat = "00:00:00"
-                            Else
-                                jamIstirahat = "00:00:00"
-                            End If
-                        Case Else
-                            'Defaultnya kita kasih jam istirahat 1 jam
-                            jamIstirahat = "00:00:00"
-                    End Select
-                End If
+                'If (_isSecurity) Then
+                '    'Security jam istirahatnya tidak dihitung
+                '    jamIstirahat = "00:00:00"
+                'Else
+                '    Select Case _lokasi
+                '        Case "SIDOARJO"
+                '            jamIstirahat = "00:00:00"
+                '        Case "PANDAAN"
+                '            If (_hari = "Friday") Then
+                '                jamIstirahat = "00:00:00"
+                '            Else
+                '                jamIstirahat = "00:00:00"
+                '            End If
+                '        Case Else
+                '            'Defaultnya kita kasih jam istirahat 1 jam
+                '            jamIstirahat = "00:00:00"
+                '    End Select
+                'End If
+                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", CONN_.schemaHRD & ".msdefaultjamistirahat",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
+
 
                 If (TimeSpan.Parse(_jamKeluar) >= TimeSpan.Parse(_jamMasuk)) Then
                     'kalau jam pulangnya masih lebih besar dari jam masuknya
@@ -1496,7 +1498,7 @@
                 'Dihitung dari jadwal jam pulang dikurangkan dengan jadwal jam masuknya, khusus untuk security, tanpa dikurangi jam istirahat
                 'Lembur tidak perlu ditambahkan di sini, karena perhitungan gajinya beda
                 'GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, WeekdayName(Weekday(_tanggal)), _isSecurity)) - TimeSpan.Parse(IIf(IsNothing(_terlambat), "00:00:00", _terlambat)) - TimeSpan.Parse(IIf(IsNothing(_pulangCepat), "00:00:00", _pulangCepat))).ToString
-                GetJamKerjaNyata = GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, WeekdayName(Weekday(_tanggal)), _isSecurity)
+                GetJamKerjaNyata = GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, _perusahaan, WeekdayName(Weekday(_tanggal)), _isSecurity)
             Else
                 'Kalau jadwal masuk dan jadwal pulangnya tidak ada, maka langsung dianggap 8 jam kerja
                 'If (_isSecurity) Then
