@@ -244,7 +244,7 @@
                     mGroupCriteria &= " AND (tbl.kelompok='" & myCStringManipulation.SafeSqlLiteral(cboKelompok.SelectedItem) & "')"
                 End If
 
-                stSQL = "SELECT tbl.rid,tbl.kdr,tbl.tanggal,tbl.nip,tbl.nama,tbl.jadwalmasuk,tbl.jadwalkeluar,tbl.masuk,tbl.keluar,tbl.cekfp,tbl.jamkerjanyata,tbl.banyakjamkerjanyata,tbl.jamkerja,tbl.banyakjamkerja,tbl.fpmasuk,tbl.fpkeluar,tbl.terlambat,tbl.pulangcepat,tbl.shift,tbl.ijin,tbl.absen,tbl.kodewaktushift,tbl.spkmulai,tbl.spkselesai,tbl.cekspk,tbl.jamlembur,tbl.mulailembur,tbl.selesailembur,tbl.ceklembur,tbl.keterangan,tbl.idk,tbl.bagian,tbl.divisi,tbl.departemen,tbl2.kode,tbl.perusahaan,tbl.lokasi,tbl.kelompok,tbl.katpenggajian,tbl.isfpmanual,tbl.isspkmanual,tbl.islemburmanual,tbl.isjamkerjamanual
+                stSQL = "SELECT tbl.rid,tbl.kdr,tbl.tanggal,to_char(tbl.tanggal, 'Day') as hari,tbl.perusahaan,tbl2.kode,tbl.nip,tbl.nama,tbl.jadwalmasuk,tbl.jadwalkeluar,tbl.masuk,tbl.keluar,tbl.cekfp,tbl.jamkerjanyata,tbl.banyakjamkerjanyata,tbl.jamkerja,tbl.banyakjamkerja,tbl.fpmasuk,tbl.fpkeluar,tbl.terlambat,tbl.pulangcepat,tbl.shift,tbl.ijin,tbl.absen,tbl.kodewaktushift,tbl.spkmulai,tbl.spkselesai,tbl.cekspk,tbl.jamlembur,tbl.mulailembur,tbl.selesailembur,tbl.ceklembur,tbl.keterangan,tbl.idk,tbl.bagian,tbl.divisi,tbl.departemen,tbl.lokasi,tbl.kelompok,tbl.katpenggajian,tbl.isfpmanual,tbl.isspkmanual,tbl.islemburmanual,tbl.isjamkerjamanual
                         FROM (" & tableName(0) & " as tbl inner join " & tableName(9) & " as tbl2 on tbl.perusahaan=tbl2.keterangan) " &
                         "WHERE (tbl.tanggal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' AND tbl.tanggal<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')" & mGroupCriteria & "
                         ORDER BY tbl.lokasi,tbl.nama,tbl.tanggal,tbl.perusahaan;"
@@ -268,6 +268,9 @@
                     .Columns("rid").Frozen = True
                     .Columns("kdr").Frozen = True
                     .Columns("tanggal").Frozen = True
+                    .Columns("hari").Frozen = True
+                    .Columns("perusahaan").Frozen = True
+                    .Columns("kode").Frozen = True
                     .Columns("nip").Frozen = True
                     .Columns("nama").Frozen = True
 
@@ -303,6 +306,7 @@
                     .Columns(myDataTable.Columns("kode").ColumnName).HeaderText = "PERUSAHAAN"
 
                     .Columns("tanggal").Width = 80
+                    .Columns("hari").Width = 80
                     .Columns("nip").Width = 60
                     .Columns("nama").Width = 100
                     .Columns("jadwalmasuk").Width = 60
@@ -362,6 +366,7 @@
                     .Columns("rid").ReadOnly = True
                     .Columns("kdr").ReadOnly = True
                     .Columns("tanggal").ReadOnly = True
+                    .Columns("hari").ReadOnly = True
                     .Columns("idk").ReadOnly = True
                     .Columns("nip").ReadOnly = True
                     .Columns("nama").ReadOnly = True

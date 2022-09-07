@@ -86,13 +86,6 @@ Public Class FormProsesPayroll
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-            'If (Me.WindowState = FormWindowState.Maximized) Then
-            '    jarakPanelBawah = 105
-            '    rptViewer.Top = Me.Size.Height - jarakPanelBawah
-            'Else
-            '    jarakPanelBawah = Me.Size.Height - rptViewer.Location.Y
-            'End If
-
             Dim arrCbo() As String
             arrCbo = {"Q1", "Q2"}
             cboKuartal.Items.AddRange(arrCbo)
@@ -126,7 +119,7 @@ Public Class FormProsesPayroll
             rbNonStaff.Checked = True
 
             If (Now.Day <= 15) Then
-                dtpPeriodeMulai.Value = DateSerial(Now.Year, Now.Month - 1, 15)
+                dtpPeriodeMulai.Value = DateSerial(Now.Year, Now.Month - 1, 16)
                 dtpPeriodeSelesai.Value = DateSerial(Now.Year, Now.Month - 1, Date.DaysInMonth(Now.Year, Now.Month - 1))
                 For i As Short = 0 To cboPeriode.Items.Count - 1
                     If (DirectCast(cboPeriode.Items(i), DataRowView).Item("keterangan") = MonthName(Now.Month - 1, True).ToUpper & Now.Year) Then
@@ -278,6 +271,7 @@ Public Class FormProsesPayroll
             Dim tahunMasaKerja As Byte
             Dim tunjanganMasaKerja As Integer
             Dim jamLembur(1) As Double
+            Dim jamLemburLama(1) As Double
             Dim totalJamLemburDiperhitungkan As Double
             Dim totalJamLemburDiperhitungkanSusulan As Double
             Dim strNoPayroll As String
@@ -298,6 +292,7 @@ Public Class FormProsesPayroll
             Dim totalKerjaShift As Byte
             Dim totalTunjanganShift As Double
             'Dim totalJamLembur As Double
+            Dim komponenLain2 As Double
             Dim upahLembur As Double
             Dim kurangJamKerja As Double
             Dim potonganTidakMasukFull As Double
@@ -357,7 +352,9 @@ Public Class FormProsesPayroll
 
             '---3. AMBIL TOTAL JAM KERJA (HARI LIBUR, CUTI, IJIN, DAN SAKIT DENGAN SURAT DOKTER DIHITUNG JAM KERJA)
             If (_kelompok = "NON STAFF") Then
-                stSQL = "SELECT (SUM(case when p.absen is null then (case when p.banyakjamkerjanyata is null then 8 else p.banyakjamkerjanyata end) else (k.persengaji/100)*8 end)/8)::numeric(5,2) as totalharikerja, sum(case when p.shift is null then 0 else s.nilai end) as tunjanganshift,sum(case when p.shift is null then 0 else (case when p.shift>1 then 1 else 0 end) end) as totalkerjashift FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi left join " & CONN_.schemaHRD & ".mstunjanganshift as s on p.shift=s.shift and p.lokasi=s.lokasi WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' and p.tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' and p.tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "';"
+                stSQL = "SELECT (SUM(case when p.absen is null then (case when p.banyakjamkerjanyata is null then 8 else p.banyakjamkerjanyata end) else (k.persengaji/100)*8 end)/8)::numeric(5,2) as totalharikerja, sum(case when p.shift is null then 0 else s.nilai end) as tunjanganshift,sum(case when p.shift is null then 0 else (case when p.shift>1 then 1 else 0 end) end) as totalkerjashift 
+                        FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi left join " & CONN_.schemaHRD & ".mstunjanganshift as s on p.shift=s.shift and p.lokasi=s.lokasi 
+                        WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' and p.tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' and p.tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "';"
                 hariKerja1Periode = 15
             ElseIf (_kelompok = "STAFF") Then
                 stSQL = ""
@@ -396,8 +393,10 @@ Public Class FormProsesPayroll
             Next
             'jamLembur(0) untuk hari biasa
             jamLembur(0) = Nothing
+            jamLemburLama(0) = Nothing
             'jamLembur(1) untuk hari libur
             jamLembur(1) = Nothing
+            jamLemburLama(1) = Nothing
             'absen(0) untuk hari pertama, absen(1) untuk hari kedua
             absen(0) = Nothing
             absen(1) = Nothing
@@ -465,10 +464,18 @@ Public Class FormProsesPayroll
                             counter += 1
                             If (counter <= 1) Then
                                 faktorPengaliLembur = 1.5
-                                totalJamLemburHariBiasa(1) += 1
+                                If (jamLembur(0) > 0 And jamLembur(0) < 1) Then
+                                    totalJamLemburHariBiasa(1) += jamLembur(0)
+                                Else
+                                    totalJamLemburHariBiasa(1) += 1
+                                End If
                             ElseIf (counter > 1) Then
                                 faktorPengaliLembur = 2
-                                totalJamLemburHariBiasa(2) += 1
+                                If (jamLembur(0) > 0 And jamLembur(0) < 1) Then
+                                    totalJamLemburHariBiasa(2) += jamLembur(0)
+                                Else
+                                    totalJamLemburHariBiasa(2) += 1
+                                End If
                             End If
 
                             If (jamLembur(0) - 1 >= 0) Then
@@ -492,13 +499,25 @@ Public Class FormProsesPayroll
                             counter += 1
                             If (counter <= 8) Then
                                 faktorPengaliLembur = 2
-                                totalJamLemburHariLibur(1) += 1
+                                If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                    totalJamLemburHariLibur(1) += jamLembur(1)
+                                Else
+                                    totalJamLemburHariLibur(1) += 1
+                                End If
                             ElseIf (counter = 9) Then
                                 faktorPengaliLembur = 3
-                                totalJamLemburHariLibur(2) += 1
+                                If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                    totalJamLemburHariLibur(2) += jamLembur(1)
+                                Else
+                                    totalJamLemburHariLibur(2) += 1
+                                End If
                             ElseIf (counter > 9) Then
                                 faktorPengaliLembur = 4
-                                totalJamLemburHariLibur(3) += 1
+                                If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                    totalJamLemburHariLibur(3) += jamLembur(1)
+                                Else
+                                    totalJamLemburHariLibur(3) += 1
+                                End If
                             End If
 
                             If (jamLembur(1) - 1 > 0) Then
@@ -599,6 +618,7 @@ Public Class FormProsesPayroll
             '8. INSERT ke trpayrolldetail
             '==========================================================================================================================================
             'GAJI POKOK DAN KOMPONEN GAJI LAIN YANG SUDAH TERDAFTAR
+            komponenLain2 = 0
             For i As Integer = 0 To myDataTableKomponenGaji.Rows.Count - 1
                 lineNr = i + 1
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','" & myCStringManipulation.SafeSqlLiteral(myDataTableKomponenGaji.Rows(i).Item("komponengaji")) & "','" & myCStringManipulation.SafeSqlLiteral(myDataTableKomponenGaji.Rows(i).Item("keterangan")) & "'," & myDataTableKomponenGaji.Rows(i).Item("faktorqty") & ",'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
@@ -622,6 +642,9 @@ Public Class FormProsesPayroll
                 If (myDataTableKomponenGaji.Rows(i).Item("keterangan").ToString.Contains("POTONGAN JHT")) Then
                     newValuesSummary &= "," & myDataTableKomponenGaji.Rows(i).Item("rupiah")
                     newFieldsSummary &= ",potonganjhtjpbpjs"
+                End If
+                If (myDataTableKomponenGaji.Rows(i).Item("komponengaji") = "BONUS") Then
+                    komponenLain2 += myDataTableKomponenGaji.Rows(i).Item("rupiah")
                 End If
             Next
 
@@ -701,8 +724,10 @@ Public Class FormProsesPayroll
                 'Next
                 'jamLembur(0) untuk hari biasa
                 jamLembur(0) = Nothing
+                jamLemburLama(0) = Nothing
                 'jamLembur(1) untuk hari libur
                 jamLembur(1) = Nothing
+                jamLemburLama(1) = Nothing
                 'absen(0) untuk hari pertama, absen(1) untuk hari kedua
                 absen(0) = Nothing
                 absen(1) = Nothing
@@ -769,81 +794,165 @@ Public Class FormProsesPayroll
                         If revisiLemburPeriodeLalu <> TimeSpan.Parse("00:00") Then
                             'If Not IsDBNull(myDataTableDataPresensiLalu.Rows(i).Item("jamlembur")) Then
                             'Di cek dulu apakah ada lemburnya atau tidak di tanggal tersebut
-                            If (Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"), "dd-MMM-yyyy") <> Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur"), "dd-MMM-yyyy")) Then
-                                'Kalau lembur dilakukan lintas hari, tanggal mulai lembur dan tanggal selesai lembur tidak sama
-                                'Maka perlu dilakukan pengecekkan apakah sama2 di hari kerja, sama2 di hari libur, atau dari hari kerja sampai ke hari libur, atau sebaliknya dari hari libur sampai ke hari kerja
-                                'Cek apakah di hari mulai lembur adalah hari libur atau bukan
-                                If Not IsDBNull(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")) Then
-                                    'Kalau ada absennya
-                                    absen(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")
-                                    If (absen(0) = "C" Or absen(0) = "L") Then
-                                        'Kalau mulai lembur hanya dilihat kalau di tanggal tersebut adalah hari cuti atau hari libur, kalau ada ijin tidak masuk, maka lembur tidak dihitung!
-                                        'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
-                                        jamLembur(1) = Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"))).TotalHours, 2)
-                                    End If
-                                Else
-                                    'Kalau tidak ada absennya berarti hari kerja biasa
-                                    absen(0) = Nothing
-                                    jamLembur(0) = Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"))).TotalHours, 2)
-                                End If
 
-                                'Cek di hari selesai lembur, hari libur atau bukan
-                                'MsgBox(Format(myDataTableLemburan.Rows(i).Item("selesailembur"), "dd-MMM-yyyy"))
-                                absen(1) = myCDBOperation.GetSpecificRecord(_conn, _comm, _reader, "absen", CONN_.schemaHRD & ".trdatapresensi",, "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND tanggal='" & Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur"), "dd-MMM-yyyy") & "'")
-                                If Not IsNothing(absen(1)) Then
-                                    'Kalau tanggal berikutnya adalah hari libur
-                                    If (absen(1) = "C" Or absen(1) = "L") Then
-                                        'Kalau cuti atau libur rutin
-                                        jamLembur(1) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                            'AMBIL YANG LEMBURAN DI PERIODE SEBELUMNYA UNTUK PENGURANGNYA
+                            If Not IsDBNull(myDataTableProcessedDetailLalu.Rows(i).Item("mulailembur")) Then
+                                If (Format(myDataTableProcessedDetailLalu.Rows(i).Item("mulailembur"), "dd-MMM-yyyy") <> Format(myDataTableProcessedDetailLalu.Rows(i).Item("selesailembur"), "dd-MMM-yyyy")) Then
+                                    'Kalau lembur dilakukan lintas hari, tanggal mulai lembur dan tanggal selesai lembur tidak sama
+                                    'Maka perlu dilakukan pengecekkan apakah sama2 di hari kerja, sama2 di hari libur, atau dari hari kerja sampai ke hari libur, atau sebaliknya dari hari libur sampai ke hari kerja
+                                    'Cek apakah di hari mulai lembur adalah hari libur atau bukan
+                                    If Not IsDBNull(myDataTableProcessedDetailLalu.Rows(i).Item("absen")) Then
+                                        'Kalau ada absennya
+                                        absen(0) = myDataTableProcessedDetailLalu.Rows(i).Item("absen")
+                                        If (absen(0) = "C" Or absen(0) = "L") Then
+                                            'Kalau mulai lembur hanya dilihat kalau di tanggal tersebut adalah hari cuti atau hari libur, kalau ada ijin tidak masuk, maka lembur tidak dihitung!
+                                            'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
+                                            jamLemburLama(1) = Math.Round((DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("mulailembur"))).TotalHours, 2)
+                                        End If
                                     Else
-                                        'Kalau di tanggal berikutnya bukan cuti atau libur, maka diberlakukan seperti hari kerja
-                                        'Bisa jadi ada absennya, misalkan tanggal berikutnya karyawan tersebut tidak masuk kerja
-                                        jamLembur(0) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                        'Kalau tidak ada absennya berarti hari kerja biasa
+                                        absen(0) = Nothing
+                                        jamLemburLama(0) = Math.Round((DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("mulailembur"))).TotalHours, 2)
+                                    End If
+
+                                    'Cek di hari selesai lembur, hari libur atau bukan
+                                    'MsgBox(Format(myDataTableLemburan.Rows(i).Item("selesailembur"), "dd-MMM-yyyy"))
+                                    absen(1) = myCDBOperation.GetSpecificRecord(_conn, _comm, _reader, "absen", CONN_.schemaHRD & ".trdatapresensi",, "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND tanggal='" & Format(myDataTableProcessedDetailLalu.Rows(i).Item("selesailembur"), "dd-MMM-yyyy") & "'")
+                                    If Not IsNothing(absen(1)) Then
+                                        'Kalau tanggal berikutnya adalah hari libur
+                                        If (absen(1) = "C" Or absen(1) = "L") Then
+                                            'Kalau cuti atau libur rutin
+                                            jamLemburLama(1) += Math.Round((DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("selesailembur")) - DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                        Else
+                                            'Kalau di tanggal berikutnya bukan cuti atau libur, maka diberlakukan seperti hari kerja
+                                            'Bisa jadi ada absennya, misalkan tanggal berikutnya karyawan tersebut tidak masuk kerja
+                                            jamLemburLama(0) += Math.Round((DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("selesailembur")) - DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                        End If
+                                    Else
+                                        'Kalau tanggal berikutnya adalah hari kerja
+                                        jamLemburLama(0) += Math.Round((DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("selesailembur")) - DateTime.Parse(myDataTableProcessedDetailLalu.Rows(i).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
                                     End If
                                 Else
-                                    'Kalau tanggal berikutnya adalah hari kerja
-                                    jamLembur(0) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
-                                End If
-                            Else
-                                'Kalau lemburnya tidak lintas tanggal, berarti hanya perlu di cek di tanggal tersebut adalah hari libur atau bukan
-                                'Cek apakah di hari tersebut adalah hari libur atau bukan
-                                If Not IsDBNull(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")) Then
-                                    'Kalau ada absennya
-                                    absen(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")
-                                    If (absen(0) = "C" Or absen(0) = "L") Then
-                                        'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
-                                        jamLembur(1) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("jamlembur").TotalHours
+                                    'Kalau lemburnya tidak lintas tanggal, berarti hanya perlu di cek di tanggal tersebut adalah hari libur atau bukan
+                                    'Cek apakah di hari tersebut adalah hari libur atau bukan
+                                    If Not IsDBNull(myDataTableProcessedDetailLalu.Rows(i).Item("absen")) Then
+                                        'Kalau ada absennya
+                                        absen(0) = myDataTableProcessedDetailLalu.Rows(i).Item("absen")
+                                        If (absen(0) = "C" Or absen(0) = "L") Then
+                                            'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
+                                            jamLemburLama(1) = myDataTableProcessedDetailLalu.Rows(i).Item("jamlembur").TotalHours
+                                        End If
+                                    Else
+                                        'Kalau bukan hari libur
+                                        absen(0) = Nothing
+                                        jamLemburLama(0) = myDataTableProcessedDetailLalu.Rows(i).Item("jamlembur").TotalHours
                                     End If
-                                Else
-                                    'Kalau bukan hari libur
-                                    absen(0) = Nothing
-                                    jamLembur(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("jamlembur").TotalHours
                                 End If
                             End If
 
-                            'jamLembur = myDataTableLemburan.Rows(i).Item("jamlembur").TotalHours
+                            If Not IsDBNull(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur")) Then
+                                If (Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"), "dd-MMM-yyyy") <> Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur"), "dd-MMM-yyyy")) Then
+                                    'Kalau lembur dilakukan lintas hari, tanggal mulai lembur dan tanggal selesai lembur tidak sama
+                                    'Maka perlu dilakukan pengecekkan apakah sama2 di hari kerja, sama2 di hari libur, atau dari hari kerja sampai ke hari libur, atau sebaliknya dari hari libur sampai ke hari kerja
+                                    'Cek apakah di hari mulai lembur adalah hari libur atau bukan
+                                    If Not IsDBNull(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")) Then
+                                        'Kalau ada absennya
+                                        absen(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")
+                                        If (absen(0) = "C" Or absen(0) = "L") Then
+                                            'Kalau mulai lembur hanya dilihat kalau di tanggal tersebut adalah hari cuti atau hari libur, kalau ada ijin tidak masuk, maka lembur tidak dihitung!
+                                            'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
+                                            jamLembur(1) = Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"))).TotalHours, 2)
+                                        End If
+                                    Else
+                                        'Kalau tidak ada absennya berarti hari kerja biasa
+                                        absen(0) = Nothing
+                                        jamLembur(0) = Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal") & " " & "23:59:59") - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("mulailembur"))).TotalHours, 2)
+                                    End If
+
+                                    'Cek di hari selesai lembur, hari libur atau bukan
+                                    'MsgBox(Format(myDataTableLemburan.Rows(i).Item("selesailembur"), "dd-MMM-yyyy"))
+                                    absen(1) = myCDBOperation.GetSpecificRecord(_conn, _comm, _reader, "absen", CONN_.schemaHRD & ".trdatapresensi",, "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND tanggal='" & Format(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur"), "dd-MMM-yyyy") & "'")
+                                    If Not IsNothing(absen(1)) Then
+                                        'Kalau tanggal berikutnya adalah hari libur
+                                        If (absen(1) = "C" Or absen(1) = "L") Then
+                                            'Kalau cuti atau libur rutin
+                                            jamLembur(1) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                        Else
+                                            'Kalau di tanggal berikutnya bukan cuti atau libur, maka diberlakukan seperti hari kerja
+                                            'Bisa jadi ada absennya, misalkan tanggal berikutnya karyawan tersebut tidak masuk kerja
+                                            jamLembur(0) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                        End If
+                                    Else
+                                        'Kalau tanggal berikutnya adalah hari kerja
+                                        jamLembur(0) += Math.Round((DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("selesailembur")) - DateTime.Parse(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("tanggal").addDays(1) & " " & "00:00:00")).TotalHours, 2)
+                                    End If
+                                Else
+                                    'Kalau lemburnya tidak lintas tanggal, berarti hanya perlu di cek di tanggal tersebut adalah hari libur atau bukan
+                                    'Cek apakah di hari tersebut adalah hari libur atau bukan
+                                    If Not IsDBNull(myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")) Then
+                                        'Kalau ada absennya
+                                        absen(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen")
+                                        If (absen(0) = "C" Or absen(0) = "L") Then
+                                            'Hanya kalau libur cuti atau libur rutin yang dianggap lemburnya
+                                            jamLembur(1) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("jamlembur").TotalHours
+                                        End If
+                                    Else
+                                        'Kalau bukan hari libur
+                                        absen(0) = Nothing
+                                        jamLembur(0) = myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("jamlembur").TotalHours
+                                    End If
+                                End If
+                            End If
+
+                            'jamLembur(0) -= jamLemburLama(0)
+                            'jamLembur(1) -= jamLemburLama(1)
+                            'If (jamLembur(0) = 0) Then
+                            '    jamLembur(0) = Nothing
+                            'End If
+                            'If (jamLembur(1) = 0) Then
+                            '    jamLembur(1) = Nothing
+                            'End If
+
                             If Not IsNothing(jamLembur(0)) Then
                                 'Cek lembur di hari kerja atau hari biasa
                                 'Untuk hitung lembur di hari biasa, maka lemburan dihitung sebagai berikut
                                 counter = 0
                                 While jamLembur(0) > 0
                                     counter += 1
-                                    If (counter <= 1) Then
-                                        faktorPengaliLembur = 1.5
-                                        totalJamLemburHariBiasa(1) += 1
-                                    ElseIf (counter > 1) Then
-                                        faktorPengaliLembur = 2
-                                        totalJamLemburHariBiasa(2) += 1
-                                    End If
-
-                                    If (jamLembur(0) - 1 >= 0) Then
-                                        totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
-                                        jamLembur(0) -= 1
+                                    If (jamLemburLama(0) > 0) Then
+                                        If (jamLemburLama(0) - 1 >= 0) Then
+                                            jamLemburLama(0) -= 1
+                                            jamLembur(0) -= 1
+                                        Else
+                                            jamLemburLama(0) = 0
+                                            jamLembur(0) -= jamLemburLama(0)
+                                        End If
                                     Else
-                                        totalJamLemburDiperhitungkanSusulan += (jamLembur(0) * faktorPengaliLembur)
-                                        jamLembur(0) = 0
+                                        If (counter <= 1) Then
+                                            faktorPengaliLembur = 1.5
+                                            If (jamLembur(0) > 0 And jamLembur(0) < 1) Then
+                                                totalJamLemburHariBiasa(1) += jamLembur(0)
+                                            Else
+                                                totalJamLemburHariBiasa(1) += 1
+                                            End If
+                                        ElseIf (counter > 1) Then
+                                            faktorPengaliLembur = 2
+                                            If (jamLembur(0) > 0 And jamLembur(0) < 1) Then
+                                                totalJamLemburHariBiasa(2) += jamLembur(0)
+                                            Else
+                                                totalJamLemburHariBiasa(2) += 1
+                                            End If
+                                        End If
+
+                                        If (jamLembur(0) - 1 >= 0) Then
+                                            totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
+                                            jamLembur(0) -= 1
+                                        Else
+                                            totalJamLemburDiperhitungkanSusulan += (jamLembur(0) * faktorPengaliLembur)
+                                            jamLembur(0) = 0
+                                        End If
+                                        totalJamLemburHariBiasa(0) += 1
                                     End If
-                                    totalJamLemburHariBiasa(0) += 1
                                 End While
                             End If
 
@@ -855,77 +964,50 @@ Public Class FormProsesPayroll
                                 counter = 0
                                 While jamLembur(1) > 0
                                     counter += 1
-                                    If (counter <= 8) Then
-                                        faktorPengaliLembur = 2
-                                        totalJamLemburHariLibur(1) += 1
-                                    ElseIf (counter = 9) Then
-                                        faktorPengaliLembur = 3
-                                        totalJamLemburHariLibur(2) += 1
-                                    ElseIf (counter > 9) Then
-                                        faktorPengaliLembur = 4
-                                        totalJamLemburHariLibur(3) += 1
-                                    End If
-
-                                    If (jamLembur(1) - 1 > 0) Then
-                                        totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
-                                        jamLembur(1) -= 1
+                                    If (jamLemburLama(1) > 0) Then
+                                        If (jamLemburLama(1) - 1 >= 0) Then
+                                            jamLemburLama(1) -= 1
+                                            jamLembur(1) -= 1
+                                        Else
+                                            jamLemburLama(1) = 0
+                                            jamLembur(1) -= jamLemburLama(1)
+                                        End If
                                     Else
-                                        totalJamLemburDiperhitungkanSusulan += (jamLembur(1) * faktorPengaliLembur)
-                                        jamLembur(1) = 0
+                                        If (counter <= 8) Then
+                                            faktorPengaliLembur = 2
+                                            If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                                totalJamLemburHariLibur(1) += jamLembur(1)
+                                            Else
+                                                totalJamLemburHariLibur(1) += 1
+                                            End If
+                                        ElseIf (counter = 9) Then
+                                            faktorPengaliLembur = 3
+                                            If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                                totalJamLemburHariLibur(2) += jamLembur(1)
+                                            Else
+                                                totalJamLemburHariLibur(2) += 1
+                                            End If
+                                        ElseIf (counter > 9) Then
+                                            faktorPengaliLembur = 4
+                                            If (jamLembur(1) > 0 And jamLembur(1) < 1) Then
+                                                totalJamLemburHariLibur(3) += jamLembur(1)
+                                            Else
+                                                totalJamLemburHariLibur(3) += 1
+                                            End If
+                                        End If
+
+                                        If (jamLembur(1) - 1 > 0) Then
+                                            totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
+                                            jamLembur(1) -= 1
+                                        Else
+                                            totalJamLemburDiperhitungkanSusulan += (jamLembur(1) * faktorPengaliLembur)
+                                            jamLembur(1) = 0
+                                        End If
+                                        totalJamLemburHariLibur(0) += 1
                                     End If
-                                    totalJamLemburHariLibur(0) += 1
                                 End While
                                 'End If
                             End If
-                            'MsgBox("Nama: " & _nama & " Tanggal: " & myDataTableLemburan.Rows(i).Item("tanggal") & ControlChars.NewLine & "Jam Lembur hari biasa 1: " & totalJamLemburHariBiasa(1) & ControlChars.NewLine & "Jam Lembur hari biasa 2:" & totalJamLemburHariBiasa(2) & ControlChars.NewLine & "Jam Lembur hari libur 1:" & totalJamLemburHariLibur(1) & ControlChars.NewLine & "Jam Lembur hari libur 2:" & totalJamLemburHariLibur(2) & ControlChars.NewLine & "Jam Lembur hari libur 3:" & totalJamLemburHariLibur(3) & ControlChars.NewLine & "Total Jam Lembur yang diperhitungkan: " & totalJamLemburDiperhitungkan)
-                            'End If
-
-                            'jamLembur = myDataTableDataPresensiLalu.Rows(i).Item("jamlembur").TotalHours
-                            'counter = 0
-                            'If IsDBNull(myDataTableDataPresensiLalu.Rows(i).Item("absen")) Then
-                            '    'Jika lembur di hari biasa, maka lemburan dihitung sebagai berikut
-                            '    While jamLembur(0) > 0
-                            '        counter += 1
-                            '        If (counter <= 1) Then
-                            '            faktorPengaliLembur = 1.5
-                            '        ElseIf (counter > 1) Then
-                            '            faktorPengaliLembur = 2
-                            '        End If
-
-                            '        If (jamLembur(0) - 1 >= 0) Then
-                            '            totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
-                            '            jamLembur(0) -= 1
-                            '        Else
-                            '            totalJamLemburDiperhitungkanSusulan += (jamLembur(0) * faktorPengaliLembur)
-                            '            jamLembur(0) = 0
-                            '        End If
-                            '        totalJamLemburHariBiasa(0) += 1
-                            '    End While
-                            'Else
-                            '    If (myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen") = "C" Or myDataTableDataPresensiLalu.Rows(myDataTableDataPresensiLalu.Rows.IndexOf(foundRows(0))).Item("absen") = "L") Then
-                            '        'Jika di hari Libur atau Cuti Bersama, maka lemburan dihitung sebagai berikut
-                            '        '8 Jam pertama tarif 2x, 1 jam berikutnya tarif 3x, setiap jam berikutnya tarif 4x
-                            '        While jamLembur(1) > 0
-                            '            counter += 1
-                            '            If (counter <= 8) Then
-                            '                faktorPengaliLembur = 2
-                            '            ElseIf (counter = 9) Then
-                            '                faktorPengaliLembur = 3
-                            '            ElseIf (counter > 9) Then
-                            '                faktorPengaliLembur = 4
-                            '            End If
-
-                            '            If (jamLembur(1) - 1 > 0) Then
-                            '                totalJamLemburDiperhitungkanSusulan += faktorPengaliLembur
-                            '                jamLembur(1) -= 1
-                            '            Else
-                            '                totalJamLemburDiperhitungkanSusulan += (jamLembur(1) * faktorPengaliLembur)
-                            '                jamLembur(1) = 0
-                            '            End If
-                            '            totalJamLemburHariLibur(0) += 1
-                            '        End While
-                            '    End If
-                            'End If
                         End If
                     End If
                     'MULAI LEMBUR
@@ -991,9 +1073,11 @@ Public Class FormProsesPayroll
 
                         lineNr += 1
                         If (_katpenggajian = "MINGGUAN") Then
-                            revisiUpahLemburPeriodeLalu = (((upahPokok + (tunjanganMasaKerja / 2)) / (173 / 2)) * totalJamLemburDiperhitungkanSusulan) - upahLemburPeriodeLaluSebelumnya
+                            'revisiUpahLemburPeriodeLalu = (((upahPokok + (tunjanganMasaKerja / 2)) / (173 / 2)) * totalJamLemburDiperhitungkanSusulan) - upahLemburPeriodeLaluSebelumnya
+                            revisiUpahLemburPeriodeLalu = (((upahPokok + (tunjanganMasaKerja / 2)) / (173 / 2)) * (totalJamLemburDiperhitungkanSusulan + totalJamLemburSummarySebelumnya)) - upahLemburPeriodeLaluSebelumnya
+                            'revisiUpahLemburPeriodeLalu = (((upahPokok + (tunjanganMasaKerja / 2)) / (173 / 2)) * totalJamLemburDiperhitungkanSusulan)
                         ElseIf (_katpenggajian = "BULANAN") Then
-                            revisiUpahLemburPeriodeLalu = ((upahPokok + tunjanganMasaKerja / 173) * totalJamLemburDiperhitungkanSusulan) - upahLemburPeriodeLaluSebelumnya
+                            revisiUpahLemburPeriodeLalu = ((upahPokok + tunjanganMasaKerja / 173) * (totalJamLemburDiperhitungkanSusulan + totalJamLemburSummarySebelumnya)) - upahLemburPeriodeLaluSebelumnya
                         End If
                         newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','" & IIf(revisiUpahLemburPeriodeLalu > 0, "TUNJANGAN TIDAK TETAP", "POTONGAN TIDAK TETAP") & "','REVISI LEMBUR PERIODE " & periodeLalu & "'," & IIf(revisiUpahLemburPeriodeLalu > 0, revisiUpahLemburPeriodeLalu, revisiUpahLemburPeriodeLalu * -1) & "," & IIf(revisiUpahLemburPeriodeLalu > 0, 1, -1) & ",'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                         newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
@@ -1004,7 +1088,7 @@ Public Class FormProsesPayroll
                         Else
                             revisiPotonganPeriodeLalu += (revisiUpahLemburPeriodeLalu * -1)
                         End If
-                        totalJamLemburDiperhitungkanSusulan -= totalJamLemburSummarySebelumnya
+                        'totalJamLemburDiperhitungkanSusulan -= totalJamLemburSummarySebelumnya
                         'totalJamLembur += (totalJamLemburHariBiasa(0) + totalJamLemburHariLibur(0))
                         'upahLembur += revisiUpahLemburPeriodeLalu
                     End If
@@ -1015,35 +1099,49 @@ Public Class FormProsesPayroll
             newFieldsSummary &= ",upahkerja,totalharikerja,upahlembur,jamlemburharibiasa1,jamlemburharibiasa2,jamlemburharilibur1,jamlemburharilibur2,jamlemburharilibur3,totaljamlembur,totalkerjashift,tunjanganshift"
             '==================
 
-            Dim lain2 As Double = 0
+            'Dim bonus As Double
+            'foundRows = myDataTableKomponenGaji.Select("komponengaji='BONUS'")
+            'If foundRows.Length > 0 Then
+            '    For a As Short = 0 To foundRows.Length - 1
+            '        bonus += myDataTableKomponenGaji.Rows(myDataTableKomponenGaji.Rows.IndexOf(foundRows(a))).Item("rupiah")
+            '    Next
+            '    lineNr += 1
+            '    newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','BONUS','LAIN2'," & bonus & ",1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+            '    newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+            '    Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+            'End If
+
+            Dim tambahanLain2 As Double = 0
             If (_prosesIndividu) Then
                 'LAIN2
-                Dim komponenLain2 As String
+                Dim KetLain2 As String
                 Dim keterangan As String
                 If (Trim(tbLain2.Text).Length > 0) Then
                     lineNr += 1
 
                     If (cboFaktorQty.SelectedItem = 1) Then
-                        komponenLain2 = "TUNJANGAN TIDAK TETAP"
+                        KetLain2 = "TUNJANGAN TIDAK TETAP"
                     Else
-                        komponenLain2 = "POTONGAN TIDAK TETAP"
+                        KetLain2 = "POTONGAN TIDAK TETAP"
                     End If
                     If (Trim(rtbLain2.Text).Length > 0) Then
-                        keterangan = Trim(rtbLain2.Text)
+                        keterangan = Trim(rtbLain2.Text).ToUpper
                     Else
                         keterangan = ""
                     End If
-                    lain2 = Double.Parse(tbLain2.Text)
-                    newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','" & komponenLain2 & "','" & keterangan & "'," & lain2 & "," & cboFaktorQty.SelectedItem & ",'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                    tambahanLain2 = Double.Parse(tbLain2.Text)
+                    newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','" & KetLain2 & "','" & keterangan & "'," & tambahanLain2 & "," & cboFaktorQty.SelectedItem & ",'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                     newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                     Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
-
-                    newValuesSummary &= "," & lain2
-                    newFieldsSummary &= ",lain2"
                 End If
             End If
+            komponenLain2 += (tambahanLain2 * cboFaktorQty.SelectedItem)
+            If (komponenLain2 <> 0) Then
+                newValuesSummary &= "," & komponenLain2
+                newFieldsSummary &= ",lain2"
+            End If
 
-            totalTunjangan = (tunjanganMasaKerja / 2) + upahLembur + totalTunjanganShift + lain2 + revisiTunjanganPeriodeLalu
+            totalTunjangan = (tunjanganMasaKerja / 2) + upahLembur + totalTunjanganShift + komponenLain2 + revisiTunjanganPeriodeLalu
             totalPotongan += potonganTidakMasukFull + revisiPotonganPeriodeLalu
 
             upahBersih = upahPokok + totalTunjangan - totalPotongan
@@ -1072,6 +1170,14 @@ Public Class FormProsesPayroll
 
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
+
+            'UPDATE HARI SABTU DAN MINGGU LIBUR KECUALI UNTUK SECURITY
+            Dim queryBuilder As New Text.StringBuilder
+            queryBuilder.Clear()
+            queryBuilder.Append("update " & CONN_.schemaHRD & ".trdatapresensi as a set ijin='TM',absen='L',updated_at=clock_timestamp() WHERE (a.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "') AND (a.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and a.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and not exists(select 1 from " & CONN_.schemaHRD & ".kalenderperusahaan as kp where (kp.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and kp.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and (kp.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (kp.libur='False') and (a.tanggal=kp.tanggal)) and (a.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (trim(to_char(a.tanggal, 'day')) IN ('saturday','sunday')) AND (a.divisi<>'SECURITY') AND (a.jamlembur is null) AND (a.spkmulai is null and a.spkselesai is null);")
+            If Not (myCDBOperation.TransactionData(CONN_.dbMain, CONN_.comm, CONN_.transaction, queryBuilder.ToString)) Then
+                Call myCShowMessage.ShowWarning("Ada kesalahan saat eksekusi perintah update libur hari sabtu dan minggu" & ControlChars.NewLine & "Silahkan hubungi EDP yang bertugas!")
+            End If
 
             'CEK TANGGAL
             If (dtpPeriodeMulai.Value.Date >= dtpPeriodeSelesai.Value.Date) Then
@@ -1125,12 +1231,23 @@ Public Class FormProsesPayroll
                 Dim isConfirm = myCShowMessage.GetUserResponse("Karyawan " & DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("nama") & " sudah pernah di proses payroll nya" & ControlChars.NewLine & "Apakah mau memproses ulang payroll untuk karyawan " & DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("nama") & "?")
                 If (isConfirm = DialogResult.Yes) Then
                     'Hapus dulu data yang lama
-                    Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameProcessedDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))")
-                    Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))")
-                    Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameHeader, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "')")
+                    'Dim queryBuilder As New Text.StringBuilder
+                    queryBuilder.Clear()
+                    queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameSummary, "",, tableKey & " IN (SELECT " & tableKey & " FROM " & tableNameHeader & " WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))"))
+                    queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameProcessedDetail & " as s", "",, "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))"))
+                    queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameDetail & " as s", "",, "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))"))
+                    queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameHeader, "",, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "')"))
 
-                    Call ProsesPayroll(CONN_.dbMain, CONN_.comm, CONN_.reader, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("idk"), cboKaryawanIndividu.SelectedValue, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("nama"), dtpPeriodeMulai.Value.Date, dtpPeriodeSelesai.Value.Date, cboLokasi.SelectedValue, cboPerusahaan.SelectedValue, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("departemen"), DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("kelompok"), DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("katpenggajian"), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("divisi")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("divisi")), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("bagian")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("bagian")), rtbCatatanHRD.Text, True)
-                    Call btnTampilkan_Click(sender, e)
+                    'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameSummary, "nopayroll IN (SELECT " & tableKey & " FROM " & tableNameHeader & " WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))")
+                    'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameProcessedDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))")
+                    'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") AND (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "'))")
+                    'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameHeader, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "')")
+                    If myCDBOperation.TransactionData(CONN_.dbMain, CONN_.comm, CONN_.transaction, queryBuilder.ToString) Then
+                        Call ProsesPayroll(CONN_.dbMain, CONN_.comm, CONN_.reader, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("idk"), cboKaryawanIndividu.SelectedValue, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("nama"), dtpPeriodeMulai.Value.Date, dtpPeriodeSelesai.Value.Date, cboLokasi.SelectedValue, cboPerusahaan.SelectedValue, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("departemen"), DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("kelompok"), DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("katpenggajian"), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("divisi")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("divisi")), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("bagian")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("bagian")), rtbCatatanHRD.Text, True)
+                        Call btnTampilkan_Click(sender, e)
+                    Else
+                        Call myCShowMessage.ShowWarning("Penghapusan data payroll lama gagal!" & ControlChars.NewLine & "Silahkan coba lagi!")
+                    End If
                 Else
                     Call myCShowMessage.ShowWarning("Proses payroll dibatalkan!")
                 End If
@@ -1201,11 +1318,20 @@ Public Class FormProsesPayroll
                 Me.Cursor = Cursors.WaitCursor
                 Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-                Dim myDataTablePresensi As New DataTable
+                Dim queryBuilder As New Text.StringBuilder
+                'UPDATE HARI SABTU DAN MINGGU LIBUR KECUALI UNTUK SECURITY
+                queryBuilder.Clear()
+                queryBuilder.Append("update " & CONN_.schemaHRD & ".trdatapresensi as a set ijin='TM',absen='L',updated_at=clock_timestamp() WHERE (a.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and a.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and not exists(select 1 from " & CONN_.schemaHRD & ".kalenderperusahaan as kp where (kp.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and kp.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and (kp.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (kp.libur='False') and (a.tanggal=kp.tanggal)) and (a.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (trim(to_char(a.tanggal, 'day')) IN ('saturday','sunday')) AND (a.divisi<>'SECURITY') AND (a.jamlembur is null) AND (a.spkmulai is null and a.spkselesai is null);")
+                If Not (myCDBOperation.TransactionData(CONN_.dbMain, CONN_.comm, CONN_.transaction, queryBuilder.ToString)) Then
+                    Call myCShowMessage.ShowWarning("Ada kesalahan saat eksekusi perintah update libur hari sabtu dan minggu" & ControlChars.NewLine & "Silahkan hubungi EDP yang bertugas!")
+                End If
 
-                stSQL = "SELECT p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian 
+                Dim myDataTablePresensi As New DataTable
+                stSQL = "SELECT p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian, p.statuskepegawaian 
                         FROM " & CONN_.schemaHRD & ".trdatapresensi  as p
-                        WHERE (p.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (p.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (p.kelompok='" & strKelompok & "') AND (p.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND p.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND EXISTS(SELECT 1 FROM " & CONN_.schemaHRD & ".trpayrollheader as h WHERE (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') and (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and p.nip=h.nip) GROUP BY p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian ORDER BY p.nama;"
+                        WHERE (p.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (p.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (p.kelompok='" & strKelompok & "') AND (p.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND p.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND EXISTS(SELECT 1 FROM " & CONN_.schemaHRD & ".trpayrollheader as h WHERE (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') and (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and p.nip=h.nip) 
+                        GROUP BY p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian, p.statuskepegawaian  
+                        ORDER BY p.nama;"
                 myDataTablePresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_Presensi")
 
                 If (myDataTablePresensi.Rows.Count > 0) Then
@@ -1221,19 +1347,28 @@ Public Class FormProsesPayroll
                         'MessageBox.Show("No Button Pressed", "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         'myDataTablePresensi.Clear()
 
-                        stSQL = "SELECT p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian 
+                        stSQL = "SELECT p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian, p.statuskepegawaian  
                                 FROM " & CONN_.schemaHRD & ".trdatapresensi  as p
-                                WHERE (p.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (p.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (p.kelompok='" & strKelompok & "') AND (p.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND p.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND NOT EXISTS(SELECT 1 FROM " & CONN_.schemaHRD & ".trpayrollheader as h WHERE (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') and (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and p.nip=h.nip) GROUP BY p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian ORDER BY p.nama;"
+                                WHERE (p.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (p.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (p.kelompok='" & strKelompok & "') AND (p.tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND p.tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') AND NOT EXISTS(SELECT 1 FROM " & CONN_.schemaHRD & ".trpayrollheader as h WHERE (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') and (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') and p.nip=h.nip) 
+                                GROUP BY p.idk,p.nip,p.nama,p.departemen,p.divisi,p.bagian,p.kelompok,p.katpenggajian, p.statuskepegawaian  
+                                ORDER BY p.nama;"
                         myDataTablePresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_Presensi")
                     ElseIf isConfirm = DialogResult.Yes Then
                         'Proses semuanya ulang
                         'MessageBox.Show("Yes Button Pressed", "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         'myDataTablePresensi.Clear()
+                        'Dim queryBuilder As New Text.StringBuilder
+                        queryBuilder.Clear()
 
                         'Hapus dulu data yang lama
-                        Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameProcessedDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))")
-                        Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))")
-                        Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameHeader, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "')")
+                        queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameSummary, "",, tableKey & " IN (SELECT " & tableKey & " FROM " & tableNameHeader & " WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))"))
+                        queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameProcessedDetail & " as s", "",, "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))"))
+                        queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameDetail & " as s", "",, "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))"))
+                        queryBuilder.Append(myCStringManipulation.QueryBuilder("delete", tableNameHeader, "",, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "')"))
+
+                        'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameProcessedDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))")
+                        'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameDetail & " as s", "EXISTS(SELECT 1 FROM " & tableNameHeader & " as h WHERE (s." & tableKey & "=h." & tableKey & ") and (h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') and (h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (h.kelompok='" & strKelompok & "') AND (h.periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND h.periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'))")
+                        'Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableNameHeader, "(perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (periodemulai>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND periodeselesai<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "')")
 
                         'stSQL = "SELECT SETVAL('" & tableNameHeader & "_rid_seq', (SELECT MAX(rid) FROM " & tableNameHeader & "));"
                         'Call myCDBOperation.ExecuteCmd(CONN_.dbMain, CONN_.comm, stSQL)
@@ -1241,24 +1376,31 @@ Public Class FormProsesPayroll
                         'Call myCDBOperation.ExecuteCmd(CONN_.dbMain, CONN_.comm, stSQL)
                         'stSQL = "SELECT SETVAL('" & tableNameProcessedDetail & "_rid_seq', (SELECT MAX(rid) FROM " & tableNameProcessedDetail & "));"
                         'Call myCDBOperation.ExecuteCmd(CONN_.dbMain, CONN_.comm, stSQL)
-
-                        stSQL = "SELECT idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian 
-                                FROM " & CONN_.schemaHRD & ".trdatapresensi 
-                                WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') GROUP BY idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian ORDER BY nama;"
-                        myDataTablePresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_Presensi")
+                        If myCDBOperation.TransactionData(CONN_.dbMain, CONN_.comm, CONN_.transaction, queryBuilder.ToString) Then
+                            stSQL = "SELECT idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian,statuskepegawaian  
+                                    FROM " & CONN_.schemaHRD & ".trdatapresensi 
+                                    WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') 
+                                    GROUP BY idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian,statuskepegawaian 
+                                    ORDER BY nama;"
+                            myDataTablePresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_Presensi")
+                        Else
+                            Call myCShowMessage.ShowWarning("Penghapusan data payroll lama gagal!" & ControlChars.NewLine & "Silahkan coba lagi!")
+                        End If
                     End If
                 Else
                     'Jika memang masih kosong data payroll nya
                     'myDataTablePresensi.Clear()
-                    stSQL = "SELECT idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian 
+                    stSQL = "SELECT idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian,statuskepegawaian  
                             FROM " & CONN_.schemaHRD & ".trdatapresensi 
-                            WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') GROUP BY idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian ORDER BY nama;"
+                            WHERE (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "') AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (kelompok='" & strKelompok & "') AND (tanggal>='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "') 
+                            GROUP BY idk,nip,nama,departemen,divisi,bagian,kelompok,katpenggajian,statuskepegawaian 
+                            ORDER BY nama;"
                     myDataTablePresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_Presensi")
                 End If
 
                 If Not IsNothing(myDataTablePresensi) Then
                     For i As Integer = 0 To myDataTablePresensi.Rows.Count - 1
-                        Call ProsesPayroll(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTablePresensi.Rows(i).Item("idk"), myDataTablePresensi.Rows(i).Item("nip"), myDataTablePresensi.Rows(i).Item("nama"), dtpPeriodeMulai.Value.Date, dtpPeriodeSelesai.Value.Date, cboLokasi.SelectedValue, cboPerusahaan.SelectedValue, myDataTablePresensi.Rows(i).Item("departemen"), myDataTablePresensi.Rows(i).Item("kelompok"), myDataTablePresensi.Rows(i).Item("katpenggajian"), IIf(IsDBNull(DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), Nothing, DirectCast(cboKaryawanIndividu.SelectedItem, DataRowView).Item("statuskepegawaian")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("divisi")), Nothing, myDataTablePresensi.Rows(i).Item("divisi")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("bagian")), Nothing, myDataTablePresensi.Rows(i).Item("bagian")), Nothing, True)
+                        Call ProsesPayroll(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTablePresensi.Rows(i).Item("idk"), myDataTablePresensi.Rows(i).Item("nip"), myDataTablePresensi.Rows(i).Item("nama"), dtpPeriodeMulai.Value.Date, dtpPeriodeSelesai.Value.Date, cboLokasi.SelectedValue, cboPerusahaan.SelectedValue, myDataTablePresensi.Rows(i).Item("departemen"), myDataTablePresensi.Rows(i).Item("kelompok"), myDataTablePresensi.Rows(i).Item("katpenggajian"), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("statuskepegawaian")), Nothing, myDataTablePresensi.Rows(i).Item("statuskepegawaian")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("divisi")), Nothing, myDataTablePresensi.Rows(i).Item("divisi")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("bagian")), Nothing, myDataTablePresensi.Rows(i).Item("bagian")), Nothing, True)
 
                         If (i Mod 50 = 0) Then
                             GC.Collect()

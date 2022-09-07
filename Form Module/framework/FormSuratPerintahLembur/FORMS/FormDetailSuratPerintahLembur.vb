@@ -700,9 +700,9 @@
                                 strJamLembur.ToString,
                                 Format(dtpRencanaMulai.Value, "dd-MMM-yyyy HH:mm"),
                                 Format(dtpRencanaSelesai.Value, "dd-MMM-yyyy HH:mm"),
-                                Nothing,
-                                Nothing,
-                                Nothing,
+                                strJamLembur.ToString,
+                                Format(dtpRencanaMulai.Value, "dd-MMM-yyyy HH:mm"),
+                                Format(dtpRencanaSelesai.Value, "dd-MMM-yyyy HH:mm"),
                                 IIf(Trim(rtbCatatanDetail.Text).Length = 0, Nothing, Trim(rtbCatatanDetail.Text)),
                                 True,
                                 False
