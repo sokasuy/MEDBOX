@@ -135,6 +135,9 @@
     <Compile Include="DATASET\Presensi\CDtSetPrintOutDataPresensi.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DATASET\Presensi\CDtSetPrintOutJadwalPresensi.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DATASET\Presensi\CDtSetPrintOutKaryawanTidakMasuk.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -199,6 +202,7 @@
     <EmbeddedResource Include="REPORTS\Payroll\rptPrintOutRekapPayrollNonStaff.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutDataMentahPANDAAN.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutDataPresensiSIDOARJO.rdlc" />
+    <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutJadwalPresensi.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutKaryawanTidakMasukPANDAAN.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutPresensiMingguanPANDAAN.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutPresensiSecurityPANDAAN.rdlc" />
@@ -218,6 +222,7 @@
     </None>
     <None Include="My Project\DataSources\CDtSetPrintOutDataPresensi.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutIjinAbsen.datasource" />
+    <None Include="My Project\DataSources\CDtSetPrintOutJadwalPresensi.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutPresensiMingguan.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutPresensiSecurity.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutPresensiStaff.datasource" />

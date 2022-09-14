@@ -102,6 +102,10 @@ Partial Class FormProsesPresensi
         Me.lblPeriodeCetak = New System.Windows.Forms.Label()
         Me.dtpTanggalCetakAwal = New System.Windows.Forms.DateTimePicker()
         Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
+        Me.rbJadwalPresensi = New System.Windows.Forms.RadioButton()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.tcPresensi.SuspendLayout()
         Me.tpProsesAbsen.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -124,7 +128,7 @@ Partial Class FormProsesPresensi
         Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.lblTitle.Location = New System.Drawing.Point(0, 0)
         Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(773, 25)
+        Me.lblTitle.Size = New System.Drawing.Size(781, 25)
         Me.lblTitle.TabIndex = 179
         Me.lblTitle.Text = "PROSES PRESENSI"
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -140,7 +144,7 @@ Partial Class FormProsesPresensi
         Me.tcPresensi.Location = New System.Drawing.Point(12, 28)
         Me.tcPresensi.Name = "tcPresensi"
         Me.tcPresensi.SelectedIndex = 0
-        Me.tcPresensi.Size = New System.Drawing.Size(749, 310)
+        Me.tcPresensi.Size = New System.Drawing.Size(757, 310)
         Me.tcPresensi.TabIndex = 180
         '
         'tpProsesAbsen
@@ -165,7 +169,7 @@ Partial Class FormProsesPresensi
         Me.tpProsesAbsen.Location = New System.Drawing.Point(4, 22)
         Me.tpProsesAbsen.Name = "tpProsesAbsen"
         Me.tpProsesAbsen.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpProsesAbsen.Size = New System.Drawing.Size(741, 284)
+        Me.tpProsesAbsen.Size = New System.Drawing.Size(749, 284)
         Me.tpProsesAbsen.TabIndex = 0
         Me.tpProsesAbsen.Text = "PROSES PRESENSI"
         Me.tpProsesAbsen.UseVisualStyleBackColor = True
@@ -522,7 +526,7 @@ Partial Class FormProsesPresensi
         Me.tpImportDataFingerFace.Location = New System.Drawing.Point(4, 22)
         Me.tpImportDataFingerFace.Name = "tpImportDataFingerFace"
         Me.tpImportDataFingerFace.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpImportDataFingerFace.Size = New System.Drawing.Size(741, 284)
+        Me.tpImportDataFingerFace.Size = New System.Drawing.Size(749, 284)
         Me.tpImportDataFingerFace.TabIndex = 1
         Me.tpImportDataFingerFace.Text = "IMPORT DATA FINGERPRINT / FACE"
         Me.tpImportDataFingerFace.UseVisualStyleBackColor = True
@@ -549,7 +553,7 @@ Partial Class FormProsesPresensi
         Me.gbImportExcel.Controls.Add(Me.tbNamaSheet)
         Me.gbImportExcel.Location = New System.Drawing.Point(6, 6)
         Me.gbImportExcel.Name = "gbImportExcel"
-        Me.gbImportExcel.Size = New System.Drawing.Size(733, 268)
+        Me.gbImportExcel.Size = New System.Drawing.Size(741, 268)
         Me.gbImportExcel.TabIndex = 196
         Me.gbImportExcel.TabStop = False
         Me.gbImportExcel.Text = "IMPORT EXCEL"
@@ -758,6 +762,10 @@ Partial Class FormProsesPresensi
         '
         'tpPrintOut
         '
+        Me.tpPrintOut.Controls.Add(Me.Label5)
+        Me.tpPrintOut.Controls.Add(Me.Label4)
+        Me.tpPrintOut.Controls.Add(Me.Label6)
+        Me.tpPrintOut.Controls.Add(Me.rbJadwalPresensi)
         Me.tpPrintOut.Controls.Add(Me.rbLaporanKaryawanTidakMasukHarian)
         Me.tpPrintOut.Controls.Add(Me.rbRekapDataPresensi)
         Me.tpPrintOut.Controls.Add(Me.cboDepartemenCetak)
@@ -778,7 +786,7 @@ Partial Class FormProsesPresensi
         Me.tpPrintOut.Location = New System.Drawing.Point(4, 22)
         Me.tpPrintOut.Name = "tpPrintOut"
         Me.tpPrintOut.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpPrintOut.Size = New System.Drawing.Size(741, 284)
+        Me.tpPrintOut.Size = New System.Drawing.Size(749, 284)
         Me.tpPrintOut.TabIndex = 2
         Me.tpPrintOut.Text = "PRINT OUT"
         Me.tpPrintOut.UseVisualStyleBackColor = True
@@ -786,7 +794,7 @@ Partial Class FormProsesPresensi
         'rbLaporanKaryawanTidakMasukHarian
         '
         Me.rbLaporanKaryawanTidakMasukHarian.AutoSize = True
-        Me.rbLaporanKaryawanTidakMasukHarian.Location = New System.Drawing.Point(8, 114)
+        Me.rbLaporanKaryawanTidakMasukHarian.Location = New System.Drawing.Point(8, 162)
         Me.rbLaporanKaryawanTidakMasukHarian.Name = "rbLaporanKaryawanTidakMasukHarian"
         Me.rbLaporanKaryawanTidakMasukHarian.Size = New System.Drawing.Size(261, 17)
         Me.rbLaporanKaryawanTidakMasukHarian.TabIndex = 23
@@ -796,7 +804,7 @@ Partial Class FormProsesPresensi
         'rbRekapDataPresensi
         '
         Me.rbRekapDataPresensi.AutoSize = True
-        Me.rbRekapDataPresensi.Location = New System.Drawing.Point(8, 91)
+        Me.rbRekapDataPresensi.Location = New System.Drawing.Point(8, 139)
         Me.rbRekapDataPresensi.Name = "rbRekapDataPresensi"
         Me.rbRekapDataPresensi.Size = New System.Drawing.Size(150, 17)
         Me.rbRekapDataPresensi.TabIndex = 22
@@ -809,7 +817,7 @@ Partial Class FormProsesPresensi
         Me.cboDepartemenCetak.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cboDepartemenCetak.FormattingEnabled = True
         Me.cboDepartemenCetak.IntegralHeight = False
-        Me.cboDepartemenCetak.Location = New System.Drawing.Point(522, 41)
+        Me.cboDepartemenCetak.Location = New System.Drawing.Point(505, 41)
         Me.cboDepartemenCetak.Name = "cboDepartemenCetak"
         Me.cboDepartemenCetak.Size = New System.Drawing.Size(214, 21)
         Me.cboDepartemenCetak.TabIndex = 18
@@ -817,7 +825,7 @@ Partial Class FormProsesPresensi
         'rbDataMentah
         '
         Me.rbDataMentah.AutoSize = True
-        Me.rbDataMentah.Location = New System.Drawing.Point(125, 68)
+        Me.rbDataMentah.Location = New System.Drawing.Point(125, 100)
         Me.rbDataMentah.Name = "rbDataMentah"
         Me.rbDataMentah.Size = New System.Drawing.Size(103, 17)
         Me.rbDataMentah.TabIndex = 20
@@ -830,7 +838,7 @@ Partial Class FormProsesPresensi
         Me.cboDaftarMesinCetak.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cboDaftarMesinCetak.FormattingEnabled = True
         Me.cboDaftarMesinCetak.IntegralHeight = False
-        Me.cboDaftarMesinCetak.Location = New System.Drawing.Point(312, 67)
+        Me.cboDaftarMesinCetak.Location = New System.Drawing.Point(295, 99)
         Me.cboDaftarMesinCetak.Name = "cboDaftarMesinCetak"
         Me.cboDaftarMesinCetak.Size = New System.Drawing.Size(189, 21)
         Me.cboDaftarMesinCetak.TabIndex = 21
@@ -838,7 +846,7 @@ Partial Class FormProsesPresensi
         'rbDataPresensi
         '
         Me.rbDataPresensi.AutoSize = True
-        Me.rbDataPresensi.Location = New System.Drawing.Point(8, 68)
+        Me.rbDataPresensi.Location = New System.Drawing.Point(8, 100)
         Me.rbDataPresensi.Name = "rbDataPresensi"
         Me.rbDataPresensi.Size = New System.Drawing.Size(111, 17)
         Me.rbDataPresensi.TabIndex = 19
@@ -848,7 +856,7 @@ Partial Class FormProsesPresensi
         'rbLaporanPresensiStaff
         '
         Me.rbLaporanPresensiStaff.AutoSize = True
-        Me.rbLaporanPresensiStaff.Location = New System.Drawing.Point(163, 41)
+        Me.rbLaporanPresensiStaff.Location = New System.Drawing.Point(8, 64)
         Me.rbLaporanPresensiStaff.Name = "rbLaporanPresensiStaff"
         Me.rbLaporanPresensiStaff.Size = New System.Drawing.Size(58, 17)
         Me.rbLaporanPresensiStaff.TabIndex = 15
@@ -891,7 +899,7 @@ Partial Class FormProsesPresensi
         Me.cboPerusahaanCetak.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cboPerusahaanCetak.FormattingEnabled = True
         Me.cboPerusahaanCetak.IntegralHeight = False
-        Me.cboPerusahaanCetak.Location = New System.Drawing.Point(312, 40)
+        Me.cboPerusahaanCetak.Location = New System.Drawing.Point(295, 40)
         Me.cboPerusahaanCetak.Name = "cboPerusahaanCetak"
         Me.cboPerusahaanCetak.Size = New System.Drawing.Size(204, 21)
         Me.cboPerusahaanCetak.TabIndex = 17
@@ -920,7 +928,7 @@ Partial Class FormProsesPresensi
         Me.btnCetak.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.btnCetak.Image = CType(resources.GetObject("btnCetak.Image"), System.Drawing.Image)
         Me.btnCetak.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCetak.Location = New System.Drawing.Point(226, 179)
+        Me.btnCetak.Location = New System.Drawing.Point(295, 220)
         Me.btnCetak.Name = "btnCetak"
         Me.btnCetak.Size = New System.Drawing.Size(120, 54)
         Me.btnCetak.TabIndex = 24
@@ -931,7 +939,7 @@ Partial Class FormProsesPresensi
         'rbLaporanPresensiSecurity
         '
         Me.rbLaporanPresensiSecurity.AutoSize = True
-        Me.rbLaporanPresensiSecurity.Location = New System.Drawing.Point(227, 41)
+        Me.rbLaporanPresensiSecurity.Location = New System.Drawing.Point(72, 64)
         Me.rbLaporanPresensiSecurity.Name = "rbLaporanPresensiSecurity"
         Me.rbLaporanPresensiSecurity.Size = New System.Drawing.Size(79, 17)
         Me.rbLaporanPresensiSecurity.TabIndex = 16
@@ -959,12 +967,49 @@ Partial Class FormProsesPresensi
         'ofd1
         '
         '
+        'rbJadwalPresensi
+        '
+        Me.rbJadwalPresensi.AutoSize = True
+        Me.rbJadwalPresensi.Location = New System.Drawing.Point(163, 41)
+        Me.rbJadwalPresensi.Name = "rbJadwalPresensi"
+        Me.rbJadwalPresensi.Size = New System.Drawing.Size(126, 17)
+        Me.rbJadwalPresensi.TabIndex = 235
+        Me.rbJadwalPresensi.Text = "JADWAL PRESENSI"
+        Me.rbJadwalPresensi.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(3, 84)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(739, 13)
+        Me.Label6.TabIndex = 236
+        Me.Label6.Text = resources.GetString("Label6.Text")
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 123)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(739, 13)
+        Me.Label4.TabIndex = 237
+        Me.Label4.Text = resources.GetString("Label4.Text")
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(3, 182)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(739, 13)
+        Me.Label5.TabIndex = 238
+        Me.Label5.Text = resources.GetString("Label5.Text")
+        '
         'FormProsesPresensi
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.AliceBlue
-        Me.ClientSize = New System.Drawing.Size(773, 336)
+        Me.ClientSize = New System.Drawing.Size(781, 336)
         Me.Controls.Add(Me.tcPresensi)
         Me.Controls.Add(Me.lblTitle)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -1075,4 +1120,8 @@ Partial Class FormProsesPresensi
     Friend WithEvents rbKaryawan As RadioButton
     Friend WithEvents cboKaryawan As ComboBox
     Friend WithEvents Panel2 As Panel
+    Friend WithEvents rbJadwalPresensi As RadioButton
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
 End Class

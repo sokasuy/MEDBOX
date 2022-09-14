@@ -579,12 +579,12 @@
                         If (rbSemua.Checked) Then
                             stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk
                                     FROM (" & tableName(10) & " as tbl1 inner join " & tableName(11) & " as tbl2 on tbl1.idk=tbl2.idk) 
-                                    WHERE (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (tbl1.statusbekerja='AKTIF' OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
+                                    WHERE (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ((tbl1.statusbekerja='AKTIF' AND tbl1.tanggalmasuk<='" & Format(tanggalProses, "dd-MMM-yyyy") & "') OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
                                     ORDER BY tbl2.lokasi,tbl2.perusahaan,tbl2.departemen,tbl2.nama;"
                         ElseIf (rbKaryawan.Checked And cboKaryawan.SelectedIndex <> -1) Then
                             stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk
                                     FROM (" & tableName(10) & " as tbl1 inner join " & tableName(11) & " as tbl2 on tbl1.idk=tbl2.idk) 
-                                    WHERE (tbl2.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (tbl1.statusbekerja='AKTIF' OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
+                                    WHERE (tbl2.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ((tbl1.statusbekerja='AKTIF' AND tbl1.tanggalmasuk<='" & Format(tanggalProses, "dd-MMM-yyyy") & "') OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
                                     ORDER BY tbl2.lokasi,tbl2.perusahaan,tbl2.departemen,tbl2.nama;"
                         End If
                         If Not (IsNothing(stSQL)) Then
@@ -1552,17 +1552,17 @@
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_terlambat) > batasToleransi) Then
                                     'Jika jam terlambatnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    If (Trim(_lokasi) = "SIDOARJO") Then
-                                        'Kalau di Sidoarjo, kalau lebih dari batas toleransi telat, maka langsung dianggap tidak masuk
-                                        'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                        'Kalau di Sidoarjo, kalau telatnya masih di bawah batas toleransi, hanya dikenakan denda telat 2500
-                                        GetJamKerjaNyata = Nothing
-                                    ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                        'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
-                                        'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                        'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
-                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
-                                    End If
+                                    'If (Trim(_lokasi) = "SIDOARJO") Then
+                                    '    'Kalau di Sidoarjo, kalau lebih dari batas toleransi telat, maka langsung dianggap tidak masuk
+                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
+                                    '    'Kalau di Sidoarjo, kalau telatnya masih di bawah batas toleransi, hanya dikenakan denda telat 2500
+                                    '    GetJamKerjaNyata = Nothing
+                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
+                                    '    'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
+                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
+                                    '    'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
+                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
+                                    'End If
                                 End If
                             End If
                         End If
@@ -1572,13 +1572,13 @@
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
                                     'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    If (Trim(_lokasi) = "SIDOARJO") Then
-                                        'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Sidoarjo maka langsung dianggap tidak masuk kerja
-                                        GetJamKerjaNyata = Nothing
-                                    ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                        'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
-                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
-                                    End If
+                                    'If (Trim(_lokasi) = "SIDOARJO") Then
+                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Sidoarjo maka langsung dianggap tidak masuk kerja
+                                    '    GetJamKerjaNyata = Nothing
+                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
+                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
+                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
+                                    'End If
                                 End If
                             End If
                         End If
@@ -1798,6 +1798,15 @@
                     Call myCShowMessage.ShowWarning("Lokasi harus dilengkapi dulu!")
                     cboLokasiCetak.Focus()
                 End If
+            ElseIf (rbJadwalPresensi.Checked) Then
+                rptType = "JadwalPresensi"
+                If (cboLokasiCetak.SelectedIndex <> -1 And cboPerusahaanCetak.SelectedIndex <> -1) Then
+                    isCetak = True
+                Else
+                    isCetak = False
+                    Call myCShowMessage.ShowWarning("Lokasi dan Perusahaan harus dilengkapi dulu!")
+                    cboLokasiCetak.Focus()
+                End If
             Else
                 rptType = "-"
                 isCetak = True
@@ -1875,10 +1884,6 @@
                         End If
                     Case "KaryawanTidakMasuk"
                         If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            'stSQL = "SELECT h.tanggal,h.fpid,h.nip,h.nama,h.perusahaan,h.departemen,h.divisi,h.bagian,h.kelompok,h.katpenggajian,h.ijin,h.absen,g.keterangan
-                            '        FROM " & tableName(0) & " as h LEFT JOIN msgeneral as g on h.absen=g.kode and g.kategori='absen'
-                            '        WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and (h.tanggal>='" & Format(dtpTanggalCetakAwal.Value.Date, "dd-MMM-yyyy") & "' and h.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and h.ijin='TM' and (h.absen<>'L' and h.absen<>'C' and h.absen<>'NC') 
-                            '        ORDER BY h.perusahaan,h.nama;"
                             stSQL = "SELECT h.tanggal,h.fpid,h.nip,h.nama,h.perusahaan,h.departemen,h.divisi,h.bagian,h.kelompok,h.katpenggajian,h.ijin,h.absen,(case when h.absen='M' then 'N/I' else g.keterangan end) as keterangan,(case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.tanggalmulai FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else h.tanggal end) as tglmulaitidakmasuk, (case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.catatan FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else (case when h.absen='M' then 'N/I' else g.keterangan end) end) as ketabsen
                                     FROM " & tableName(0) & " as h left join " & CONN_.schemaHRD & ".msgeneral as g on h.absen=g.kode and g.kategori='absen' 
                                     WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and (h.tanggal='" & Format(dtpTanggalCetakAwal.Value.Date, "dd-MMM-yyyy") & "') and h.ijin='TM' and (h.absen<>'L' and h.absen<>'C' and h.absen<>'NC') 
@@ -1886,6 +1891,11 @@
                         ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
                             stSQL = Nothing
                         End If
+                    Case "JadwalPresensi"
+                        stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,jadwalmasuk,jadwalkeluar,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur,spkmulai,spkselesai
+                                FROM " & tableName(0) & " " & "
+                                WHERE (tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and (perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaanCetak.SelectedValue) & "') " & IIf(cboDepartemenCetak.SelectedIndex <> -1, "and departemen='" & myCStringManipulation.SafeSqlLiteral(cboDepartemenCetak.SelectedValue) & "'", "") & "
+                                ORDER BY tanggal,nama,departemen,divisi,bagian;"
                     Case Else
                         stSQL = Nothing
                 End Select
@@ -1893,9 +1903,9 @@
                 If (rptType = "PresensiMingguan") Or (rptType = "PresensiSecurity") Or (rptType = "PresensiStaff") Or (rptType = "DataPresensi") Or (rptType = "DataMentah") Or (rptType = "RekapDataPresensi") Or (rptType = "KaryawanTidakMasuk") Then
                     Dim frmDisplayReport As New FormDisplayReport.FormDisplayReport(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, stSQL, rptType,, cboLokasiCetak.SelectedValue)
                     Call myCFormManipulation.GoToForm(Me.MdiParent, frmDisplayReport)
-                    'ElseIf (rptType = "RekapDataPresensi") Then
-                    '    Dim frmDisplayReport As New FormDisplayReport.FormDisplayReport(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, stSQL, rptType)
-                    '    Call myCFormManipulation.GoToForm(Me.MdiParent, frmDisplayReport)
+                ElseIf (rptType = "JadwalPresensi") Then
+                    Dim frmDisplayReport As New FormDisplayReport.FormDisplayReport(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, stSQL, rptType)
+                    Call myCFormManipulation.GoToForm(Me.MdiParent, frmDisplayReport)
                 End If
             End If
         Catch ex As Exception
@@ -1903,20 +1913,24 @@
         End Try
     End Sub
 
-    Private Sub rbLaporanPresensi_CheckedChanged(sender As Object, e As EventArgs) Handles rbLaporanPresensiKaryawanMingguan.CheckedChanged, rbLaporanPresensiSecurity.CheckedChanged, rbDataPresensi.CheckedChanged, rbDataMentah.CheckedChanged
+    Private Sub rbLaporanPresensi_CheckedChanged(sender As Object, e As EventArgs) Handles rbLaporanPresensiKaryawanMingguan.CheckedChanged, rbJadwalPresensi.CheckedChanged, rbLaporanPresensiSecurity.CheckedChanged, rbDataPresensi.CheckedChanged, rbDataMentah.CheckedChanged
         Try
-            If (rbLaporanPresensiKaryawanMingguan.Checked Or rbLaporanPresensiSecurity.Checked Or rbLaporanPresensiStaff.Checked) Then
+            If (rbLaporanPresensiKaryawanMingguan.Checked Or rbLaporanPresensiSecurity.Checked Or rbLaporanPresensiStaff.Checked Or rbJadwalPresensi.Checked) Then
                 cboPerusahaanCetak.Enabled = True
                 cboDaftarMesinCetak.Enabled = False
-                If (rbLaporanPresensiKaryawanMingguan.Checked Or rbLaporanPresensiStaff.Checked) Then
+                If (rbLaporanPresensiKaryawanMingguan.Checked Or rbLaporanPresensiStaff.Checked Or rbJadwalPresensi.Checked) Then
                     cboDepartemenCetak.Enabled = True
                 ElseIf (rbLaporanPresensiSecurity.Checked) Then
                     cboDepartemenCetak.Enabled = False
                 End If
             ElseIf (rbDataPresensi.Checked) Or (rbDataMentah.Checked) Then
                 cboPerusahaanCetak.Enabled = False
-                cboDaftarMesinCetak.Enabled = True
                 cboDepartemenCetak.Enabled = False
+                cboDaftarMesinCetak.Enabled = True
+            ElseIf (rbRekapDataPresensi.Checked) Or (rbLaporanKaryawanTidakMasukHarian.Checked) Then
+                cboPerusahaanCetak.Enabled = False
+                cboDepartemenCetak.Enabled = False
+                cboDaftarMesinCetak.Enabled = False
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "rbLaporanPresensi_CheckedChanged Error")
@@ -1972,7 +1986,7 @@
                 'End If
             End If
         Catch ex As Exception
-            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "rbLaporanPresensi_CheckedChanged Error")
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "rbKategoriProses_CheckedChanged Error")
         End Try
     End Sub
 
@@ -1989,6 +2003,30 @@
     End Sub
 
     Private Sub cboLokasiCetak_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboLokasiCetak.SelectedIndexChanged
-
+        Try
+            If (isCboPrepared) Then
+                If (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                    rbLaporanPresensiKaryawanMingguan.Enabled = False
+                    rbLaporanPresensiStaff.Enabled = True
+                    rbLaporanPresensiSecurity.Enabled = False
+                    rbDataPresensi.Enabled = True
+                    rbDataMentah.Enabled = False
+                    rbRekapDataPresensi.Enabled = False
+                    rbLaporanKaryawanTidakMasukHarian.Enabled = False
+                    rbJadwalPresensi.Enabled = True
+                ElseIf (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                    rbLaporanPresensiKaryawanMingguan.Enabled = True
+                    rbLaporanPresensiStaff.Enabled = False
+                    rbLaporanPresensiSecurity.Enabled = True
+                    rbDataPresensi.Enabled = False
+                    rbDataMentah.Enabled = True
+                    rbRekapDataPresensi.Enabled = True
+                    rbLaporanKaryawanTidakMasukHarian.Enabled = True
+                    rbJadwalPresensi.Enabled = True
+                End If
+            End If
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "cboLokasiCetak_SelectedIndexChanged Error")
+        End Try
     End Sub
 End Class

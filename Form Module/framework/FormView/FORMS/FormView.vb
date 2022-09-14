@@ -809,17 +809,17 @@
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_terlambat) > batasToleransi) Then
                                     'Jika jam terlambatnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    If (Trim(_lokasi) = "SIDOARJO") Then
-                                        'Kalau di Sidoarjo, kalau lebih dari batas toleransi telat, maka langsung dianggap tidak masuk
-                                        'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                        'Kalau di Sidoarjo, kalau telatnya masih di bawah batas toleransi, hanya dikenakan denda telat 2500
-                                        GetJamKerjaNyata = Nothing
-                                    ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                        'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
-                                        'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                        'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
-                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
-                                    End If
+                                    'If (Trim(_lokasi) = "SIDOARJO") Then
+                                    '    'Kalau di Sidoarjo, kalau lebih dari batas toleransi telat, maka langsung dianggap tidak masuk
+                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
+                                    '    'Kalau di Sidoarjo, kalau telatnya masih di bawah batas toleransi, hanya dikenakan denda telat 2500
+                                    '    GetJamKerjaNyata = Nothing
+                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
+                                    '    'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
+                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
+                                    '    'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
+                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
+                                    'End If
                                 End If
                             End If
                         End If
@@ -829,13 +829,13 @@
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
                                     'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    If (Trim(_lokasi) = "SIDOARJO") Then
-                                        'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Sidoarjo maka langsung dianggap tidak masuk kerja
-                                        GetJamKerjaNyata = Nothing
-                                    ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                        'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
-                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
-                                    End If
+                                    'If (Trim(_lokasi) = "SIDOARJO") Then
+                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Sidoarjo maka langsung dianggap tidak masuk kerja
+                                    '    GetJamKerjaNyata = Nothing
+                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
+                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
+                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
+                                    'End If
                                 End If
                             End If
                         End If
@@ -1026,7 +1026,7 @@
                         If e.ColumnIndex <> -1 And e.RowIndex <> -1 Then
                             dgvView.CurrentCell = dgvView.Item(e.ColumnIndex, e.RowIndex)
                             dgvView.CurrentCell.Selected = True
-                            If (contentView = "data presensi") Then
+                            If (contentView = "Presensi") Then
                                 If (e.ColumnIndex = dgvView.Columns("ijin").Index Or e.ColumnIndex = dgvView.Columns("absen").Index) Then
                                     If (isDataPrepared) Then
                                         If Not IsDBNull(dgvView.CurrentCell.Value) Then
@@ -1464,210 +1464,207 @@
                 If (contentView = "Presensi") Then
                     Me.Cursor = Cursors.WaitCursor
                     Call myCDBConnection.OpenConn(CONN_.dbMain)
-
-                    If (contentView = "data presensi") Then
-                        Select Case dgvView.Columns(e.ColumnIndex).DataPropertyName
-                            Case "lokasi", "ijin", "absen", "kodewaktushift", "keterangan"
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentCell.Value) & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                Else
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                End If
-                                If (dgvView.Columns(e.ColumnIndex).DataPropertyName = "ijin") Then
-                                    If Not IsDBNull(dgvView.CurrentRow.Cells("ijin").Value) Then
-                                        If (dgvView.CurrentRow.Cells("ijin").Value <> "TM") Then
-                                            'Kalau bukan tidak masuk, maka kolom absennya harus dihapus
-                                            If Not IsDBNull(dgvView.CurrentRow.Cells("absen").Value) Then
-                                                'Hanya dilakukan penghapusan kalau kolom absennya sebelumnya belum null
-                                                isPartialChanged = True
-                                                dgvView.CurrentRow.Cells("absen").Value = DBNull.Value
-                                                isPartialChanged = False
-                                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "absen=Null", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                            End If
-                                        Else
-                                            'Kalau ijinnya tidak masuk, maka kolom jam mulai, selesai, banyakjamkerja,dll harus di null kan
-                                            isPartialChanged = True
-                                            dgvView.CurrentRow.Cells("masuk").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("keluar").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("jamkerja").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("banyakjamkerja").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("jamkerjanyata").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("terlambat").Value = DBNull.Value
-                                            dgvView.CurrentRow.Cells("pulangcepat").Value = DBNull.Value
-                                            isPartialChanged = False
-                                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "masuk=Null,keluar=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,terlambat=Null,pulangcepat=Null", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                        End If
-                                    Else
-                                        'Kalau kolom ijinnya dihapus, maka otomatis kolom absen juga harus dikosongkan
+                    Select Case dgvView.Columns(e.ColumnIndex).DataPropertyName
+                        Case "lokasi", "ijin", "absen", "kodewaktushift", "keterangan"
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentCell.Value) & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            Else
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                            If (dgvView.Columns(e.ColumnIndex).DataPropertyName = "ijin") Then
+                                If Not IsDBNull(dgvView.CurrentRow.Cells("ijin").Value) Then
+                                    If (dgvView.CurrentRow.Cells("ijin").Value <> "TM") Then
+                                        'Kalau bukan tidak masuk, maka kolom absennya harus dihapus
                                         If Not IsDBNull(dgvView.CurrentRow.Cells("absen").Value) Then
                                             'Hanya dilakukan penghapusan kalau kolom absennya sebelumnya belum null
                                             isPartialChanged = True
-                                            dgvView.CurrentRow.Cells("absen").Value = Nothing
+                                            dgvView.CurrentRow.Cells("absen").Value = DBNull.Value
                                             isPartialChanged = False
                                             Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "absen=Null", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
                                         End If
-                                    End If
-                                End If
-                            Case "masuk", "keluar"
-                                isPartialChanged = True
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    Dim terlambat As TimeSpan
-                                    Dim pulangCepat As TimeSpan
-                                    If (e.ColumnIndex = dgvView.Columns("masuk").Index) Then
-                                        If Not IsDBNull(dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
-                                            If (dgvView.CurrentRow.Cells("masuk").Value > dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
-                                                terlambat = dgvView.CurrentRow.Cells("jadwalmasuk").Value - dgvView.CurrentRow.Cells("masuk").Value
-                                                dgvView.CurrentRow.Cells("terlambat").Value = terlambat.Duration.ToString
-                                            Else
-                                                dgvView.CurrentRow.Cells("terlambat").Value = DBNull.Value
-                                            End If
-                                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',terlambat=" & IIf(Not IsDBNull(dgvView.CurrentRow.Cells("terlambat").Value), "'" & dgvView.CurrentRow.Cells("terlambat").Value.ToString & "'", "Null") & ",isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                        Else
-                                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                        End If
-                                    ElseIf (e.ColumnIndex = dgvView.Columns("keluar").Index) Then
-                                        If Not IsDBNull(dgvView.CurrentRow.Cells("jadwalkeluar").Value) Then
-                                            If (dgvView.CurrentRow.Cells("keluar").Value < dgvView.CurrentRow.Cells("jadwalkeluar").Value) Then
-                                                pulangCepat = dgvView.CurrentRow.Cells("jadwalkeluar").Value - dgvView.CurrentRow.Cells("keluar").Value
-                                                dgvView.CurrentRow.Cells("pulangcepat").Value = pulangCepat.Duration.ToString
-                                            Else
-                                                dgvView.CurrentRow.Cells("pulangcepat").Value = DBNull.Value
-                                            End If
-                                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',pulangcepat=" & IIf(Not IsDBNull(dgvView.CurrentRow.Cells("pulangcepat").Value), "'" & dgvView.CurrentRow.Cells("pulangcepat").Value.ToString & "'", "Null") & ",isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                        Else
-                                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                        End If
-                                    End If
-
-                                    '=================================== UNTUK SET JAM KERJA
-                                    If Not IsDBNull(dgvView.CurrentRow.Cells("masuk").Value) And Not IsDBNull(dgvView.CurrentRow.Cells("keluar").Value) Then
-                                        'Tidak boleh ada yang null
-                                        Dim jamKerja As String
-                                        Dim jamKerjaNyata As String
-                                        Dim banyakJamKerja As Double
-                                        Dim banyakJamKerjaNyata As Double
-                                        Dim arrGrup(2) As String
-
-                                        arrGrup(0) = IIf(IsDBNull(dgvView.CurrentRow.Cells("departemen").Value), Nothing, dgvView.CurrentRow.Cells("departemen").Value)
-                                        arrGrup(1) = IIf(IsDBNull(dgvView.CurrentRow.Cells("divisi").Value), Nothing, dgvView.CurrentRow.Cells("divisi").Value)
-                                        arrGrup(2) = IIf(IsDBNull(dgvView.CurrentRow.Cells("bagian").Value), Nothing, dgvView.CurrentRow.Cells("bagian").Value)
-
-                                        If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
-                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)), True)
-                                            jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, True, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
-                                        Else
-                                            jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)))
-                                            jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, False, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
-                                        End If
-                                        dgvView.CurrentRow.Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)
-                                        dgvView.CurrentRow.Cells("jamkerjanyata").Value = IIf(IsNothing(jamKerjaNyata), DBNull.Value, jamKerjaNyata)
-                                        banyakJamKerja = GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerja").Value.ToString)
-                                        banyakJamKerjaNyata = GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False)
-                                        dgvView.CurrentRow.Cells("banyakjamkerja").Value = IIf(banyakJamKerja = 0, DBNull.Value, banyakJamKerja)
-                                        dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = IIf(banyakJamKerjaNyata = 0, DBNull.Value, banyakJamKerjaNyata)
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamkerja=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("jamkerja").Value), "Null", "'" & dgvView.CurrentRow.Cells("jamkerja").Value.ToString & "'") & ",banyakjamkerja=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerja").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerja").Value) & ",jamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("jamkerjanyata").Value), "Null", "'" & dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString & "'") & ",banyakjamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                    End If
-                                    '===================================
-
-                                    '================================= UNTUK SET SHIFT NYA, SHIFT 1 < 23:00, SHIFT 2 = 23:00, SHIFT 3 > 23:00
-                                    dgvView.CurrentRow.Cells("shift").Value = GetShift(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerja").Value), 0, dgvView.CurrentRow.Cells("banyakjamkerja").Value), dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString)
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "shift='" & dgvView.CurrentRow.Cells("shift").Value & "'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                    '==================================
-                                Else
-                                    dgvView.CurrentRow.Cells("jamkerja").Value = DBNull.Value
-                                    dgvView.CurrentRow.Cells("banyakjamkerja").Value = DBNull.Value
-                                    dgvView.CurrentRow.Cells("jamkerjanyata").Value = DBNull.Value
-                                    dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
-                                    If (e.ColumnIndex = dgvView.Columns("masuk").Index) Then
+                                    Else
+                                        'Kalau ijinnya tidak masuk, maka kolom jam mulai, selesai, banyakjamkerja,dll harus di null kan
+                                        isPartialChanged = True
+                                        dgvView.CurrentRow.Cells("masuk").Value = DBNull.Value
+                                        dgvView.CurrentRow.Cells("keluar").Value = DBNull.Value
+                                        dgvView.CurrentRow.Cells("jamkerja").Value = DBNull.Value
+                                        dgvView.CurrentRow.Cells("banyakjamkerja").Value = DBNull.Value
+                                        dgvView.CurrentRow.Cells("jamkerjanyata").Value = DBNull.Value
+                                        dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
                                         dgvView.CurrentRow.Cells("terlambat").Value = DBNull.Value
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,terlambat=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,isfpmanual='True'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                    ElseIf (e.ColumnIndex = dgvView.Columns("keluar").Index) Then
                                         dgvView.CurrentRow.Cells("pulangcepat").Value = DBNull.Value
-                                        dgvView.CurrentRow.Cells("shift").Value = 1
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,pulangcepat=Null,shift=1,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,isfpmanual='True'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                    End If
-                                End If
-                                isPartialChanged = False
-                            Case "spkmulai", "spkselesai"
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value & "',isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                Else
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                End If
-                            Case "terlambat", "pulangcepat"
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                Else
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                End If
-                            Case "jamkerjanyata"
-                                isPartialChanged = True
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = IIf(GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False) = 0, DBNull.Value, GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False))
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',banyakjamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value) & ",isjamkerjamanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                Else
-                                    dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,banyakjamkerjanyata=Null,isjamkerjamanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                End If
-                                isPartialChanged = False
-                            Case "jamlembur"
-                                isPartialChanged = True
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    If Not IsDBNull(dgvView.CurrentRow.Cells("mulailembur").Value) Then
-                                        Dim splselesai As Date
-                                        splselesai = dgvView.CurrentRow.Cells("mulailembur").Value + dgvView.CurrentRow.Cells("jamlembur").Value
-                                        isPartialChanged = True
-                                        dgvView.CurrentRow.Cells("selesailembur").Value = Format(splselesai, "dd-MMM-yyyy HH:mm")
                                         isPartialChanged = False
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',selesailembur='" & dgvView.CurrentRow.Cells("selesailembur").Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                                    Else
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "masuk=Null,keluar=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,terlambat=Null,pulangcepat=Null", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
                                     End If
                                 Else
-                                    isPartialChanged = True
-                                    dgvView.CurrentRow.Cells("mulailembur").Value = DBNull.Value
-                                    dgvView.CurrentRow.Cells("selesailembur").Value = DBNull.Value
-                                    isPartialChanged = False
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,mulailembur=Null,selesailembur=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                    'Kalau kolom ijinnya dihapus, maka otomatis kolom absen juga harus dikosongkan
+                                    If Not IsDBNull(dgvView.CurrentRow.Cells("absen").Value) Then
+                                        'Hanya dilakukan penghapusan kalau kolom absennya sebelumnya belum null
+                                        isPartialChanged = True
+                                        dgvView.CurrentRow.Cells("absen").Value = Nothing
+                                        isPartialChanged = False
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "absen=Null", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                    End If
                                 End If
-                                isPartialChanged = False
-                            Case "mulailembur", "selesailembur"
-                                Dim strJamLembur As TimeSpan
-                                isPartialChanged = True
-                                If Not IsDBNull(dgvView.CurrentCell.Value) Then
-                                    If Not IsDBNull(dgvView.CurrentRow.Cells("mulailembur").Value) And Not IsDBNull(dgvView.CurrentRow.Cells("selesailembur").Value) Then
-                                        'Kalau keduanya sudah ada isinya, maka jam lemburnya bisa didapatkan
-                                        If (dgvView.CurrentRow.Cells("mulailembur").Value > dgvView.CurrentRow.Cells("selesailembur").Value) Then
-                                            'SEHARUSNYA GAK MUNGKIN MASUK SINI!!
-                                            'Karena sudah dicegat di event value changed
-                                            Call myCShowMessage.ShowWarning("Waktu selesai lembur tidak boleh lebih kecil daripada waktu mulai lembur!" & ControlChars.NewLine & "Waktu lembur dikembalikan semula!")
-                                            isPartialChanged = True
-                                            dgvView.CurrentCell.Value = initialValue
-                                            isPartialChanged = False
+                            End If
+                        Case "masuk", "keluar"
+                            isPartialChanged = True
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                Dim terlambat As TimeSpan
+                                Dim pulangCepat As TimeSpan
+                                If (e.ColumnIndex = dgvView.Columns("masuk").Index) Then
+                                    If Not IsDBNull(dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
+                                        If (dgvView.CurrentRow.Cells("masuk").Value > dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
+                                            terlambat = dgvView.CurrentRow.Cells("jadwalmasuk").Value - dgvView.CurrentRow.Cells("masuk").Value
+                                            dgvView.CurrentRow.Cells("terlambat").Value = terlambat.Duration.ToString
+                                        Else
+                                            dgvView.CurrentRow.Cells("terlambat").Value = DBNull.Value
                                         End If
-                                        strJamLembur = dgvView.CurrentRow.Cells("selesailembur").Value - dgvView.CurrentRow.Cells("mulailembur").Value
-                                        isPartialChanged = True
-                                        dgvView.CurrentRow.Cells("jamlembur").Value = strJamLembur.ToString
-                                        isPartialChanged = False
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',jamlembur='" & dgvView.CurrentRow.Cells("jamlembur").Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',terlambat=" & IIf(Not IsDBNull(dgvView.CurrentRow.Cells("terlambat").Value), "'" & dgvView.CurrentRow.Cells("terlambat").Value.ToString & "'", "Null") & ",isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
                                     Else
-                                        'Kalau salah 1 masih ada yang null, maka jam lemburnya tidak bisa dihitung
-                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',jamlembur=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
                                     End If
-                                Else
-                                    isPartialChanged = True
-                                    dgvView.CurrentRow.Cells("jamlembur").Value = DBNull.Value
-                                    'dgvView.CurrentRow.Cells("mulailembur").Value = DBNull.Value
-                                    'dgvView.CurrentRow.Cells("selesailembur").Value = DBNull.Value
-                                    isPartialChanged = False
-                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamlembur=Null," & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                ElseIf (e.ColumnIndex = dgvView.Columns("keluar").Index) Then
+                                    If Not IsDBNull(dgvView.CurrentRow.Cells("jadwalkeluar").Value) Then
+                                        If (dgvView.CurrentRow.Cells("keluar").Value < dgvView.CurrentRow.Cells("jadwalkeluar").Value) Then
+                                            pulangCepat = dgvView.CurrentRow.Cells("jadwalkeluar").Value - dgvView.CurrentRow.Cells("keluar").Value
+                                            dgvView.CurrentRow.Cells("pulangcepat").Value = pulangCepat.Duration.ToString
+                                        Else
+                                            dgvView.CurrentRow.Cells("pulangcepat").Value = DBNull.Value
+                                        End If
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',pulangcepat=" & IIf(Not IsDBNull(dgvView.CurrentRow.Cells("pulangcepat").Value), "'" & dgvView.CurrentRow.Cells("pulangcepat").Value.ToString & "'", "Null") & ",isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                    Else
+                                        Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                    End If
                                 End If
+
+                                '=================================== UNTUK SET JAM KERJA
+                                If Not IsDBNull(dgvView.CurrentRow.Cells("masuk").Value) And Not IsDBNull(dgvView.CurrentRow.Cells("keluar").Value) Then
+                                    'Tidak boleh ada yang null
+                                    Dim jamKerja As String
+                                    Dim jamKerjaNyata As String
+                                    Dim banyakJamKerja As Double
+                                    Dim banyakJamKerjaNyata As Double
+                                    Dim arrGrup(2) As String
+
+                                    arrGrup(0) = IIf(IsDBNull(dgvView.CurrentRow.Cells("departemen").Value), Nothing, dgvView.CurrentRow.Cells("departemen").Value)
+                                    arrGrup(1) = IIf(IsDBNull(dgvView.CurrentRow.Cells("divisi").Value), Nothing, dgvView.CurrentRow.Cells("divisi").Value)
+                                    arrGrup(2) = IIf(IsDBNull(dgvView.CurrentRow.Cells("bagian").Value), Nothing, dgvView.CurrentRow.Cells("bagian").Value)
+
+                                    If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
+                                        jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)), True)
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, True, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
+                                    Else
+                                        jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)))
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, False, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
+                                    End If
+                                    dgvView.CurrentRow.Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)
+                                    dgvView.CurrentRow.Cells("jamkerjanyata").Value = IIf(IsNothing(jamKerjaNyata), DBNull.Value, jamKerjaNyata)
+                                    banyakJamKerja = GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerja").Value.ToString)
+                                    banyakJamKerjaNyata = GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False)
+                                    dgvView.CurrentRow.Cells("banyakjamkerja").Value = IIf(banyakJamKerja = 0, DBNull.Value, banyakJamKerja)
+                                    dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = IIf(banyakJamKerjaNyata = 0, DBNull.Value, banyakJamKerjaNyata)
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamkerja=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("jamkerja").Value), "Null", "'" & dgvView.CurrentRow.Cells("jamkerja").Value.ToString & "'") & ",banyakjamkerja=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerja").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerja").Value) & ",jamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("jamkerjanyata").Value), "Null", "'" & dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString & "'") & ",banyakjamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                End If
+                                '===================================
+
+                                '================================= UNTUK SET SHIFT NYA, SHIFT 1 < 23:00, SHIFT 2 = 23:00, SHIFT 3 > 23:00
+                                dgvView.CurrentRow.Cells("shift").Value = GetShift(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerja").Value), 0, dgvView.CurrentRow.Cells("banyakjamkerja").Value), dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString)
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "shift='" & dgvView.CurrentRow.Cells("shift").Value & "'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                '==================================
+                            Else
+                                dgvView.CurrentRow.Cells("jamkerja").Value = DBNull.Value
+                                dgvView.CurrentRow.Cells("banyakjamkerja").Value = DBNull.Value
+                                dgvView.CurrentRow.Cells("jamkerjanyata").Value = DBNull.Value
+                                dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
+                                If (e.ColumnIndex = dgvView.Columns("masuk").Index) Then
+                                    dgvView.CurrentRow.Cells("terlambat").Value = DBNull.Value
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,terlambat=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,isfpmanual='True'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                ElseIf (e.ColumnIndex = dgvView.Columns("keluar").Index) Then
+                                    dgvView.CurrentRow.Cells("pulangcepat").Value = DBNull.Value
+                                    dgvView.CurrentRow.Cells("shift").Value = 1
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,pulangcepat=Null,shift=1,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,isfpmanual='True'", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                End If
+                            End If
+                            isPartialChanged = False
+                        Case "spkmulai", "spkselesai"
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value & "',isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            Else
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                        Case "terlambat", "pulangcepat"
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            Else
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                        Case "jamkerjanyata"
+                            isPartialChanged = True
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = IIf(GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False) = 0, DBNull.Value, GetBanyakJamKerja(dgvView.CurrentRow.Cells("jamkerjanyata").Value.ToString, False))
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',banyakjamkerjanyata=" & IIf(IsDBNull(dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value), "Null", dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value) & ",isjamkerjamanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            Else
+                                dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,banyakjamkerjanyata=Null,isjamkerjamanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                            isPartialChanged = False
+                        Case "jamlembur"
+                            isPartialChanged = True
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                If Not IsDBNull(dgvView.CurrentRow.Cells("mulailembur").Value) Then
+                                    Dim splselesai As Date
+                                    splselesai = dgvView.CurrentRow.Cells("mulailembur").Value + dgvView.CurrentRow.Cells("jamlembur").Value
+                                    isPartialChanged = True
+                                    dgvView.CurrentRow.Cells("selesailembur").Value = Format(splselesai, "dd-MMM-yyyy HH:mm")
+                                    isPartialChanged = False
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',selesailembur='" & dgvView.CurrentRow.Cells("selesailembur").Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                Else
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                End If
+                            Else
+                                isPartialChanged = True
+                                dgvView.CurrentRow.Cells("mulailembur").Value = DBNull.Value
+                                dgvView.CurrentRow.Cells("selesailembur").Value = DBNull.Value
                                 isPartialChanged = False
-                            Case "shift", "cekfp", "cekspk", "ceklembur"
-                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
-                        End Select
-                    End If
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,mulailembur=Null,selesailembur=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                            isPartialChanged = False
+                        Case "mulailembur", "selesailembur"
+                            Dim strJamLembur As TimeSpan
+                            isPartialChanged = True
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                If Not IsDBNull(dgvView.CurrentRow.Cells("mulailembur").Value) And Not IsDBNull(dgvView.CurrentRow.Cells("selesailembur").Value) Then
+                                    'Kalau keduanya sudah ada isinya, maka jam lemburnya bisa didapatkan
+                                    If (dgvView.CurrentRow.Cells("mulailembur").Value > dgvView.CurrentRow.Cells("selesailembur").Value) Then
+                                        'SEHARUSNYA GAK MUNGKIN MASUK SINI!!
+                                        'Karena sudah dicegat di event value changed
+                                        Call myCShowMessage.ShowWarning("Waktu selesai lembur tidak boleh lebih kecil daripada waktu mulai lembur!" & ControlChars.NewLine & "Waktu lembur dikembalikan semula!")
+                                        isPartialChanged = True
+                                        dgvView.CurrentCell.Value = initialValue
+                                        isPartialChanged = False
+                                    End If
+                                    strJamLembur = dgvView.CurrentRow.Cells("selesailembur").Value - dgvView.CurrentRow.Cells("mulailembur").Value
+                                    isPartialChanged = True
+                                    dgvView.CurrentRow.Cells("jamlembur").Value = strJamLembur.ToString
+                                    isPartialChanged = False
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',jamlembur='" & dgvView.CurrentRow.Cells("jamlembur").Value.ToString & "',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                Else
+                                    'Kalau salah 1 masih ada yang null, maka jam lemburnya tidak bisa dihitung
+                                    Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',jamlembur=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                                End If
+                            Else
+                                isPartialChanged = True
+                                dgvView.CurrentRow.Cells("jamlembur").Value = DBNull.Value
+                                'dgvView.CurrentRow.Cells("mulailembur").Value = DBNull.Value
+                                'dgvView.CurrentRow.Cells("selesailembur").Value = DBNull.Value
+                                isPartialChanged = False
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamlembur=Null," & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                            isPartialChanged = False
+                        Case "shift", "cekfp", "cekspk", "ceklembur"
+                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                    End Select
                 End If
             End If
         Catch ex As Exception
@@ -2071,21 +2068,21 @@
             If (isDataPrepared) Then
                 If (contentView = "Presensi") Then
                     If (cbTampilkanYangKosong.Checked) Then
-                        If (contentView = "data presensi") Then
+                        If (contentView = "Presensi") Then
                             If Not IsNothing(myDataTableDGV) Then
                                 Dim dv As DataView
                                 If (rbKosongJamMasuk.Checked) Then
-                                    If (contentView = "data presensi") Then
+                                    If (contentView = "Presensi") Then
                                         dv = New DataView(myDataTableDGV, "masuk is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
                                     End If
                                     dgvView.DataSource = dv
                                 ElseIf (rbKosongJamMasukPulang.Checked) Then
-                                    If (contentView = "data presensi") Then
+                                    If (contentView = "Presensi") Then
                                         dv = New DataView(myDataTableDGV, "masuk is null AND keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
                                     End If
                                     dgvView.DataSource = dv
                                 ElseIf (rbKosongJamPulang.Checked) Then
-                                    If (contentView = "data presensi") Then
+                                    If (contentView = "Presensi") Then
                                         dv = New DataView(myDataTableDGV, "keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
                                     End If
                                     dgvView.DataSource = dv
