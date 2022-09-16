@@ -506,13 +506,15 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!jamkerjanyata.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!jamkerjanyata.Value,"TM")</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
                                               </TextRun>
                                             </TextRuns>
-                                            <Style />
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
                                           </Paragraph>
                                         </Paragraphs>
                                         <rd:DefaultName>jamkerjanyata</rd:DefaultName>
@@ -520,6 +522,7 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BackgroundColor>=iif(value="TM","Lime",iif(isnothing(value),"DimGray","Transparent"))</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -536,7 +539,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!shift.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!shift.Value,Nothing)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -607,7 +610,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!masuk.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!masuk.Value,Nothing)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -638,7 +641,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!keluar.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!keluar.Value,Nothing)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -669,7 +672,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!banyakjamkerjanyata.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!banyakjamkerjanyata.Value,Fields!absen.Value)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -685,7 +688,7 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <BackgroundColor>=iif(isnothing(value),"Transparent",iif(value&lt;8,"Red","Transparent"))</BackgroundColor>
+                                          <BackgroundColor>=iif(isnothing(value),"DimGray",iif(Fields!ijin.Value&lt;&gt;"TM",iif(value&lt;8,"Red","Transparent"),"Lime"))</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -779,7 +782,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!terlambat.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!terlambat.Value,Nothing)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -810,7 +813,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!pulangcepat.Value</Value>
+                                                <Value>=iif(Fields!ijin.Value&lt;&gt;"TM",Fields!pulangcepat.Value,Nothing)</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                 </Style>
@@ -980,7 +983,7 @@
                                                 <Border>
                                                   <Style>Solid</Style>
                                                 </Border>
-                                                <BackgroundColor>LightGrey</BackgroundColor>
+                                                <BackgroundColor>=iif(WeekdayName(Weekday(Fields!tanggal.Value),True,1)="Sat","SlateBlue",iif(WeekdayName(Weekday(Fields!tanggal.Value),True,1)="Sun","SlateBlue","LightGrey"))</BackgroundColor>
                                                 <PaddingLeft>2pt</PaddingLeft>
                                                 <PaddingRight>2pt</PaddingRight>
                                                 <PaddingTop>2pt</PaddingTop>
