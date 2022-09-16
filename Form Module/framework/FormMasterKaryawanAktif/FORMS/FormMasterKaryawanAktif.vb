@@ -1229,8 +1229,8 @@
                             stSQL = "SELECT * FROM " & CONN_.schemaHRD & ".trsuratperingatan WHERE nip='" & myCStringManipulation.SafeSqlLiteral(arrDefValues(3)) & "';"
                             myDataTableSPLama = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataSPLama")
                             myDataTableSPLama.Columns.Remove("rid")
-                            'Untuk insert ke logsuratperingatan
-                            Call myCDBOperation.ConstructorInsertData(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTableSPLama, CONN_.schemaHRD & ".logsuratperingatan")
+                            'Untuk insert ke logtrsuratperingatan
+                            Call myCDBOperation.ConstructorInsertData(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTableSPLama, CONN_.schemaHRD & ".logtrsuratperingatan")
                             Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, CONN_.schemaHRD & ".trsuratperingatan", "nip='" & myCStringManipulation.SafeSqlLiteral((arrDefValues(3))) & "'", CONN_.dbType)
                         End If
                         isDataPrepared = False

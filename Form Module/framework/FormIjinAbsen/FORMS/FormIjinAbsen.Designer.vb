@@ -63,6 +63,10 @@ Partial Class FormIjinAbsen
         Me.lblKaryawan = New System.Windows.Forms.Label()
         Me.btnKeluar = New System.Windows.Forms.Button()
         Me.gbView = New System.Windows.Forms.GroupBox()
+        Me.pnlTanggal = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtpAkhir = New System.Windows.Forms.DateTimePicker()
+        Me.dtpAwal = New System.Windows.Forms.DateTimePicker()
         Me.pnlNavigasi = New System.Windows.Forms.Panel()
         Me.btnAddNew = New System.Windows.Forms.Button()
         Me.btnFFBack = New System.Windows.Forms.Button()
@@ -83,16 +87,16 @@ Partial Class FormIjinAbsen
         Me.dtpTanggalSelesaiCetak = New System.Windows.Forms.DateTimePicker()
         Me.dtpTanggalMulaiCetak = New System.Windows.Forms.DateTimePicker()
         Me.btnCetak = New System.Windows.Forms.Button()
-        Me.pnlTanggal = New System.Windows.Forms.Panel()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.dtpAkhir = New System.Windows.Forms.DateTimePicker()
-        Me.dtpAwal = New System.Windows.Forms.DateTimePicker()
+        Me.lblPeriode = New System.Windows.Forms.Label()
+        Me.lblSorting = New System.Windows.Forms.Label()
+        Me.cboSortingType = New System.Windows.Forms.ComboBox()
+        Me.cboSortingCriteria = New System.Windows.Forms.ComboBox()
         Me.gbDataEntry.SuspendLayout()
         Me.gbView.SuspendLayout()
+        Me.pnlTanggal.SuspendLayout()
         Me.pnlNavigasi.SuspendLayout()
         CType(Me.dgvView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlCetak.SuspendLayout()
-        Me.pnlTanggal.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblTitle
@@ -173,7 +177,7 @@ Partial Class FormIjinAbsen
         Me.btnCreateNew.Location = New System.Drawing.Point(548, 185)
         Me.btnCreateNew.Name = "btnCreateNew"
         Me.btnCreateNew.Size = New System.Drawing.Size(120, 54)
-        Me.btnCreateNew.TabIndex = 16
+        Me.btnCreateNew.TabIndex = 19
         Me.btnCreateNew.Text = "BUAT BARU"
         Me.btnCreateNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnCreateNew.UseVisualStyleBackColor = True
@@ -523,7 +527,7 @@ Partial Class FormIjinAbsen
         Me.btnKeluar.Location = New System.Drawing.Point(955, 220)
         Me.btnKeluar.Name = "btnKeluar"
         Me.btnKeluar.Size = New System.Drawing.Size(120, 54)
-        Me.btnKeluar.TabIndex = 12
+        Me.btnKeluar.TabIndex = 23
         Me.btnKeluar.Text = "KELUAR"
         Me.btnKeluar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnKeluar.UseVisualStyleBackColor = True
@@ -532,6 +536,10 @@ Partial Class FormIjinAbsen
         '
         Me.gbView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbView.Controls.Add(Me.lblSorting)
+        Me.gbView.Controls.Add(Me.cboSortingType)
+        Me.gbView.Controls.Add(Me.cboSortingCriteria)
+        Me.gbView.Controls.Add(Me.lblPeriode)
         Me.gbView.Controls.Add(Me.pnlTanggal)
         Me.gbView.Controls.Add(Me.pnlNavigasi)
         Me.gbView.Controls.Add(Me.tbCari)
@@ -545,6 +553,43 @@ Partial Class FormIjinAbsen
         Me.gbView.TabIndex = 181
         Me.gbView.TabStop = False
         Me.gbView.Text = "VIEW"
+        '
+        'pnlTanggal
+        '
+        Me.pnlTanggal.Controls.Add(Me.Label4)
+        Me.pnlTanggal.Controls.Add(Me.dtpAkhir)
+        Me.pnlTanggal.Controls.Add(Me.dtpAwal)
+        Me.pnlTanggal.Location = New System.Drawing.Point(63, 22)
+        Me.pnlTanggal.Name = "pnlTanggal"
+        Me.pnlTanggal.Size = New System.Drawing.Size(285, 30)
+        Me.pnlTanggal.TabIndex = 208
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(129, 12)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(22, 15)
+        Me.Label4.TabIndex = 5
+        Me.Label4.Text = "s.d"
+        '
+        'dtpAkhir
+        '
+        Me.dtpAkhir.CustomFormat = "dd-MMM-yyyy"
+        Me.dtpAkhir.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpAkhir.Location = New System.Drawing.Point(156, 6)
+        Me.dtpAkhir.Name = "dtpAkhir"
+        Me.dtpAkhir.Size = New System.Drawing.Size(120, 23)
+        Me.dtpAkhir.TabIndex = 13
+        '
+        'dtpAwal
+        '
+        Me.dtpAwal.CustomFormat = "dd-MMM-yyyy"
+        Me.dtpAwal.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpAwal.Location = New System.Drawing.Point(3, 6)
+        Me.dtpAwal.Name = "dtpAwal"
+        Me.dtpAwal.Size = New System.Drawing.Size(120, 23)
+        Me.dtpAwal.TabIndex = 12
         '
         'pnlNavigasi
         '
@@ -636,20 +681,20 @@ Partial Class FormIjinAbsen
         '
         'tbCari
         '
-        Me.tbCari.Location = New System.Drawing.Point(184, 29)
+        Me.tbCari.Location = New System.Drawing.Point(526, 29)
         Me.tbCari.Name = "tbCari"
-        Me.tbCari.Size = New System.Drawing.Size(380, 23)
-        Me.tbCari.TabIndex = 14
+        Me.tbCari.Size = New System.Drawing.Size(186, 23)
+        Me.tbCari.TabIndex = 15
         '
         'btnTampilkan
         '
         Me.btnTampilkan.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.btnTampilkan.Image = CType(resources.GetObject("btnTampilkan.Image"), System.Drawing.Image)
         Me.btnTampilkan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnTampilkan.Location = New System.Drawing.Point(570, 12)
+        Me.btnTampilkan.Location = New System.Drawing.Point(937, 12)
         Me.btnTampilkan.Name = "btnTampilkan"
         Me.btnTampilkan.Size = New System.Drawing.Size(120, 54)
-        Me.btnTampilkan.TabIndex = 15
+        Me.btnTampilkan.TabIndex = 18
         Me.btnTampilkan.Text = "TAMPILKAN"
         Me.btnTampilkan.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnTampilkan.UseVisualStyleBackColor = True
@@ -657,7 +702,7 @@ Partial Class FormIjinAbsen
         'lblCari
         '
         Me.lblCari.AutoSize = True
-        Me.lblCari.Location = New System.Drawing.Point(11, 32)
+        Me.lblCari.Location = New System.Drawing.Point(353, 32)
         Me.lblCari.Name = "lblCari"
         Me.lblCari.Size = New System.Drawing.Size(50, 15)
         Me.lblCari.TabIndex = 132
@@ -669,10 +714,10 @@ Partial Class FormIjinAbsen
         Me.cboKriteria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cboKriteria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboKriteria.FormattingEnabled = True
-        Me.cboKriteria.Location = New System.Drawing.Point(62, 29)
+        Me.cboKriteria.Location = New System.Drawing.Point(404, 29)
         Me.cboKriteria.Name = "cboKriteria"
         Me.cboKriteria.Size = New System.Drawing.Size(116, 23)
-        Me.cboKriteria.TabIndex = 13
+        Me.cboKriteria.TabIndex = 14
         '
         'dgvView
         '
@@ -729,7 +774,7 @@ Partial Class FormIjinAbsen
         Me.dtpTanggalSelesaiCetak.Location = New System.Drawing.Point(129, 3)
         Me.dtpTanggalSelesaiCetak.Name = "dtpTanggalSelesaiCetak"
         Me.dtpTanggalSelesaiCetak.Size = New System.Drawing.Size(120, 23)
-        Me.dtpTanggalSelesaiCetak.TabIndex = 208
+        Me.dtpTanggalSelesaiCetak.TabIndex = 21
         '
         'dtpTanggalMulaiCetak
         '
@@ -738,7 +783,7 @@ Partial Class FormIjinAbsen
         Me.dtpTanggalMulaiCetak.Location = New System.Drawing.Point(3, 3)
         Me.dtpTanggalMulaiCetak.Name = "dtpTanggalMulaiCetak"
         Me.dtpTanggalMulaiCetak.Size = New System.Drawing.Size(120, 23)
-        Me.dtpTanggalMulaiCetak.TabIndex = 11
+        Me.dtpTanggalMulaiCetak.TabIndex = 20
         '
         'btnCetak
         '
@@ -748,47 +793,50 @@ Partial Class FormIjinAbsen
         Me.btnCetak.Location = New System.Drawing.Point(67, 32)
         Me.btnCetak.Name = "btnCetak"
         Me.btnCetak.Size = New System.Drawing.Size(120, 54)
-        Me.btnCetak.TabIndex = 10
+        Me.btnCetak.TabIndex = 22
         Me.btnCetak.Text = "CETAK"
         Me.btnCetak.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnCetak.UseVisualStyleBackColor = True
         '
-        'pnlTanggal
+        'lblPeriode
         '
-        Me.pnlTanggal.Controls.Add(Me.Label4)
-        Me.pnlTanggal.Controls.Add(Me.dtpAkhir)
-        Me.pnlTanggal.Controls.Add(Me.dtpAwal)
-        Me.pnlTanggal.Location = New System.Drawing.Point(184, 22)
-        Me.pnlTanggal.Name = "pnlTanggal"
-        Me.pnlTanggal.Size = New System.Drawing.Size(285, 30)
-        Me.pnlTanggal.TabIndex = 208
+        Me.lblPeriode.AutoSize = True
+        Me.lblPeriode.Location = New System.Drawing.Point(4, 34)
+        Me.lblPeriode.Name = "lblPeriode"
+        Me.lblPeriode.Size = New System.Drawing.Size(53, 15)
+        Me.lblPeriode.TabIndex = 210
+        Me.lblPeriode.Text = "Periode :"
         '
-        'Label4
+        'lblSorting
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(129, 12)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(22, 15)
-        Me.Label4.TabIndex = 5
-        Me.Label4.Text = "s.d"
+        Me.lblSorting.AutoSize = True
+        Me.lblSorting.Location = New System.Drawing.Point(715, 11)
+        Me.lblSorting.Name = "lblSorting"
+        Me.lblSorting.Size = New System.Drawing.Size(51, 15)
+        Me.lblSorting.TabIndex = 215
+        Me.lblSorting.Text = "Sorting :"
         '
-        'dtpAkhir
+        'cboSortingType
         '
-        Me.dtpAkhir.CustomFormat = "dd-MMM-yyyy"
-        Me.dtpAkhir.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpAkhir.Location = New System.Drawing.Point(156, 6)
-        Me.dtpAkhir.Name = "dtpAkhir"
-        Me.dtpAkhir.Size = New System.Drawing.Size(120, 23)
-        Me.dtpAkhir.TabIndex = 3
+        Me.cboSortingType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cboSortingType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cboSortingType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboSortingType.FormattingEnabled = True
+        Me.cboSortingType.Location = New System.Drawing.Point(840, 29)
+        Me.cboSortingType.Name = "cboSortingType"
+        Me.cboSortingType.Size = New System.Drawing.Size(91, 23)
+        Me.cboSortingType.TabIndex = 17
         '
-        'dtpAwal
+        'cboSortingCriteria
         '
-        Me.dtpAwal.CustomFormat = "dd-MMM-yyyy"
-        Me.dtpAwal.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpAwal.Location = New System.Drawing.Point(3, 6)
-        Me.dtpAwal.Name = "dtpAwal"
-        Me.dtpAwal.Size = New System.Drawing.Size(120, 23)
-        Me.dtpAwal.TabIndex = 2
+        Me.cboSortingCriteria.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cboSortingCriteria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cboSortingCriteria.FormattingEnabled = True
+        Me.cboSortingCriteria.IntegralHeight = False
+        Me.cboSortingCriteria.Location = New System.Drawing.Point(718, 29)
+        Me.cboSortingCriteria.Name = "cboSortingCriteria"
+        Me.cboSortingCriteria.Size = New System.Drawing.Size(116, 23)
+        Me.cboSortingCriteria.TabIndex = 16
         '
         'FormIjinAbsen
         '
@@ -811,12 +859,12 @@ Partial Class FormIjinAbsen
         Me.gbDataEntry.PerformLayout()
         Me.gbView.ResumeLayout(False)
         Me.gbView.PerformLayout()
+        Me.pnlTanggal.ResumeLayout(False)
+        Me.pnlTanggal.PerformLayout()
         Me.pnlNavigasi.ResumeLayout(False)
         Me.pnlNavigasi.PerformLayout()
         CType(Me.dgvView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlCetak.ResumeLayout(False)
-        Me.pnlTanggal.ResumeLayout(False)
-        Me.pnlTanggal.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -886,4 +934,8 @@ Partial Class FormIjinAbsen
     Friend WithEvents Label4 As Label
     Friend WithEvents dtpAkhir As DateTimePicker
     Friend WithEvents dtpAwal As DateTimePicker
+    Friend WithEvents lblSorting As Label
+    Friend WithEvents cboSortingType As ComboBox
+    Friend WithEvents cboSortingCriteria As ComboBox
+    Friend WithEvents lblPeriode As Label
 End Class

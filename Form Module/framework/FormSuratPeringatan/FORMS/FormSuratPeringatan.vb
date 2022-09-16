@@ -115,7 +115,7 @@
             'ofd1.Multiselect = False
 
             tableName = CONN_.schemaHRD & ".trsuratperingatan"
-            tableNameLog = CONN_.schemaHRD & ".logsuratperingatan"
+            tableNameLog = CONN_.schemaHRD & ".logtrsuratperingatan"
             digitLength = 1
 
             isDataPrepared = True
@@ -1063,7 +1063,7 @@
                     stSQL = "SELECT * FROM " & tableName & " WHERE nip='" & myCStringManipulation.SafeSqlLiteral(myDataTableKaryawanAktif.Rows(i).Item("nip")) & "';"
                     myDataTableSPLama = myCDBOperation.GetDataTableUsingReader(_conn, _comm, _reader, stSQL, "T_DataSPLama")
                     myDataTableSPLama.Columns.Remove("rid")
-                    'Untuk insert ke logsuratperingatan
+                    'Untuk insert ke logtrsuratperingatan
                     Call myCDBOperation.ConstructorInsertData(_conn, _comm, _reader, myDataTableSPLama, tableNameLog)
                     Call myCDBOperation.DelDbRecords(_conn, _comm, tableName, "nip='" & myCStringManipulation.SafeSqlLiteral(myDataTableKaryawanAktif.Rows(i).Item("nip")) & "'", _type)
 

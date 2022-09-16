@@ -21,3 +21,4 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormSuratPeringatan\obj\Debu
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormSuratPeringatan\obj\Debug\FormSuratPeringatan.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormSuratPeringatan\obj\Debug\FormSuratPeringatan.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormSuratPeringatan\obj\Debug\FormSuratPeringatan.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormSuratPeringatan\obj\Debug\FormSuratPeringatan.vbproj.AssemblyReference.cache

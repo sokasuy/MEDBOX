@@ -5,6 +5,8 @@
     Private isExist As Boolean
     Private myDataTableDGV As New DataTable
     Private myBindingTableDGV As New BindingSource
+    Private myDataTableColumnNames As New DataTable
+    Private myBindingColumnNames As New BindingSource
     Private updateString As String
     Private newValues As String
     Private newFields As String
@@ -18,6 +20,7 @@
     Private cekTambahButton(3) As Boolean
     Private arrDefValues(14) As String
     Private tableName As String
+    Private tableNameLog As String
 
     Private myDataTableCboKaryawan As New DataTable
     Private myBindingKaryawan As New BindingSource
@@ -73,7 +76,7 @@
         Try
             isNew = True
             Dim arrCbo() As String
-            arrCbo = {"IDK", "TANGGAL MULAI", "TANGGAL SELESAI", "NIP", "NAMA"}
+            arrCbo = {"IDK", "NIP", "NAMA"}
             cboKriteria.Items.AddRange(arrCbo)
             cboKriteria.SelectedIndex = 1
 
@@ -113,7 +116,15 @@
                 End If
             End If
 
+            stSQL = "SELECT column_name FROM INFORMATION_SCHEMA. COLUMNS WHERE TABLE_NAME = 'trijinabsen' and column_name NOT IN('created_at','updated_at') ORDER BY column_name ASC;"
+            Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableColumnNames, myBindingColumnNames, cboSortingCriteria, "T_" & cboSortingCriteria.Name, "column_name", "column_name", isCboPrepared)
+
+            arrCbo = {"ASC", "DESC"}
+            cboSortingType.Items.AddRange(arrCbo)
+            cboSortingType.SelectedIndex = 0
+
             tableName = CONN_.schemaHRD & ".trijinabsen"
+            tableNameLog = CONN_.schemaHRD & ".logtrijinabsen"
             digitLength = 2
 
             isDataPrepared = True
@@ -147,7 +158,7 @@
         Call myCFormManipulation.CloseMyForm(Me.Owner, Me, False)
     End Sub
 
-    Private Sub SetDGV(myConn As Object, myComm As Object, myReader As Object, offSet As Integer, ByRef myDataTable As DataTable, ByRef myBindingTable As BindingSource, mKriteria As String, Optional gantiKriteria As Boolean = False)
+    Private Sub SetDGV(myConn As Object, myComm As Object, myReader As Object, offSet As Integer, ByRef myDataTable As DataTable, ByRef myBindingTable As BindingSource, mKriteria As String, Optional gantiKriteria As Boolean = False, Optional sortingCols As String = Nothing, Optional sortingType As String = Nothing)
         Try
             Dim batas As Integer
             Dim mJumlah As Integer
@@ -160,11 +171,11 @@
             mSelectedCriteria = cboKriteria.SelectedItem.ToString.Replace(" ", "")
             mKriteria = IIf(IsNothing(mKriteria), "", mKriteria)
 
-            If (mSelectedCriteria = "IDK" Or mSelectedCriteria = "NIP" Or mSelectedCriteria = "NAMA") Then
-                mWhereString = "(upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%') "
-            Else
-                mWhereString = "(tbl." & mSelectedCriteria & ">='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl." & mSelectedCriteria & "<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') "
-            End If
+            'If (mSelectedCriteria = "IDK" Or mSelectedCriteria = "NIP" Or mSelectedCriteria = "NAMA") Then
+            mWhereString = "(upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%') "
+            'Else
+            '    mWhereString = "(tbl." & mSelectedCriteria & ">='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl." & mSelectedCriteria & "<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') "
+            'End If
 
             If (gantiKriteria) Then
                 Dim tempSisa As Integer
@@ -172,7 +183,7 @@
                 banyakPages = 0
                 mKriteria = IIf(IsNothing(mKriteria), "", mKriteria)
 
-                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.nip=tbl2.nip WHERE " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
+                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.nip=tbl2.nip WHERE (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
                 mJumlah = Integer.Parse(myCDBOperation.GetDataIndividual(myConn, myComm, myReader, stSQL))
 
                 If (mJumlah > 10) Then
@@ -209,14 +220,14 @@
                         "FROM ( " &
                             "SELECT tbl.rid,tbl.kdr,tbl.tanggalpengajuan,tbl.tanggalmulai,tbl.tanggalselesai,tbl.darijam,tbl.sampaijam,tbl.idk,tbl.nip,tbl.nama,tbl.posisi,tbl.bagian,tbl.divisi,tbl.departemen,tbl.perusahaan,tbl.kodeijin,tbl.ketijin,tbl.kodeabsen,tbl.ketabsen,tbl.catatan,tbl.created_at,tbl.updated_at " &
                             "FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 on tbl.nip=tbl2.nip " &
-                            "WHERE " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " " &
-                            "ORDER BY (case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC " &
+                            "WHERE (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " " &
+                            "ORDER BY " & IIf(IsNothing(sortingCols), "(case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC ", sortingCols & " " & sortingType) & " " &
                             "LIMIT " & offSet &
                             ") sub " &
-                        "ORDER BY (case when sub.updated_at is null then sub.created_at else sub.updated_at end) ASC, sub.rid ASC " &
+                        "ORDER BY " & IIf(IsNothing(sortingCols), "(case when sub.updated_at is null then sub.created_at else sub.updated_at end) ASC, sub.rid ASC ", sortingCols & " " & IIf(sortingType = "ASC", "DESC", "ASC")) & " " &
                         "LIMIT " & batas &
                     ") subOrdered " &
-                    "ORDER BY (case when subOrdered.updated_at is null then subOrdered.created_at else subOrdered.updated_at end) DESC, subOrdered.rid DESC;"
+                    "ORDER BY " & IIf(IsNothing(sortingCols), "(case when subOrdered.updated_at is null then subOrdered.created_at else subOrdered.updated_at end) DESC, subOrdered.rid DESC ", sortingCols & " " & sortingType) & ";"
 
             myDataTable = myCDBOperation.GetDataTableUsingReader(myConn, myComm, myReader, stSQL, "TBL " & lblTitle.Text)
             myBindingTable.DataSource = myDataTable
@@ -287,18 +298,17 @@
                 .ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False
             End With
 
-            'Kalau menampilkan data aktif
             With cmbDgvEditButton
                 If Not (cekTambahButton(0)) Then
                     .HeaderText = "EDIT"
                     .Name = "edit"
                     .Text = "Edit"
                     .UseColumnTextForButtonValue = True
+                    .DisplayIndex = dgvView.Columns("nama").Index + 1
                     dgvView.Columns.Add(cmbDgvEditButton)
                     dgvView.Columns("edit").Width = 70
                     cekTambahButton(0) = True
                     .Visible = clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
-                    .DisplayIndex = dgvView.Columns("nama").Index + 1
                     .Frozen = True
                 End If
                 .HeaderCell.Style.BackColor = Color.Lime
@@ -310,13 +320,13 @@
                     .Name = "attachment"
                     .Text = "Attachment"
                     .UseColumnTextForButtonValue = True
+                    .DisplayIndex = dgvView.ColumnCount
                     dgvView.Columns.Add(cmbDgvAttachmentButton)
                     dgvView.Columns("attachment").Width = 90
                     cekTambahButton(2) = True
                     .Visible = enableSubForm(0)
                 End If
                 .HeaderCell.Style.BackColor = Color.Yellow
-                .DisplayIndex = dgvView.ColumnCount - 1
             End With
 
             With cmbDgvCetakButton
@@ -325,12 +335,12 @@
                     .Name = "cetak"
                     .Text = "Cetak"
                     .UseColumnTextForButtonValue = True
+                    .DisplayIndex = dgvView.ColumnCount
                     dgvView.Columns.Add(cmbDgvCetakButton)
                     dgvView.Columns("cetak").Width = 70
                     cekTambahButton(3) = True
                 End If
                 .HeaderCell.Style.BackColor = Color.SkyBlue
-                .DisplayIndex = dgvView.ColumnCount - 1
             End With
 
             With cmbDgvHapusButton
@@ -339,13 +349,13 @@
                     .Name = "delete"
                     .Text = "Hapus Record"
                     .UseColumnTextForButtonValue = True
+                    .DisplayIndex = dgvView.ColumnCount
                     dgvView.Columns.Add(cmbDgvHapusButton)
                     dgvView.Columns("delete").Width = 100
                     cekTambahButton(1) = True
                     .Visible = clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Menghapus"))
                 End If
                 .HeaderCell.Style.BackColor = Color.LightSalmon
-                .DisplayIndex = dgvView.ColumnCount - 1
             End With
 
             ''untuk menampilkan auto number pada rowHeaders
@@ -402,7 +412,7 @@
         Try
             mCari = myCStringManipulation.SafeSqlLiteral(tbCari.Text, 1)
             tbRecordPage.Text = 1
-            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnTampilkan_Click Error")
         End Try
@@ -441,7 +451,7 @@
             If (Integer.Parse(tbRecordPage.Text) - 1 > 0) Then
                 tbRecordPage.Text = Integer.Parse(tbRecordPage.Text) - 1
                 logRecordPage = tbRecordPage.Text
-                Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, Integer.Parse(tbRecordPage.Text) * 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+                Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, Integer.Parse(tbRecordPage.Text) * 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnBack_Click Error")
@@ -454,7 +464,7 @@
             If (Integer.Parse(tbRecordPage.Text) + 1 <= banyakPages) Then
                 tbRecordPage.Text = Integer.Parse(tbRecordPage.Text) + 1
                 logRecordPage = tbRecordPage.Text
-                Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, Integer.Parse(tbRecordPage.Text) * 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+                Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, Integer.Parse(tbRecordPage.Text) * 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnForward_Click Error")
@@ -466,7 +476,7 @@
         Try
             tbRecordPage.Text = 1
             logRecordPage = tbRecordPage.Text
-            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnFFBack_Click Error")
             tbRecordPage.Text = logRecordPage
@@ -477,7 +487,7 @@
         Try
             tbRecordPage.Text = banyakPages
             logRecordPage = tbRecordPage.Text
-            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, banyakPages * 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, banyakPages * 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnFFForward_Click Error")
             tbRecordPage.Text = logRecordPage
@@ -498,7 +508,7 @@
                 Dim temp As Integer
                 temp = Integer.Parse(tbRecordPage.Text)
                 If (temp > 0 And temp <= banyakPages) Then
-                    Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, temp * 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+                    Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, temp * 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
                     logRecordPage = tbRecordPage.Text
                 Else
                     Call myCShowMessage.ShowWarning("Tidak ada record pada halaman tersebut!", "Perhatian")
@@ -587,7 +597,7 @@
                     If (isConfirm = DialogResult.Yes) Then
                         Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableName, "rid=" & dgvView.CurrentRow.Cells("rid").Value, CONN_.dbType)
                         Call myCShowMessage.ShowDeletedMsg("Ijin absen " & dgvView.CurrentRow.Cells("nama").Value & " dari tanggal " & Format(dgvView.CurrentRow.Cells("tanggal_mulai").Value, "dd-MMM-yyyy") & " sampai tanggal " & Format(dgvView.CurrentRow.Cells("tanggal_selesai").Value, "dd-MMM-yyyy"))
-                        Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True)
+                        Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, True, IIf(cboSortingCriteria.SelectedIndex = -1, Nothing, cboSortingCriteria.SelectedValue), cboSortingType.SelectedItem)
                     Else
                         Call myCShowMessage.ShowInfo("Penghapusan ijin absen " & dgvView.CurrentRow.Cells("nama").Value & " dari tanggal " & Format(dgvView.CurrentRow.Cells("tanggal_mulai").Value, "dd-MMM-yyyy") & " sampai tanggal " & Format(dgvView.CurrentRow.Cells("tanggal_selesai").Value, "dd-MMM-yyyy") & " dibatalkan oleh user")
                     End If
@@ -805,6 +815,40 @@
                                     newFields &= ",catatan"
                                 End If
                                 Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableName, newValues, newFields)
+
+                                'CEK APAKAH ADA DATA LAMA KARYAWAN TERSEBUT DI PERIODE YANG SAMA
+                                If (cboMohonIjin.SelectedValue = "TM") Then
+                                    isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "(nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "')")
+                                    If (isExist) Then
+                                        'Jika ada ijin sebelumnya, mau itu TM ataupun yang lainnya, tetap akan diganti dengan yang baru, dan yang lama di backup
+                                        Dim myDataTableBackupIjinAbsen As New DataTable
+                                        stSQL = "SELECT *
+                                            FROM " & tableName & "
+                                            WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "');"
+                                        myDataTableBackupIjinAbsen = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_IjinAbsen")
+                                        myDataTableBackupIjinAbsen.Columns.Remove("rid")
+                                        'Untuk insert ke logtrijinabsen
+                                        Call myCDBOperation.ConstructorInsertData(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTableBackupIjinAbsen, tableNameLog)
+                                        Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableName, "(nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "')", CONN_.dbType)
+                                    End If
+                                Else
+                                    'Kalau mohon ijinnya yang baru tidak TM, maka harus di cek apakah ijin sebelumnya TM atau bukan
+                                    isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "(nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kodeijin='TM') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "')")
+                                    If (isExist) Then
+                                        'Jika ijin sebelumnya untuk karyawan tersebut TM, maka harus dihapus, di backup dan diganti dengan yang baru
+                                        'AMBIL YANG TM SAJA YANG DI BACKUP!!
+                                        Dim myDataTableBackupIjinAbsen As New DataTable
+                                        stSQL = "SELECT *
+                                                FROM " & tableName & "
+                                                WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kodeijin='TM') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "');"
+                                        myDataTableBackupIjinAbsen = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_IjinAbsen")
+                                        myDataTableBackupIjinAbsen.Columns.Remove("rid")
+                                        'Untuk insert ke logtrijinabsen
+                                        Call myCDBOperation.ConstructorInsertData(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTableBackupIjinAbsen, tableNameLog)
+                                        Call myCDBOperation.DelDbRecords(CONN_.dbMain, CONN_.comm, tableName, "(nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tanggalmulai='" & Format(dtpTanggalMulai.Value.Date, "dd-MMM-yyyy") & "' and tanggalselesai='" & Format(dtpTanggalSelesai.Value.Date, "dd-MMM-yyyy") & "') AND (kodeijin='TM') AND (kdr<>'" & myCStringManipulation.SafeSqlLiteral(strKDR) & "')", CONN_.dbType)
+                                    End If
+                                End If
+
                                 Call myCShowMessage.ShowSavedMsg("Ijin absen " & Trim(DirectCast(cboKaryawan.SelectedItem, DataRowView).Item("nama")) & " di tanggal " & Format(dtpTanggalPengajuan.Value.Date, "dd-MMM-yyyy"))
                                 Call btnTampilkan_Click(sender, e)
 
@@ -1050,13 +1094,13 @@
 
     Private Sub cboKriteria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboKriteria.SelectedIndexChanged
         Try
-            If (cboKriteria.SelectedItem = "TANGGAL MULAI" Or cboKriteria.SelectedItem = "TANGGAL SELESAI") Then
-                pnlTanggal.Visible = True
-                tbCari.Visible = False
-            Else
-                pnlTanggal.Visible = False
-                tbCari.Visible = True
-            End If
+            'If (cboKriteria.SelectedItem = "TANGGAL MULAI" Or cboKriteria.SelectedItem = "TANGGAL SELESAI") Then
+            '    pnlTanggal.Visible = True
+            '    tbCari.Visible = False
+            'Else
+            '    pnlTanggal.Visible = False
+            '    tbCari.Visible = True
+            'End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "cboKriteria_SelectedIndexChanged Error")
         End Try
