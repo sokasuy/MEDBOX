@@ -1,5 +1,5 @@
 ﻿Public Class FormProsesPresensi
-    Private tableName(13) As String
+    Private tableName(14) As String
     Private isDataPrepared As Boolean = False
     Private stSQL As String
     Private newValues As String
@@ -163,6 +163,7 @@
             tableName(11) = CONN_.schemaHRD & ".mskaryawanaktif"
             tableName(12) = CONN_.schemaHRD & ".mstoleransimenit"
             tableName(13) = CONN_.schemaTmp & ".fpcheckclock"
+            tableName(14) = CONN_.schemaHRD & ".msdefaultjamistirahat"
 
             rbLaporanPresensiKaryawanMingguan.Checked = True
             rbSemua.Checked = True
@@ -1460,7 +1461,7 @@
                 '            jamIstirahat = "00:00:00"
                 '    End Select
                 'End If
-                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", CONN_.schemaHRD & ".msdefaultjamistirahat",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
+                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", tableName(14),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
 
 
                 If (TimeSpan.Parse(_jamKeluar) >= TimeSpan.Parse(_jamMasuk)) Then

@@ -1,5 +1,5 @@
 ﻿Public Class FormView
-    Private tableName(12) As String
+    Private tableName(13) As String
     Private myDataTableDGV As New DataTable
     Private myBindingTableDGV As New BindingSource
     Private cmbDgvHapusButton As New DataGridViewButtonColumn()
@@ -87,6 +87,7 @@
                 tableName(10) = CONN_.schemaHRD & ".mskaryawan"
                 tableName(11) = CONN_.schemaHRD & ".mskaryawanaktif"
                 tableName(12) = CONN_.schemaHRD & ".mstoleransimenit"
+                tableName(13) = CONN_.schemaHRD & ".msdefaultjamistirahat"
 
                 stSQL = "SELECT lokasi FROM " & tableName(0) & " " & IIf(USER_.lokasi = "ALL", "", "where upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "lokasi", "lokasi", isCboPrepared)
@@ -923,7 +924,7 @@
                 '            jamIstirahat = "01:00:00"
                 '    End Select
                 'End If
-                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", CONN_.schemaHRD & ".msdefaultjamistirahat",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
+                jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", tableName(13),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
 
                 If (TimeSpan.Parse(_jamKeluar) >= TimeSpan.Parse(_jamMasuk)) Then
                     'kalau jam pulangnya masih lebih besar dari jam masuknya
