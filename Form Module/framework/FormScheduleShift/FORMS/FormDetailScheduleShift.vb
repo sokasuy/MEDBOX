@@ -635,6 +635,21 @@
                         dtpAwal.Value = dtpAkhir.Value.AddDays(-30)
                     End If
                 End If
+                If (isCboPrepared) Then
+                    If (cboPerusahaan.SelectedIndex <> -1) Then
+                        Me.Cursor = Cursors.WaitCursor
+                        Call myCDBConnection.OpenConn(CONN_.dbMain)
+
+                        isDataPrepared = False
+                        prefixCompleted = prefixKode & "-" & DirectCast(cboPerusahaan.SelectedItem, DataRowView).Item("kode")
+                        strScheduleShift = myCDBOperation.SetDynamicAutoKode(CONN_.dbMain, CONN_.comm, CONN_.reader, tableNameHeader, tableKey, "rid", prefixCompleted, digitLength, False,, CONN_.dbType, Format(dtpAwal.Value.Date, "MMMyy").ToUpper)
+                        tbNoScheduleShift.Text = strScheduleShift
+                        isDataPrepared = True
+
+                        Me.Cursor = Cursors.Default
+                        Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
+                    End If
+                End If
                 isPartialChanged = False
             End If
         Catch ex As Exception
