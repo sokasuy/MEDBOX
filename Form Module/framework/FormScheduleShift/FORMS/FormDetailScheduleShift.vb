@@ -588,8 +588,8 @@
 
                     isDataPrepared = False
                     prefixCompleted = prefixKode & "-" & DirectCast(cboPerusahaan.SelectedItem, DataRowView).Item("kode")
-                    strScheduleShift = myCDBOperation.SetDynamicAutoKode(CONN_.dbMain, CONN_.comm, CONN_.reader, tableNameHeader, tableKey, "rid", prefixCompleted, digitLength, False,, CONN_.dbType, Format(dtpAwal.Value.Date, "MMMyy"))
-                    tbNoScheduleShift.Text = strScheduleShift.ToUpper
+                    strScheduleShift = myCDBOperation.SetDynamicAutoKode(CONN_.dbMain, CONN_.comm, CONN_.reader, tableNameHeader, tableKey, "rid", prefixCompleted, digitLength, False,, CONN_.dbType, Format(dtpAwal.Value.Date, "MMMyy").ToUpper)
+                    tbNoScheduleShift.Text = strScheduleShift
                     isDataPrepared = True
 
                     Me.Cursor = Cursors.Default
@@ -1034,7 +1034,7 @@
                             isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableNameHeader, tableKey & "='" & myCStringManipulation.SafeSqlLiteral(tbNoScheduleShift.Text) & "'")
                             If (isExist) Then
                                 prefixCompleted = prefixKode & " -" & DirectCast(cboPerusahaan.SelectedItem, DataRowView).Item("kode")
-                                strScheduleShift = myCDBOperation.SetDynamicAutoKode(CONN_.dbMain, CONN_.comm, CONN_.reader, tableNameHeader, tableKey, "rid", prefixCompleted, digitLength, False,, CONN_.dbType, Format(dtpAwal.Value.Date, "MMMyy"))
+                                strScheduleShift = myCDBOperation.SetDynamicAutoKode(CONN_.dbMain, CONN_.comm, CONN_.reader, tableNameHeader, tableKey, "rid", prefixCompleted, digitLength, False,, CONN_.dbType, Format(dtpAwal.Value.Date, "MMMyy").ToUpper)
                                 tbNoScheduleShift.Text = strScheduleShift
                             End If
                         End While
