@@ -401,7 +401,7 @@
                     End If
                 End While
 
-                stSQL = "SELECT 0 as rid, d.linenr,d.perusahaan,d.lokasi,d.departemen,d.grup,d.ketgrup as ket_grup,d.idk,d.nip,d.nama,d.posisi,
+                stSQL = "SELECT 0 as rid, d.linenr,d.idk,d.nip,d.nama,d.perusahaan,d.lokasi,d.departemen,d.grup,d.ketgrup as ket_grup,d.posisi,
                         " & subSQL & "
                         FROM " & tableNameHeader & " as h INNER JOIN " & tableNameDetail & " as d ON h." & tableKey & " = d." & tableKey & "
                         WHERE h." & tableKey & "='" & myCStringManipulation.SafeSqlLiteral(mKriteria) & "'

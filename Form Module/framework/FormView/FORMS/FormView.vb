@@ -819,7 +819,11 @@
                                     '    'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
                                     '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
                                     '    'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
-                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
+                                    If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
+                                    Else
+                                        GetJamKerjaNyata = Nothing
+                                    End If
                                     'End If
                                 End If
                             End If
@@ -835,7 +839,11 @@
                                     '    GetJamKerjaNyata = Nothing
                                     'ElseIf (Trim(_lokasi) = "PANDAAN") Then
                                     '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
-                                    GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
+                                    If (TimeSpan.Parse(_pulangCepat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
+                                    Else
+                                        GetJamKerjaNyata = Nothing
+                                    End If
                                     'End If
                                 End If
                             End If
