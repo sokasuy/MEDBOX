@@ -15,6 +15,7 @@
         Public dbMain As Object
         Public dbLokal As Object
         Public dbFinger As Object
+        Public dbMySql As Object
 
         Public dbType As String
         Public schemaTmp As String

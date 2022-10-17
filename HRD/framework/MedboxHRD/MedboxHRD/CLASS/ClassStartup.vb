@@ -1,7 +1,7 @@
 ﻿Public Class CStartup
     Private pathFileSetting As String
 
-    Public Sub StartUp(ByVal _segmen As String, ByRef _companyName As String, ByRef _programName As String, ByRef _programType As String, ByRef _connMain As Object, ByRef _connLokal As Object, ByRef _dbType As String, ByRef _schemaTmp As String, ByRef _schemaHRD As String, ByRef _connFinger As Object)
+    Public Sub StartUp(ByVal _segmen As String, ByRef _companyName As String, ByRef _programName As String, ByRef _programType As String, ByRef _connMain As Object, ByRef _connLokal As Object, ByRef _dbType As String, ByRef _schemaTmp As String, ByRef _schemaHRD As String, ByRef _connFinger As Object, ByRef _connMysql As Object)
         Try
             If (_segmen = "MAIN") Then
                 'SEKARANG PAKAI INI DULU
@@ -22,6 +22,9 @@
                 _schemaHRD = myCFileIO.ReadIniFile(_dbType, "SCHEMA_HRD", pathFileSetting)
                 'UNTUK DATABASE UTAMA POSTGRESQL
                 Call myCDBConnection.SetDBParameter(_connMain, _dbType, "SERVER_NAME", "DB_NAME", "", pathFileSetting, "PORT", "postgres", "1234567", "")
+
+                'UNTUK DATABASE MYSQL -> UNTUK AMBIL DATA KOMISI DLL
+                Call myCDBConnection.SetDBParameter(_connMysql, "MYSQL", "SERVER_NAME", "DB_NAME", "", pathFileSetting, "PORT", "admin", "1234567", "")
 
                 'UNTUK DATABASE ACCESS FINGERPRINT
                 Call myCDBConnection.SetDBParameter(_connFinger, "ACCESS", "", "PATHDB_Finger", "PRVDRTYPE", pathFileSetting, "")

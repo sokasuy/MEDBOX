@@ -244,6 +244,16 @@
                 If (cboKelompok.SelectedIndex <> -1) Then
                     mGroupCriteria &= " AND (tbl.kelompok='" & myCStringManipulation.SafeSqlLiteral(cboKelompok.SelectedItem) & "')"
                 End If
+                If (rbKosongJamMasuk.Checked Or rbKosongJamPulang.Checked Or rbKosongJamMasukPulang.Checked) Then
+                    Select Case True
+                        Case rbKosongJamMasuk.Checked
+                            mGroupCriteria &= " AND tbl.masuk is null"
+                        Case rbKosongJamPulang.Checked
+                            mGroupCriteria &= " AND tbl.keluar is null"
+                        Case rbKosongJamMasukPulang.Checked
+                            mGroupCriteria &= " AND (tbl.masuk is null and tbl.keluar is null)"
+                    End Select
+                End If
 
                 stSQL = "SELECT tbl.rid,tbl.kdr,tbl.tanggal,to_char(tbl.tanggal, 'DAY') as hari,tbl.perusahaan,tbl2.kode,tbl.nip,tbl.nama,tbl.jadwalmasuk,tbl.jadwalkeluar,tbl.masuk,tbl.keluar,tbl.cekfp,tbl.jamkerjanyata,tbl.banyakjamkerjanyata,tbl.jamkerja,tbl.banyakjamkerja,tbl.fpmasuk,tbl.fpkeluar,tbl.terlambat,tbl.pulangcepat,tbl.shift,tbl.ijin,tbl.absen,tbl.kodewaktushift,tbl.spkmulai,tbl.spkselesai,tbl.cekspk,tbl.jamlembur,tbl.mulailembur,tbl.selesailembur,tbl.ceklembur,tbl.keterangan,tbl.idk,tbl.bagian,tbl.divisi,tbl.departemen,tbl.lokasi,tbl.kelompok,tbl.katpenggajian,tbl.isfpmanual,tbl.isspkmanual,tbl.islemburmanual,tbl.isjamkerjamanual
                         FROM (" & tableName(0) & " as tbl inner join " & tableName(9) & " as tbl2 on tbl.perusahaan=tbl2.keterangan) " &
@@ -2077,29 +2087,28 @@
             If (isDataPrepared) Then
                 If (contentView = "Presensi") Then
                     If (cbTampilkanYangKosong.Checked) Then
-                        If (contentView = "Presensi") Then
-                            If Not IsNothing(myDataTableDGV) Then
-                                Dim dv As DataView
-                                If (rbKosongJamMasuk.Checked) Then
-                                    If (contentView = "Presensi") Then
-                                        dv = New DataView(myDataTableDGV, "masuk is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
-                                    End If
-                                    dgvView.DataSource = dv
-                                ElseIf (rbKosongJamMasukPulang.Checked) Then
-                                    If (contentView = "Presensi") Then
-                                        dv = New DataView(myDataTableDGV, "masuk is null AND keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
-                                    End If
-                                    dgvView.DataSource = dv
-                                ElseIf (rbKosongJamPulang.Checked) Then
-                                    If (contentView = "Presensi") Then
-                                        dv = New DataView(myDataTableDGV, "keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
-                                    End If
-                                    dgvView.DataSource = dv
-                                End If
+                        If Not IsNothing(myDataTableDGV) Then
+                            'Dim dv As DataView
+                            'If (rbKosongJamMasuk.Checked) Then
+                            '    If (contentView = "Presensi") Then
+                            '        dv = New DataView(myDataTableDGV, "masuk is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
+                            '    End If
+                            '    dgvView.DataSource = dv
+                            'ElseIf (rbKosongJamMasukPulang.Checked) Then
+                            '    If (contentView = "Presensi") Then
+                            '        dv = New DataView(myDataTableDGV, "masuk is null AND keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
+                            '    End If
+                            '    dgvView.DataSource = dv
+                            'ElseIf (rbKosongJamPulang.Checked) Then
+                            '    If (contentView = "Presensi") Then
+                            '        dv = New DataView(myDataTableDGV, "keluar is null", "lokasi Asc, nama Asc, tanggal Asc, perusahaan Asc", DataViewRowState.CurrentRows)
+                            '    End If
+                            '    dgvView.DataSource = dv
+                            'End If
 
-                                Call myCDataGridViewManipulation.AutoNumberRowsForGridViewWithoutPaging(dgvView, dgvView.RowCount)
-                                dgvView.RowHeadersWidth = 70
-                            End If
+                            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, contentView, True)
+                            Call myCDataGridViewManipulation.AutoNumberRowsForGridViewWithoutPaging(dgvView, dgvView.RowCount)
+                            dgvView.RowHeadersWidth = 70
                         End If
                     End If
                 End If

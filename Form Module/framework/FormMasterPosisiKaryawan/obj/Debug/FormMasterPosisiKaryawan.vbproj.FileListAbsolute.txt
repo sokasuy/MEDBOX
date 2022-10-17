@@ -14,6 +14,7 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\bin
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\bin\Debug\FormMasterPosisiKaryawan.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\bin\Debug\FormMasterPosisiKaryawan.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\bin\Debug\FormMasterPosisiKaryawan.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.FormMasterPosisiKaryawan.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.vbproj.GenerateResource.cache
@@ -21,4 +22,3 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.pdb
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterPosisiKaryawan\obj\Debug\FormMasterPosisiKaryawan.vbproj.AssemblyReference.cache

@@ -37,6 +37,7 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormSu
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormSuratPerintahLembur.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormView.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Npgsql.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\MySql.Data.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.ReportViewer.WinForms.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.ValueTuple.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Threading.Tasks.Extensions.dll
@@ -45,10 +46,17 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Text.Json.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Net.Sockets.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Google.Protobuf.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\ZstdNet.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\K4os.Compression.LZ4.Streams.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Ubiety.Dns.Core.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.ReportViewer.Common.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\netstandard.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Numerics.Vectors.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Buffers.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Text.Encodings.Web.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\K4os.Compression.LZ4.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\K4os.Hash.xxHash.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.SqlServer.Types.dll
@@ -148,6 +156,7 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormVi
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormView.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\FormView.dll.config
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Npgsql.xml
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\MySql.Data.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.ValueTuple.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Threading.Tasks.Extensions.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
@@ -155,6 +164,7 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Text.Json.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Numerics.Vectors.xml
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Buffers.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\System.Text.Encodings.Web.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\de\Microsoft.ReportViewer.WinForms.resources.dll
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\es\Microsoft.ReportViewer.WinForms.resources.dll
