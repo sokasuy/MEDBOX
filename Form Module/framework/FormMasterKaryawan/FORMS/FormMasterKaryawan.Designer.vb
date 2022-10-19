@@ -28,7 +28,7 @@ Partial Class FormMasterKaryawan
         Me.btnCreateNew = New System.Windows.Forms.Button()
         Me.clbUserRight = New System.Windows.Forms.CheckedListBox()
         Me.gbView = New System.Windows.Forms.GroupBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.cbShowCommandColumns = New System.Windows.Forms.CheckBox()
         Me.lblPilihanData = New System.Windows.Forms.Label()
         Me.pnlPilihanData = New System.Windows.Forms.Panel()
         Me.rbFilterHistory = New System.Windows.Forms.RadioButton()
@@ -139,6 +139,8 @@ Partial Class FormMasterKaryawan
         Me.lblNamaSimpan = New System.Windows.Forms.Label()
         Me.lblSimpanKeDrive = New System.Windows.Forms.Label()
         Me.fbdExport = New System.Windows.Forms.FolderBrowserDialog()
+        Me.cbSertifikat = New System.Windows.Forms.CheckBox()
+        Me.dtpSertifikat = New System.Windows.Forms.DateTimePicker()
         Me.gbView.SuspendLayout()
         Me.pnlPilihanData.SuspendLayout()
         Me.pnlNavigasi.SuspendLayout()
@@ -206,7 +208,7 @@ Partial Class FormMasterKaryawan
         '
         Me.gbView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.gbView.Controls.Add(Me.CheckBox1)
+        Me.gbView.Controls.Add(Me.cbShowCommandColumns)
         Me.gbView.Controls.Add(Me.lblPilihanData)
         Me.gbView.Controls.Add(Me.pnlPilihanData)
         Me.gbView.Controls.Add(Me.lblSorting)
@@ -231,16 +233,16 @@ Partial Class FormMasterKaryawan
         Me.gbView.TabStop = False
         Me.gbView.Text = "VIEW"
         '
-        'CheckBox1
+        'cbShowCommandColumns
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(1082, 336)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(166, 19)
-        Me.CheckBox1.TabIndex = 200
-        Me.CheckBox1.Text = "Show Command Columns"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        Me.CheckBox1.Visible = False
+        Me.cbShowCommandColumns.AutoSize = True
+        Me.cbShowCommandColumns.Location = New System.Drawing.Point(1082, 336)
+        Me.cbShowCommandColumns.Name = "cbShowCommandColumns"
+        Me.cbShowCommandColumns.Size = New System.Drawing.Size(166, 19)
+        Me.cbShowCommandColumns.TabIndex = 200
+        Me.cbShowCommandColumns.Text = "Show Command Columns"
+        Me.cbShowCommandColumns.UseVisualStyleBackColor = True
+        Me.cbShowCommandColumns.Visible = False
         '
         'lblPilihanData
         '
@@ -633,6 +635,8 @@ Partial Class FormMasterKaryawan
         '
         'gbPendidikan
         '
+        Me.gbPendidikan.Controls.Add(Me.dtpSertifikat)
+        Me.gbPendidikan.Controls.Add(Me.cbSertifikat)
         Me.gbPendidikan.Controls.Add(Me.tbPendidikan)
         Me.gbPendidikan.Controls.Add(Me.lblTahunLulus)
         Me.gbPendidikan.Controls.Add(Me.lblPendidikanAkhir)
@@ -650,14 +654,14 @@ Partial Class FormMasterKaryawan
         '
         Me.tbPendidikan.Location = New System.Drawing.Point(85, 16)
         Me.tbPendidikan.Name = "tbPendidikan"
-        Me.tbPendidikan.Size = New System.Drawing.Size(190, 23)
+        Me.tbPendidikan.Size = New System.Drawing.Size(115, 23)
         Me.tbPendidikan.TabIndex = 19
         '
         'lblTahunLulus
         '
         Me.lblTahunLulus.AutoSize = True
         Me.lblTahunLulus.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.lblTahunLulus.Location = New System.Drawing.Point(706, 19)
+        Me.lblTahunLulus.Location = New System.Drawing.Point(501, 19)
         Me.lblTahunLulus.Name = "lblTahunLulus"
         Me.lblTahunLulus.Size = New System.Drawing.Size(76, 15)
         Me.lblTahunLulus.TabIndex = 224
@@ -675,23 +679,23 @@ Partial Class FormMasterKaryawan
         '
         'tbTahunLulus
         '
-        Me.tbTahunLulus.Location = New System.Drawing.Point(788, 16)
+        Me.tbTahunLulus.Location = New System.Drawing.Point(583, 16)
         Me.tbTahunLulus.Name = "tbTahunLulus"
         Me.tbTahunLulus.Size = New System.Drawing.Size(109, 23)
         Me.tbTahunLulus.TabIndex = 21
         '
         'tbLulusanDari
         '
-        Me.tbLulusanDari.Location = New System.Drawing.Point(365, 16)
+        Me.tbLulusanDari.Location = New System.Drawing.Point(289, 16)
         Me.tbLulusanDari.Name = "tbLulusanDari"
-        Me.tbLulusanDari.Size = New System.Drawing.Size(309, 23)
+        Me.tbLulusanDari.Size = New System.Drawing.Size(206, 23)
         Me.tbLulusanDari.TabIndex = 20
         '
         'lblLulusanDari
         '
         Me.lblLulusanDari.AutoSize = True
         Me.lblLulusanDari.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.lblLulusanDari.Location = New System.Drawing.Point(281, 19)
+        Me.lblLulusanDari.Location = New System.Drawing.Point(205, 19)
         Me.lblLulusanDari.Name = "lblLulusanDari"
         Me.lblLulusanDari.Size = New System.Drawing.Size(78, 15)
         Me.lblLulusanDari.TabIndex = 218
@@ -1357,6 +1361,25 @@ Partial Class FormMasterKaryawan
         Me.lblSimpanKeDrive.TabIndex = 86
         Me.lblSimpanKeDrive.Text = "Simpan ke Drive :"
         '
+        'cbSertifikat
+        '
+        Me.cbSertifikat.AutoSize = True
+        Me.cbSertifikat.Location = New System.Drawing.Point(698, 20)
+        Me.cbSertifikat.Name = "cbSertifikat"
+        Me.cbSertifikat.Size = New System.Drawing.Size(72, 19)
+        Me.cbSertifikat.TabIndex = 225
+        Me.cbSertifikat.Text = "Sertifikat"
+        Me.cbSertifikat.UseVisualStyleBackColor = True
+        '
+        'dtpSertifikat
+        '
+        Me.dtpSertifikat.CustomFormat = "dd-MMM-yyyy"
+        Me.dtpSertifikat.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpSertifikat.Location = New System.Drawing.Point(776, 16)
+        Me.dtpSertifikat.Name = "dtpSertifikat"
+        Me.dtpSertifikat.Size = New System.Drawing.Size(120, 23)
+        Me.dtpSertifikat.TabIndex = 226
+        '
         'FormMasterKaryawan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1510,7 +1533,7 @@ Partial Class FormMasterKaryawan
     Friend WithEvents rbFilterHistory As RadioButton
     Friend WithEvents rbFilterAktif As RadioButton
     Friend WithEvents lblPilihanData As Label
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents cbShowCommandColumns As CheckBox
     Friend WithEvents pnlCetak As Panel
     Friend WithEvents btnBrowse As Button
     Friend WithEvents btnExportExcel As Button
@@ -1519,4 +1542,6 @@ Partial Class FormMasterKaryawan
     Friend WithEvents lblNamaSimpan As Label
     Friend WithEvents lblSimpanKeDrive As Label
     Friend WithEvents fbdExport As FolderBrowserDialog
+    Friend WithEvents cbSertifikat As CheckBox
+    Friend WithEvents dtpSertifikat As DateTimePicker
 End Class

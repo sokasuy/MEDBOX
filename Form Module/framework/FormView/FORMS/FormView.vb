@@ -758,36 +758,19 @@
         End Try
     End Function
 
-    Private Function GetJamKerjaNyata(_jadwalMasuk As String, _jadwalPulang As String, _jamKerja As String, _lokasi As String, _tanggal As Date, _perusahaan As String, _kelompok As String, _katpenggajian As String, _isSecurity As Boolean, _terlambat As String, _pulangCepat As String) As String
+    Private Function GetJamKerjaNyata(_jadwalMasuk As String, _jadwalPulang As String, _masuk As String, _pulang As String, _jamKerja As String, _lokasi As String, _tanggal As Date, _perusahaan As String, _kelompok As String, _katpenggajian As String, _isSecurity As Boolean, _terlambat As String, _pulangCepat As String, _levelJabatan As Byte, _bagian As String) As String
         Try
             Dim batasToleransi As TimeSpan
+            Dim hitungJamKerjaNyata As TimeSpan
+            Dim alreadyProcessed As Boolean = False
             If (Not IsNothing(_jadwalMasuk) And Not IsNothing(_jadwalPulang)) And ((_jadwalMasuk <> "") And (_jadwalPulang <> "")) Then
                 'Kalau jadwal masuk dan jadwal pulangnya ada
                 'Dihitung dari jadwal jam pulang dikurangkan dengan jadwal jam masuknya, khusus untuk security, tanpa dikurangi jam istirahat
                 'Lembur tidak perlu ditambahkan di sini, karena perhitungan gajinya beda
-                'GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, WeekdayName(Weekday(_tanggal)), _isSecurity)) - TimeSpan.Parse(IIf(IsNothing(_terlambat), "00:00:00", _terlambat)) - TimeSpan.Parse(IIf(IsNothing(_pulangCepat), "00:00:00", _pulangCepat))).ToString
                 GetJamKerjaNyata = GetJamKerja(_jadwalMasuk, _jadwalPulang, _lokasi, _perusahaan, WeekdayName(Weekday(_tanggal)), _isSecurity)
             Else
                 'Kalau jadwal masuk dan jadwal pulangnya tidak ada, maka langsung dianggap 8 jam kerja dulu
-                'If (_isSecurity) Then
-                '    If (Trim(_lokasi) = "SIDOARJO") Then
-                '        'Khusus untuk security di Sidoarjo jam kerjanya 12 jam
-                '        GetJamKerjaNyata = "12:00:00"
-                '    Else
-                '        GetJamKerjaNyata = "08:00:00"
-                '    End If
-                'Else
-                '    If (WeekdayName(Weekday(_tanggal)) = "Friday") Then
-                '        If Not (_perusahaan.ToUpper.Contains("APOTEK")) Then
-                '            GetJamKerjaNyata = "08:30:00"
-                '        Else
-                '            GetJamKerjaNyata = "08:00:00"
-                '        End If
-                '    Else
-                '        GetJamKerjaNyata = "08:00:00"
-                '    End If
-                'End If
-                GetJamKerjaNyata = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & WeekdayName(Weekday(_tanggal)) & "'")
+                GetJamKerjaNyata = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & WeekdayName(Weekday(_tanggal)) & "' AND bagian='" & myCStringManipulation.SafeSqlLiteral(_bagian) & "'")
 
                 If Not IsNothing(_jamKerja) And _jamKerja <> "" Then
                     'Jika tidak ada jadwal, dan jam kerja sebelumnya lebih kecil dari jam kerja sesungguhnya (8 dan 12 jam), maka jam kerja nyata disesuaikan dengan jam kerja yang sebelumnya
@@ -816,58 +799,90 @@
                         'Jika ada jam terlambatnya atau pulang cepat, maka dilakukan pengecekkan sesuai data yang ada di tabel mstoleransimenit
                         If Not IsNothing(_terlambat) And (_terlambat <> "") Then
                             'DATANG TERLAMBAT
-                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and ijin='DT'")
+                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='DT'")
                             If Not IsNothing(batasToleransi) Then
-                                If (TimeSpan.Parse(_terlambat) > batasToleransi) Then
-                                    'Jika jam terlambatnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    'If (Trim(_lokasi) = "SIDOARJO") Then
-                                    '    'Kalau di Sidoarjo, kalau lebih dari batas toleransi telat, maka langsung dianggap tidak masuk
-                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                    '    'Kalau di Sidoarjo, kalau telatnya masih di bawah batas toleransi, hanya dikenakan denda telat 2500
-                                    '    GetJamKerjaNyata = Nothing
-                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                    '    'kalau di Pandaan, kalau lebih dari batas toleransi telat, maka nanti perhitungan jam kerjanya akan dihitung jam2an
-                                    '    'Nanti denda terlambatnya diperhitungkan kemudian, tetap ada denda telat 2500
-                                    '    'Jadi di Pandaan selain potongan gaji per jam, juga ditambah denda telat 2500
-                                    If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
-                                        GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)).ToString
+                                'Jika jam terlambatnya kurang dari batas toleransinya
+                                If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                    Dim lebihanJamPulang As TimeSpan
+                                    If Not IsNothing(_pulang) Then
+                                        If (TimeSpan.Parse(_pulang) > TimeSpan.Parse(_jadwalPulang)) Then
+                                            lebihanJamPulang = (TimeSpan.Parse(_pulang) - TimeSpan.Parse(_jadwalPulang))
+                                            If (lebihanJamPulang > batasToleransi) Then
+                                                lebihanJamPulang = batasToleransi
+                                            End If
+                                        Else
+                                            lebihanJamPulang = TimeSpan.Parse("00:00:00")
+                                        End If
                                     Else
-                                        GetJamKerjaNyata = Nothing
+                                        lebihanJamPulang = TimeSpan.Parse("00:00:00")
                                     End If
-                                    'End If
+                                    hitungJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)) + lebihanJamPulang
+                                    If (hitungJamKerjaNyata <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                        GetJamKerjaNyata = hitungJamKerjaNyata.ToString
+                                    End If
+                                Else
+                                    GetJamKerjaNyata = Nothing
                                 End If
                             End If
+                            alreadyProcessed = True
                         End If
                         If Not IsNothing(_pulangCepat) And (_pulangCepat <> "") Then
                             'PULANG CEPAT
-                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and ijin='PC'")
+                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='PC'")
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
                                     'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
-                                    'If (Trim(_lokasi) = "SIDOARJO") Then
-                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Sidoarjo maka langsung dianggap tidak masuk kerja
-                                    '    GetJamKerjaNyata = Nothing
-                                    'ElseIf (Trim(_lokasi) = "PANDAAN") Then
-                                    '    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff di Pandaan maka akan dihitung gaji per jam
                                     If (TimeSpan.Parse(_pulangCepat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
                                         GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
                                     Else
                                         GetJamKerjaNyata = Nothing
                                     End If
-                                    'End If
+                                End If
+                            End If
+                        Else
+                            If Not alreadyProcessed Then
+                                'JIKA TIDAK PULANG CEPAT, CEK JAM KERJA, APAKAH PULANGNYA LEBIH DARI TOLERANSI TERLAMBAT
+                                If Not IsNothing(_terlambat) And (_terlambat <> "") Then
+                                    'Kalau tidak terlambat dan tidak pulang cepat, maka gak perlu di cek di sini
+                                    batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='DT'")
+                                    If Not IsNothing(batasToleransi) Then
+                                        'Jika jam terlambatnya kurang dari batas toleransinya
+                                        If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                            Dim lebihanJamPulang As TimeSpan
+                                            If Not IsNothing(_pulang) Then
+                                                If (TimeSpan.Parse(_pulang) > TimeSpan.Parse(_jadwalPulang)) Then
+                                                    lebihanJamPulang = (TimeSpan.Parse(_pulang) - TimeSpan.Parse(_jadwalPulang))
+                                                    If (lebihanJamPulang > batasToleransi) Then
+                                                        lebihanJamPulang = batasToleransi
+                                                    End If
+                                                Else
+                                                    lebihanJamPulang = TimeSpan.Parse("00:00:00")
+                                                End If
+                                            Else
+                                                lebihanJamPulang = TimeSpan.Parse("00:00:00")
+                                            End If
+                                            hitungJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_terlambat)) + lebihanJamPulang
+                                            If (hitungJamKerjaNyata <= TimeSpan.Parse(GetJamKerjaNyata)) Then
+                                                GetJamKerjaNyata = hitungJamKerjaNyata.ToString
+                                            End If
+                                        Else
+                                            GetJamKerjaNyata = Nothing
+                                        End If
+                                    End If
                                 End If
                             End If
                         End If
                     End If
                 Else
                     'Untuk NON STAFF dan OUTSOURCING. Perlakuan terlambatnya berbeda, jadi harus dipisah
+                    'SEMENTARA TIDAK DIPAKAI DI MEDBOX
                     If (IsNothing(_terlambat) And IsNothing(_pulangCepat)) And (_terlambat = "" And _pulangCepat = "") Then
                         'Jika tidak terlambat dan pulang cepat, maka jam kerjanya full
                     Else
                         'Jika ada jam terlambatnya atau pulang cepat, maka dilakukan pengecekkan sesuai data yang ada di tabel mstoleransimenit
                         If (Not IsNothing(_terlambat) And Not IsNothing(GetJamKerjaNyata)) And (_terlambat <> "" And GetJamKerjaNyata <> "") Then
                             'DATANG TERLAMBAT
-                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and ijin='DT'")
+                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='DT'")
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_terlambat) > batasToleransi) Then
                                     'Jika jam terlambatnya melebihi batas toleransinya, kalau untuk non staff maka akan dihitung gaji per jam
@@ -889,7 +904,7 @@
                         End If
                         If (Not IsNothing(_pulangCepat) And Not IsNothing(GetJamKerjaNyata)) And (_pulangCepat <> "" And GetJamKerjaNyata <> "") Then
                             'PULANG CEPAT
-                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and ijin='PC'")
+                            batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='PC'")
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
                                     'Jika jam pulangnya melebihi batas toleransinya, kalau untuk non staff maka akan dihitung gaji per jam
@@ -924,24 +939,6 @@
                 'Jam masuk dan jam keluarnya harus sama2 ada isinya, tidak boleh salah 1 kosong!!
                 'Untuk hitung jam kerja dan banyaknya jam kerjanya
                 Dim jamIstirahat As String
-                'If (_isSecurity) Then
-                '    'Security jam istirahatnya tidak dihitung
-                '    jamIstirahat = "00:00:00"
-                'Else
-                '    Select Case _lokasi
-                '        Case "SIDOARJO"
-                '            jamIstirahat = "01:00:00"
-                '        Case "PANDAAN"
-                '            If (_hari = "Friday") Then
-                '                jamIstirahat = "01:00:00"
-                '            Else
-                '                jamIstirahat = "00:30:00"
-                '            End If
-                '        Case Else
-                '            'Defaultnya kita kasih jam istirahat 1 jam
-                '            jamIstirahat = "01:00:00"
-                '    End Select
-                'End If
                 jamIstirahat = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamistirahat", tableName(13),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' AND issecurity='" & _isSecurity & "' AND hari='" & _hari & "'")
 
                 If (TimeSpan.Parse(_jamKeluar) >= TimeSpan.Parse(_jamMasuk)) Then
@@ -1345,7 +1342,7 @@
                                 ElseIf (e.ColumnIndex = dgvView.Columns("jamkerjanyata").Index) Then
                                     Dim limitJamKerja As String
                                     Call myCDBConnection.OpenConn(CONN_.dbMain)
-                                    limitJamKerja = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("lokasi").Value) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("perusahaan").Value) & "' AND issecurity='" & IIf(dgvView.CurrentRow.Cells("departemen").Value = "SECURITY", "True", "False") & "' AND hari='" & WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)) & "'")
+                                    limitJamKerja = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("lokasi").Value) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("perusahaan").Value) & "' AND issecurity='" & IIf(dgvView.CurrentRow.Cells("departemen").Value = "SECURITY", "True", "False") & "' AND hari='" & WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)) & "' AND bagian='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("bagian").Value) & "'")
                                     Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
                                     If (dgvView.CurrentCell.Value > TimeSpan.Parse(limitJamKerja)) Then
                                         'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
@@ -1363,65 +1360,6 @@
                                         End If
                                         isPartialChanged = False
                                     End If
-                                    'If (dgvView.CurrentRow.Cells("departemen").Value = "SECURITY") Then
-                                    '    If (dgvView.CurrentRow.Cells("lokasi").Value = "PANDAAN") Then
-                                    '        If (dgvView.CurrentCell.Value > TimeSpan.Parse("08:00:00")) Then
-                                    '            'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '            Call myCShowMessage.ShowWarning("Jam kerja Security tidak boleh lebih dari 8 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '            isValueChanged = False
-                                    '        Else
-                                    '            isValueChanged = True
-                                    '        End If
-                                    '    ElseIf (dgvView.CurrentRow.Cells("lokasi").Value = "SIDOARJO") Then
-                                    '        If (dgvView.CurrentCell.Value > TimeSpan.Parse("12:00:00")) Then
-                                    '            'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '            Call myCShowMessage.ShowWarning("Jam kerja Security tidak boleh lebih dari 12 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '            isValueChanged = False
-                                    '        Else
-                                    '            isValueChanged = True
-                                    '        End If
-                                    '    End If
-                                    'Else
-                                    '    If (dgvView.CurrentRow.Cells("lokasi").Value = "PANDAAN") Then
-                                    '        If (dgvView.CurrentCell.Value > TimeSpan.Parse("08:00:00")) Then
-                                    '            'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '            Call myCShowMessage.ShowWarning("Jam kerja tidak boleh lebih dari 8 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '            isValueChanged = False
-                                    '        Else
-                                    '            isValueChanged = True
-                                    '        End If
-                                    '    ElseIf (dgvView.CurrentRow.Cells("lokasi").Value = "SIDOARJO") Then
-                                    '        If (dgvView.CurrentRow.Cells("perusahaan").Value.ToString.ToUpper.Contains("APOTEK")) Then
-                                    '            If (dgvView.CurrentCell.Value > TimeSpan.Parse("08:00:00")) Then
-                                    '                'Jam Kerja di APOTEK tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '                Call myCShowMessage.ShowWarning("Jam kerja tidak boleh lebih dari 8 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '                isValueChanged = False
-                                    '            Else
-                                    '                isValueChanged = True
-                                    '            End If
-                                    '        Else
-                                    '            If (WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)) = "Friday") Then
-                                    '                'Kalau jumat boleh sampai 8.30 jam
-                                    '                If (dgvView.CurrentCell.Value > TimeSpan.Parse("08:30:00")) Then
-                                    '                    'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '                    Call myCShowMessage.ShowWarning("Jam kerja khusus di hari Jumat tidak boleh lebih dari 8.5 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '                    isValueChanged = False
-                                    '                Else
-                                    '                    isValueChanged = True
-                                    '                End If
-                                    '            Else
-                                    '                'Selain hari jumat, maks sampai 8 jam
-                                    '                If (dgvView.CurrentCell.Value > TimeSpan.Parse("08:00:00")) Then
-                                    '                    'Jam Kerja selain hari Jumat tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                    '                    Call myCShowMessage.ShowWarning("Jam kerja selain hari Jumat tidak boleh lebih dari 8 jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
-                                    '                    isValueChanged = False
-                                    '                Else
-                                    '                    isValueChanged = True
-                                    '                End If
-                                    '            End If
-                                    '        End If
-                                    '    End If
-                                    'End If
                                 Else
                                     isPartialChanged = True
                                     dgvView.CurrentCell.Value = dgvView.CurrentCell.Value.ToString.ToUpper
@@ -1531,6 +1469,9 @@
                             If Not IsDBNull(dgvView.CurrentCell.Value) Then
                                 Dim terlambat As TimeSpan
                                 Dim pulangCepat As TimeSpan
+                                Dim levelJabatan As Byte
+
+                                levelJabatan = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "level", CONN_.schemaHRD & ".msposisikaryawan",, "nip='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("nip").Value) & "'", CONN_.dbType)
                                 If (e.ColumnIndex = dgvView.Columns("masuk").Index) Then
                                     If Not IsDBNull(dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
                                         If (dgvView.CurrentRow.Cells("masuk").Value > dgvView.CurrentRow.Cells("jadwalmasuk").Value) Then
@@ -1572,10 +1513,10 @@
 
                                     If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
                                         jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)), True)
-                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, True, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, True, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString, levelJabatan, dgvView.CurrentRow.Cells("bagian").Value)
                                     Else
                                         jamKerja = GetJamKerja(dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("perusahaan").Value, WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)))
-                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, False, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString)
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.CurrentRow.Cells("jadwalmasuk").Value.ToString, dgvView.CurrentRow.Cells("jadwalkeluar").Value.ToString, dgvView.CurrentRow.Cells("masuk").Value.ToString, dgvView.CurrentRow.Cells("keluar").Value.ToString, jamKerja, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.CurrentRow.Cells("tanggal").Value, dgvView.CurrentRow.Cells("perusahaan").Value, dgvView.CurrentRow.Cells("kelompok").Value, dgvView.CurrentRow.Cells("katpenggajian").Value.ToString, False, dgvView.CurrentRow.Cells("terlambat").Value.ToString, dgvView.CurrentRow.Cells("pulangcepat").Value.ToString, levelJabatan, dgvView.CurrentRow.Cells("bagian").Value)
                                     End If
                                     dgvView.CurrentRow.Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)
                                     dgvView.CurrentRow.Cells("jamkerjanyata").Value = IIf(IsNothing(jamKerjaNyata), DBNull.Value, jamKerjaNyata)
@@ -1762,8 +1703,9 @@
                         Dim jadwalKeluar As String
                         Dim terlambat As String
                         Dim pulangCepat As String
+                        Dim levelJabatan As Byte
 
-                        stSQL = "SELECT tanggal,jadwalmasuk,jadwalkeluar,masuk,keluar,lokasi,perusahaan,kelompok,katpenggajian,departemen,divisi,bagian,kdr,terlambat,pulangcepat FROM " & tableName(0) & " WHERE cekfp='True' and (ijin<>'TM' or ijin is null) and absen is null;"
+                        stSQL = "SELECT nip,tanggal,jadwalmasuk,jadwalkeluar,masuk,keluar,lokasi,perusahaan,kelompok,katpenggajian,departemen,divisi,bagian,kdr,terlambat,pulangcepat FROM " & tableName(0) & " WHERE cekfp='True' and (ijin<>'TM' or ijin is null) and absen is null;"
                         tmpDataPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_tmpDataPresensi")
                         For i As Integer = 0 To tmpDataPresensi.Rows.Count - 1
                             If (rbJamMasuk.Checked) Then
@@ -1791,6 +1733,7 @@
                             jadwalKeluar = IIf(IsDBNull(tmpDataPresensi.Rows(i).Item("jadwalkeluar")), Nothing, tmpDataPresensi.Rows(i).Item("jadwalkeluar").ToString)
                             terlambat = IIf(IsDBNull(tmpDataPresensi.Rows(i).Item("terlambat")), Nothing, tmpDataPresensi.Rows(i).Item("terlambat").ToString)
                             pulangCepat = IIf(IsDBNull(tmpDataPresensi.Rows(i).Item("pulangcepat")), Nothing, tmpDataPresensi.Rows(i).Item("pulangcepat").ToString)
+                            levelJabatan = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "level", CONN_.schemaHRD & ".msposisikaryawan",, "nip='" & myCStringManipulation.SafeSqlLiteral(tmpDataPresensi.Rows(i).Item("nip")) & "'", CONN_.dbType)
 
                             If IsDBNull(tmpDataPresensi.Rows(i).Item("departemen")) Then
                                 arrGrup(0) = Nothing
@@ -1810,10 +1753,10 @@
 
                             If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
                                 jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, tmpDataPresensi.Rows(i).Item("perusahaan"), hari, True)
-                                jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), True, terlambat, pulangCepat)
+                                jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamMasuk, jamKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), True, terlambat, pulangCepat, levelJabatan, arrGrup(2))
                             Else
                                 jamKerja = GetJamKerja(jamMasuk, jamKeluar, lokasi, tmpDataPresensi.Rows(i).Item("perusahaan"), hari)
-                                jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), False, terlambat, pulangCepat)
+                                jamKerjaNyata = GetJamKerjaNyata(jadwalMasuk, jadwalKeluar, jamMasuk, jamKeluar, jamKerja, tmpDataPresensi.Rows(i).Item("lokasi"), tmpDataPresensi.Rows(i).Item("tanggal"), tmpDataPresensi.Rows(i).Item("perusahaan"), tmpDataPresensi.Rows(i).Item("kelompok"), tmpDataPresensi.Rows(i).Item("katpenggajian"), False, terlambat, pulangCepat, levelJabatan, arrGrup(2))
                             End If
                             banyakJamKerja = GetBanyakJamKerja(jamKerja)
                             banyakJamKerjaNyata = GetBanyakJamKerja(jamKerjaNyata, False)
@@ -1983,6 +1926,7 @@
                 Dim cekIjin As String
                 Dim banyakJamKerja As Double
                 Dim banyakJamKerjaNyata As Double
+                Dim levelJabatan As Byte
 
                 For Each selectedCells As DataGridViewCell In dgvView.SelectedCells
                     Dim rowIndex As Integer = selectedCells.RowIndex
@@ -2003,6 +1947,7 @@
                             'mySelectedCells.Add(rowIndex)
                             isPartialChanged = True
                             If Not IsDBNull(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value) And Not IsDBNull(dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value) Then
+                                levelJabatan = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "level", CONN_.schemaHRD & ".msposisikaryawan",, "nip='" & myCStringManipulation.SafeSqlLiteral(dgvView.Rows(rowIndex).Cells("nip").Value) & "'", CONN_.dbType)
                                 If (colIndex = dgvView.Columns("masuk").Index) Then
                                     dgvView.Rows(rowIndex).Cells("masuk").Value = dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value
                                     'If IsDBNull(dgvView.Rows(rowIndex).Cells("keluar").Value) Then
@@ -2035,10 +1980,10 @@
 
                                     If (arrGrup(0) = "SECURITY" Or arrGrup(1) = "SECURITY" Or arrGrup(2) = "SECURITY") Then
                                         jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))), True)
-                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, True, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString)
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, True, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString, levelJabatan, arrGrup(2))
                                     Else
                                         jamKerja = GetJamKerja(dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, dgvView.CurrentRow.Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, WeekdayName(Weekday(Date.Parse(dgvView.CurrentRow.Cells("tanggal").Value))))
-                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, False, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString)
+                                        jamKerjaNyata = GetJamKerjaNyata(dgvView.Rows(rowIndex).Cells("jadwalmasuk").Value.ToString, dgvView.Rows(rowIndex).Cells("jadwalkeluar").Value.ToString, dgvView.Rows(rowIndex).Cells("masuk").Value.ToString, dgvView.Rows(rowIndex).Cells("keluar").Value.ToString, jamKerja, dgvView.Rows(rowIndex).Cells("lokasi").Value, dgvView.Rows(rowIndex).Cells("tanggal").Value, dgvView.Rows(rowIndex).Cells("perusahaan").Value, dgvView.Rows(rowIndex).Cells("kelompok").Value, dgvView.Rows(rowIndex).Cells("katpenggajian").Value.ToString, False, dgvView.Rows(rowIndex).Cells("terlambat").Value.ToString, dgvView.Rows(rowIndex).Cells("pulangcepat").Value.ToString, levelJabatan, arrGrup(2))
                                     End If
                                     dgvView.Rows(rowIndex).Cells("jamkerja").Value = IIf(IsNothing(jamKerja), DBNull.Value, jamKerja)
                                     dgvView.Rows(rowIndex).Cells("jamkerjanyata").Value = IIf(IsNothing(jamKerjaNyata), DBNull.Value, jamKerjaNyata)

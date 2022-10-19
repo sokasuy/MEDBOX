@@ -112,7 +112,7 @@ Partial Class FormProsesPayroll
         Me.cboPerusahaan.Location = New System.Drawing.Point(111, 49)
         Me.cboPerusahaan.Name = "cboPerusahaan"
         Me.cboPerusahaan.Size = New System.Drawing.Size(218, 21)
-        Me.cboPerusahaan.TabIndex = 3
+        Me.cboPerusahaan.TabIndex = 4
         '
         'lblPerusahaanGlobal
         '
@@ -148,6 +148,7 @@ Partial Class FormProsesPayroll
         'rbNonStaff
         '
         Me.rbNonStaff.AutoSize = True
+        Me.rbNonStaff.Enabled = False
         Me.rbNonStaff.Location = New System.Drawing.Point(84, 3)
         Me.rbNonStaff.Name = "rbNonStaff"
         Me.rbNonStaff.Size = New System.Drawing.Size(85, 17)
@@ -158,7 +159,6 @@ Partial Class FormProsesPayroll
         'rbStaff
         '
         Me.rbStaff.AutoSize = True
-        Me.rbStaff.Enabled = False
         Me.rbStaff.Location = New System.Drawing.Point(3, 3)
         Me.rbStaff.Name = "rbStaff"
         Me.rbStaff.Size = New System.Drawing.Size(58, 17)
@@ -184,6 +184,7 @@ Partial Class FormProsesPayroll
         Me.gbView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbView.Controls.Add(Me.cboKuartal)
         Me.gbView.Controls.Add(Me.lblCatatanHRD)
         Me.gbView.Controls.Add(Me.rtbCatatanHRD)
         Me.gbView.Controls.Add(Me.lblFaktorQty)
@@ -229,7 +230,7 @@ Partial Class FormProsesPayroll
         Me.rtbCatatanHRD.Location = New System.Drawing.Point(99, 116)
         Me.rtbCatatanHRD.Name = "rtbCatatanHRD"
         Me.rtbCatatanHRD.Size = New System.Drawing.Size(472, 56)
-        Me.rtbCatatanHRD.TabIndex = 255
+        Me.rtbCatatanHRD.TabIndex = 10
         Me.rtbCatatanHRD.Text = ""
         '
         'lblFaktorQty
@@ -248,7 +249,7 @@ Partial Class FormProsesPayroll
         Me.cboFaktorQty.Location = New System.Drawing.Point(381, 58)
         Me.cboFaktorQty.Name = "cboFaktorQty"
         Me.cboFaktorQty.Size = New System.Drawing.Size(121, 21)
-        Me.cboFaktorQty.TabIndex = 7
+        Me.cboFaktorQty.TabIndex = 8
         '
         'lblKeterangan
         '
@@ -265,7 +266,7 @@ Partial Class FormProsesPayroll
         Me.rtbLain2.Location = New System.Drawing.Point(99, 81)
         Me.rtbLain2.Name = "rtbLain2"
         Me.rtbLain2.Size = New System.Drawing.Size(472, 32)
-        Me.rtbLain2.TabIndex = 8
+        Me.rtbLain2.TabIndex = 9
         Me.rtbLain2.Text = ""
         '
         'Label6
@@ -303,7 +304,7 @@ Partial Class FormProsesPayroll
         Me.tbLain2.Location = New System.Drawing.Point(99, 59)
         Me.tbLain2.Name = "tbLain2"
         Me.tbLain2.Size = New System.Drawing.Size(164, 20)
-        Me.tbLain2.TabIndex = 6
+        Me.tbLain2.TabIndex = 7
         Me.tbLain2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label5
@@ -417,7 +418,7 @@ Partial Class FormProsesPayroll
         Me.cboKaryawanIndividu.Location = New System.Drawing.Point(99, 15)
         Me.cboKaryawanIndividu.Name = "cboKaryawanIndividu"
         Me.cboKaryawanIndividu.Size = New System.Drawing.Size(443, 21)
-        Me.cboKaryawanIndividu.TabIndex = 5
+        Me.cboKaryawanIndividu.TabIndex = 6
         '
         'lblKaryawanIndividu
         '
@@ -536,7 +537,7 @@ Partial Class FormProsesPayroll
         Me.cboLokasi.Location = New System.Drawing.Point(408, 49)
         Me.cboLokasi.Name = "cboLokasi"
         Me.cboLokasi.Size = New System.Drawing.Size(146, 21)
-        Me.cboLokasi.TabIndex = 4
+        Me.cboLokasi.TabIndex = 5
         '
         'Label3
         '
@@ -552,7 +553,7 @@ Partial Class FormProsesPayroll
         'lblSD
         '
         Me.lblSD.AutoSize = True
-        Me.lblSD.Location = New System.Drawing.Point(407, 34)
+        Me.lblSD.Location = New System.Drawing.Point(358, 33)
         Me.lblSD.Name = "lblSD"
         Me.lblSD.Size = New System.Drawing.Size(21, 13)
         Me.lblSD.TabIndex = 239
@@ -561,11 +562,12 @@ Partial Class FormProsesPayroll
         'dtpPeriodeSelesai
         '
         Me.dtpPeriodeSelesai.CustomFormat = "dd-MMM-yyyy"
+        Me.dtpPeriodeSelesai.Enabled = False
         Me.dtpPeriodeSelesai.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpPeriodeSelesai.Location = New System.Drawing.Point(434, 28)
+        Me.dtpPeriodeSelesai.Location = New System.Drawing.Point(385, 27)
         Me.dtpPeriodeSelesai.Name = "dtpPeriodeSelesai"
         Me.dtpPeriodeSelesai.Size = New System.Drawing.Size(120, 20)
-        Me.dtpPeriodeSelesai.TabIndex = 2
+        Me.dtpPeriodeSelesai.TabIndex = 3
         '
         'lblPeriode
         '
@@ -580,11 +582,12 @@ Partial Class FormProsesPayroll
         'dtpPeriodeMulai
         '
         Me.dtpPeriodeMulai.CustomFormat = "dd-MMM-yyyy"
+        Me.dtpPeriodeMulai.Enabled = False
         Me.dtpPeriodeMulai.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpPeriodeMulai.Location = New System.Drawing.Point(281, 28)
+        Me.dtpPeriodeMulai.Location = New System.Drawing.Point(232, 27)
         Me.dtpPeriodeMulai.Name = "dtpPeriodeMulai"
         Me.dtpPeriodeMulai.Size = New System.Drawing.Size(120, 20)
-        Me.dtpPeriodeMulai.TabIndex = 1
+        Me.dtpPeriodeMulai.TabIndex = 2
         '
         'btnCetakRekap
         '
@@ -603,10 +606,11 @@ Partial Class FormProsesPayroll
         '
         Me.cboKuartal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboKuartal.FormattingEnabled = True
-        Me.cboKuartal.Location = New System.Drawing.Point(227, 27)
+        Me.cboKuartal.Location = New System.Drawing.Point(906, 149)
         Me.cboKuartal.Name = "cboKuartal"
         Me.cboKuartal.Size = New System.Drawing.Size(48, 21)
         Me.cboKuartal.TabIndex = 242
+        Me.cboKuartal.Visible = False
         '
         'cboPeriode
         '
@@ -615,7 +619,7 @@ Partial Class FormProsesPayroll
         Me.cboPeriode.Location = New System.Drawing.Point(111, 27)
         Me.cboPeriode.Name = "cboPeriode"
         Me.cboPeriode.Size = New System.Drawing.Size(115, 21)
-        Me.cboPeriode.TabIndex = 241
+        Me.cboPeriode.TabIndex = 1
         '
         'FormProsesPayroll
         '
@@ -623,7 +627,6 @@ Partial Class FormProsesPayroll
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.AliceBlue
         Me.ClientSize = New System.Drawing.Size(984, 641)
-        Me.Controls.Add(Me.cboKuartal)
         Me.Controls.Add(Me.cboPeriode)
         Me.Controls.Add(Me.btnCetakRekap)
         Me.Controls.Add(Me.lblSD)

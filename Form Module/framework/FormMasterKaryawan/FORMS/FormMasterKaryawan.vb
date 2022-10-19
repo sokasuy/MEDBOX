@@ -16,7 +16,7 @@
     Private cmbDgvTanggunganButton As New DataGridViewButtonColumn()
     Private cmbDgvAttachmentButton As New DataGridViewButtonColumn()
     Private cekTambahButton(3) As Boolean
-    Private arrDefValues(29) As String
+    Private arrDefValues(31) As String
     Private tableName(3) As String
 
     Private myDataTableCboAgama As New DataTable
@@ -183,6 +183,7 @@
             rbPria.Checked = True
             rbAktif.Checked = True
             'rbSingle.Checked = True
+            dtpSertifikat.Visible = False
 
             isDataPrepared = True
 
@@ -323,11 +324,11 @@
             End If
 
             'Kalau aktif pakai tabel mskaryawanaktif, kalau sudah tidak aktif pakai tabel logkaryawanaktif
-            stSQL = "SELECT rid,idk,nik,nama,jeniskelamin as jenis_kelamin,alamat,tempatlahir as tempat_lahir,tanggallahir as tanggal_lahir,tanggalmasuk as tanggal_masuk,npwp,namaberdasarnpwp as nama_berdasar_npwp,alamatberdasarnpwp as alamat_berdasar_npwp,nokk as no_kk,status,jumlahanak as jumlah_anak,nohp as no_hp,email,agama,goldarah as gol_darah,pendidikan,lulusandari as lulusan_dari,tahunlulus as tahun_lulus,bpjstk as bpjs_tk,nobpjstk as no_bpjs_tk,bpjskesehatan as bpjs_kesehatan,nobpjskesehatan as no_bpjs_kesehatan,jaminan,statusbekerja as status_bekerja,tanggalberhentibekerja as tanggal_berhenti_bekerja,tanggalterakhirbekerja as tanggal_terakhir_bekerja,lokasi,created_at,updated_at " &
+            stSQL = "SELECT rid,idk,nik,nama,jeniskelamin as jenis_kelamin,alamat,tempatlahir as tempat_lahir,tanggallahir as tanggal_lahir,tanggalmasuk as tanggal_masuk,npwp,namaberdasarnpwp as nama_berdasar_npwp,alamatberdasarnpwp as alamat_berdasar_npwp,nokk as no_kk,status,jumlahanak as jumlah_anak,nohp as no_hp,email,agama,goldarah as gol_darah,pendidikan,lulusandari as lulusan_dari,tahunlulus as tahun_lulus,bpjstk as bpjs_tk,nobpjstk as no_bpjs_tk,bpjskesehatan as bpjs_kesehatan,nobpjskesehatan as no_bpjs_kesehatan,jaminan,statusbekerja as status_bekerja,tanggalberhentibekerja as tanggal_berhenti_bekerja,tanggalterakhirbekerja as tanggal_terakhir_bekerja,lokasi,sertifikat,tanggalsertifikat as tanggal_sertifikat,created_at,updated_at " &
                         "FROM ( " &
-                            "SELECT sub.rid,sub.idk,sub.nik,sub.nama,sub.jeniskelamin,sub.alamat,sub.tempatlahir,sub.tanggallahir,sub.tanggalmasuk,sub.npwp,sub.namaberdasarnpwp,sub.alamatberdasarnpwp,sub.nokk,sub.status,sub.jumlahanak,sub.nohp,sub.email,sub.agama,sub.goldarah,sub.pendidikan,sub.lulusandari,sub.tahunlulus,sub.bpjstk,sub.nobpjstk,sub.bpjskesehatan,sub.nobpjskesehatan,sub.jaminan,sub.statusbekerja,sub.tanggalberhentibekerja,sub.tanggalterakhirbekerja,sub.lokasi,sub.created_at,sub.updated_at " &
+                            "SELECT sub.rid,sub.idk,sub.nik,sub.nama,sub.jeniskelamin,sub.alamat,sub.tempatlahir,sub.tanggallahir,sub.tanggalmasuk,sub.npwp,sub.namaberdasarnpwp,sub.alamatberdasarnpwp,sub.nokk,sub.status,sub.jumlahanak,sub.nohp,sub.email,sub.agama,sub.goldarah,sub.pendidikan,sub.lulusandari,sub.tahunlulus,sub.bpjstk,sub.nobpjstk,sub.bpjskesehatan,sub.nobpjskesehatan,sub.jaminan,sub.statusbekerja,sub.tanggalberhentibekerja,sub.tanggalterakhirbekerja,sub.lokasi,sub.sertifikat,sub.tanggalsertifikat,sub.created_at,sub.updated_at " &
                             "FROM ( " &
-                                "SELECT tbl.rid,tbl.idk,tbl.nik,tbl.nama,tbl.jeniskelamin,tbl.alamat,tbl.tempatlahir,tbl.tanggallahir,tbl.tanggalmasuk,tbl.npwp,tbl.namaberdasarnpwp,tbl.alamatberdasarnpwp,tbl.nokk,tbl.status,tbl.jumlahanak,tbl.nohp,tbl.email,tbl.agama,tbl.goldarah,tbl.pendidikan,tbl.lulusandari,tbl.tahunlulus,tbl.bpjstk,tbl.nobpjstk,tbl.bpjskesehatan,tbl.nobpjskesehatan,tbl.jaminan,tbl.statusbekerja,tbl.tanggalberhentibekerja,tbl.tanggalterakhirbekerja,tbl.lokasi,tbl.created_at,tbl.updated_at " &
+                                "SELECT tbl.rid,tbl.idk,tbl.nik,tbl.nama,tbl.jeniskelamin,tbl.alamat,tbl.tempatlahir,tbl.tanggallahir,tbl.tanggalmasuk,tbl.npwp,tbl.namaberdasarnpwp,tbl.alamatberdasarnpwp,tbl.nokk,tbl.status,tbl.jumlahanak,tbl.nohp,tbl.email,tbl.agama,tbl.goldarah,tbl.pendidikan,tbl.lulusandari,tbl.tahunlulus,tbl.bpjstk,tbl.nobpjstk,tbl.bpjskesehatan,tbl.nobpjskesehatan,tbl.jaminan,tbl.statusbekerja,tbl.tanggalberhentibekerja,tbl.tanggalterakhirbekerja,tbl.lokasi,tbl.sertifikat,tbl.tanggalsertifikat,tbl.created_at,tbl.updated_at " &
                                 "FROM " & tableName(0) & " as tbl left join " & IIf(rbFilterAktif.Checked, tableName(1), tableName(2)) & " as tbl2 on tbl.idk=tbl2.idk " &
                                 "WHERE " & mStatusBekerja & " AND ((upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " & IIf(USER_.lokasi = "ALL", "", "AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') ") & mGroupCriteria & " " &
                                 "ORDER BY " & IIf(IsNothing(sortingCols), "(case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC ", sortingCols & " " & sortingType) & " " &
@@ -394,6 +395,8 @@
                 .Columns("tanggal_berhenti_bekerja").Width = 80
                 .Columns("tanggal_terakhir_bekerja").Width = 80
                 .Columns("lokasi").Width = 70
+                .Columns("sertifikat").Width = 70
+                .Columns("tanggal_sertifikat").Width = 80
 
                 For a As Integer = 0 To myDataTable.Columns.Count - 1
                     .Columns(myDataTable.Columns(a).ColumnName).HeaderText = myDataTable.Columns(a).ColumnName.ToUpper
@@ -406,6 +409,7 @@
                 .Columns("tanggal_lahir").DefaultCellStyle.Format = "dd-MMM-yyyy"
                 .Columns("tanggal_masuk").DefaultCellStyle.Format = "dd-MMM-yyyy"
                 .Columns("tanggal_berhenti_bekerja").DefaultCellStyle.Format = "dd-MMM-yyyy"
+                .Columns("tanggal_sertifikat").DefaultCellStyle.Format = "dd-MMM-yyyy"
                 .Columns("created_at").DefaultCellStyle.Format = "dd-MMM-yyyy HH:mm:ss"
                 .Columns("updated_at").DefaultCellStyle.Format = "dd-MMM-yyyy HH:mm:ss"
 
@@ -903,6 +907,18 @@
                                 End If
                             Next
                         End If
+                        'Sertifikat
+                        If Not IsDBNull(dgvView.CurrentRow.Cells("sertifikat").Value) Then
+                            cbSertifikat.Checked = dgvView.CurrentRow.Cells("sertifikat").Value
+                            arrDefValues(30) = dgvView.CurrentRow.Cells("sertifikat").Value
+                        End If
+                        'Tanggal Sertifikat
+                        If Not IsDBNull(dgvView.CurrentRow.Cells("tanggal_sertifikat").Value) Then
+                            dtpSertifikat.Value = dgvView.CurrentRow.Cells("tanggal_sertifikat").Value
+                            arrDefValues(31) = dgvView.CurrentRow.Cells("tanggal_sertifikat").Value
+                        Else
+                            arrDefValues(31) = Nothing
+                        End If
                         isDataPrepared = True
                     End If
                 End If
@@ -1025,6 +1041,10 @@
                         If (strStatusBekerja <> "AKTIF") Then
                             newValues &= ",'" & Format(dtpTerakhirKerja.Value.Date, "dd-MMM-yyyy") & "','" & Format(dtpTerakhirKerja.Value.Date.AddDays(1), "dd-MMM-yyyy") & "'"
                             newFields &= ",tanggalterakhirbekerja,tanggalberhentibekerja"
+                        End If
+                        If cbSertifikat.Checked Then
+                            newValues &= ",'" & cbSertifikat.Checked & "','" & Format(dtpSertifikat.Value.Date, "dd-MMM-yyyy") & "'"
+                            newFields &= ",sertifikat,tanggalsertifikat"
                         End If
                         Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableName(0), newValues, newFields)
 
@@ -1243,6 +1263,21 @@
                         End If
                         If (USER_.lokasi = "ALL") Then
                             Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(1), "lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "'", "idk='" & arrDefValues(1) & "'")
+                        End If
+                    End If
+                    If (arrDefValues(30) <> cbSertifikat.Checked) Then
+                        If (cbSertifikat.Checked) Then
+                            updateString &= IIf(IsNothing(updateString), "", ",") & "sertifikat='" & cbSertifikat.Checked & "',tanggalsertifikat='" & Format(dtpSertifikat.Value.Date, "dd-MMM-yyyy") & "'"
+                        Else
+                            updateString &= IIf(IsNothing(updateString), "", ",") & "sertifikat='False',tanggalsertifikat=Null"
+                        End If
+                        If (foundRows.Length > 0) Then
+                            myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("sertifikat") = cbSertifikat.Checked
+                            If (cbSertifikat.Checked) Then
+                                myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("tanggal_sertifikat") = Format(dtpSertifikat.Value.Date, "dd-MMM-yyyy")
+                            Else
+                                myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("tanggal_sertifikat") = DBNull.Value
+                            End If
                         End If
                     End If
 
@@ -1565,6 +1600,18 @@
         Finally
             Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
             Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub cbSertifikat_CheckedChanged(sender As Object, e As EventArgs) Handles cbSertifikat.CheckedChanged
+        Try
+            If (cbSertifikat.Checked) Then
+                dtpSertifikat.Visible = True
+            Else
+                dtpSertifikat.Visible = False
+            End If
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "cbSertifikat_CheckedChanged Error")
         End Try
     End Sub
 End Class

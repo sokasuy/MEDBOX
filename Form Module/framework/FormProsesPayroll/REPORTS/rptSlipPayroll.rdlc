@@ -516,6 +516,7 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="keterangan">
+                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -564,7 +565,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Fields!komponengaji.Value="GAJI POKOK",Fields!rupiah.Value/2,iif(Fields!keterangan.Value Like "*TUNJANGAN MASA KERJA*",Fields!rupiah.Value/2,Fields!rupiah.Value)) * Fields!faktorqty.Value</Value>
+                              <Value>=Fields!rupiah.Value * Fields!faktorqty.Value</Value>
                               <Style>
                                 <Format>'Rp' #,0</Format>
                               </Style>
