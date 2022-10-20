@@ -197,7 +197,7 @@
     End Sub
 
     Private Sub mnProsesPayroll_Click(sender As Object, e As EventArgs) Handles mnProsesPayroll.Click
-        Dim frmProsesPayroll As New FormProsesPayroll.FormProsesPayroll(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmProsesPayroll As New FormProsesPayroll.FormProsesPayroll(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi, CONN_.dbMySql)
         Call myCFormManipulation.GoToForm(Me, frmProsesPayroll)
     End Sub
 

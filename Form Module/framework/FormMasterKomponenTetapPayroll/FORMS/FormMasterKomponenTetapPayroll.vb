@@ -713,4 +713,14 @@
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "rbRupiah_CheckedChanged Error")
         End Try
     End Sub
+
+    Private Sub rtbKeterangan_Validated(sender As Object, e As EventArgs) Handles rtbKeterangan.Validated
+        Try
+            If (Trim(rtbKeterangan.Text).Length > 0) Then
+                rtbKeterangan.Text = Trim(rtbKeterangan.Text).ToUpper
+            End If
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "rtbKeterangan_Validated Error")
+        End Try
+    End Sub
 End Class
