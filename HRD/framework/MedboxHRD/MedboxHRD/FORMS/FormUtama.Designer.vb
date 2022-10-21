@@ -45,6 +45,7 @@ Partial Class FormUtama
         Me.mnGroupPresensi = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnProsesPresensi = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnViewPresensi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnViewFingerprint = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnGroupImport = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnImportData = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnGroupPengaturan = New System.Windows.Forms.ToolStripMenuItem()
@@ -54,7 +55,7 @@ Partial Class FormUtama
         Me.mnTunjanganMasaKerja = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnLogout = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnExit = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnViewFingerprint = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnViewFPAccess = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStripUtama.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -183,7 +184,7 @@ Partial Class FormUtama
         '
         'mnGroupPresensi
         '
-        Me.mnGroupPresensi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnProsesPresensi, Me.mnViewPresensi, Me.mnViewFingerprint})
+        Me.mnGroupPresensi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnProsesPresensi, Me.mnViewPresensi, Me.mnViewFingerprint, Me.mnViewFPAccess})
         Me.mnGroupPresensi.Name = "mnGroupPresensi"
         Me.mnGroupPresensi.Size = New System.Drawing.Size(69, 20)
         Me.mnGroupPresensi.Text = "PRESENSI"
@@ -199,6 +200,12 @@ Partial Class FormUtama
         Me.mnViewPresensi.Name = "mnViewPresensi"
         Me.mnViewPresensi.Size = New System.Drawing.Size(180, 22)
         Me.mnViewPresensi.Text = "View Presensi"
+        '
+        'mnViewFingerprint
+        '
+        Me.mnViewFingerprint.Name = "mnViewFingerprint"
+        Me.mnViewFingerprint.Size = New System.Drawing.Size(180, 22)
+        Me.mnViewFingerprint.Text = "View Fingerprint"
         '
         'mnGroupImport
         '
@@ -257,11 +264,11 @@ Partial Class FormUtama
         Me.mnExit.Size = New System.Drawing.Size(41, 20)
         Me.mnExit.Text = "EXIT"
         '
-        'mnViewFingerprint
+        'mnViewFPAccess
         '
-        Me.mnViewFingerprint.Name = "mnViewFingerprint"
-        Me.mnViewFingerprint.Size = New System.Drawing.Size(180, 22)
-        Me.mnViewFingerprint.Text = "View Fingerprint"
+        Me.mnViewFPAccess.Name = "mnViewFPAccess"
+        Me.mnViewFPAccess.Size = New System.Drawing.Size(180, 22)
+        Me.mnViewFPAccess.Text = "View FP Access"
         '
         'FormUtama
         '
@@ -314,4 +321,5 @@ Partial Class FormUtama
     Friend WithEvents mnGroupScheduleShift As ToolStripMenuItem
     Friend WithEvents mnScheduleShift As ToolStripMenuItem
     Friend WithEvents mnViewFingerprint As ToolStripMenuItem
+    Friend WithEvents mnViewFPAccess As ToolStripMenuItem
 End Class

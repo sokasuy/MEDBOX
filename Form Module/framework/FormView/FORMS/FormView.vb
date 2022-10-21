@@ -31,7 +31,7 @@
 
     Private WithEvents tbCellText As New DataGridViewTextBoxEditingControl
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String, _connFinger As Object)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -41,6 +41,7 @@
             With CONN_
                 .dbType = _dbType
                 .dbMain = _connMain
+                .dbFinger = _connFinger
                 .schemaTmp = _schemaTmp
                 .schemaHRD = _schemaHRD
             End With
@@ -171,6 +172,38 @@
                 End If
 
                 arrCbo = {"FPID", "NAMA"}
+                cboKriteria.Items.AddRange(arrCbo)
+                cboKriteria.SelectedIndex = 1
+            ElseIf (contentView = "FPAccess") Then
+                tableName(8) = CONN_.schemaTmp & ".datapresensi"
+
+                dtpAkhir.Visible = False
+                lblSD.Visible = False
+                gbProsesCepat.Visible = False
+                'lblLokasi.Visible = False
+                'cboLokasi.Visible = False
+                lblPerusahaan.Visible = False
+                cboFilterPerusahaan.Visible = False
+                lblKelompok.Visible = False
+                cboKelompok.Visible = False
+
+                'lblKelompok.Location = lblPerusahaan.Location
+                'cboKelompok.Location = cboFilterPerusahaan.Location
+                lblKriteria.Location = New Point(cboLokasi.Location.X + cboLokasi.Size.Width + 6, lblKriteria.Location.Y)
+                cboKriteria.Location = New Point(cboLokasi.Location.X + cboLokasi.Size.Width + 6, cboKriteria.Location.Y)
+                tbCari.Location = New Point(cboKriteria.Location.X + cboKriteria.Size.Width + 6, tbCari.Location.Y)
+                btnTampilkan.Location = New Point(tbCari.Location.X + tbCari.Size.Width + 6, btnTampilkan.Location.Y)
+                dgvView.Location = New Point(dgvView.Location.X, clbUserRight.Location.Y + clbUserRight.Size.Height + 5)
+                dgvView.Size = New Size(dgvView.Size.Width, 465)
+
+                stSQL = "SELECT lokasi FROM " & tableName(8) & " " & IIf(USER_.lokasi = "ALL", "", "where upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
+                Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "lokasi", "lokasi", isCboPrepared)
+
+                If (myDataTableCboLokasi.Rows.Count > 0) Then
+                    cboLokasi.SelectedIndex = 0
+                End If
+
+                arrCbo = {"USERID", "NAME"}
                 cboKriteria.Items.AddRange(arrCbo)
                 cboKriteria.SelectedIndex = 1
             End If
@@ -468,6 +501,11 @@
                         FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi
                         WHERE (tbl.tanggal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' AND tbl.tanggal<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')" & mGroupCriteria & "
                         ORDER BY tbl.lokasi ASC,tbl.nama ASC,tbl.tanggal ASC,tbl.mesin ASC;"
+                stSQL = "SELECT USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy') AS Tanggal, Format([CHECKTIME],'hh:nn:ss') AS Checkclock
+                        FROM CHECKINOUT INNER JOIN USERINFO ON CHECKINOUT.USERID = USERINFO.USERID
+                        WHERE (((Format([CHECKTIME],'dd-mmm-yyyy'))='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "')) AND (name LIKE '*" & mKriteria.ToUpper & "*')
+                        GROUP BY USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss')
+                        ORDER BY USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss');"
                 myDataTable = myCDBOperation.GetDataTableUsingReader(myConn, myComm, myReader, stSQL, "TBL " & lblTitle.Text)
                 myBindingTable.DataSource = myDataTable
 
@@ -512,6 +550,63 @@
                     .Columns("tanggal").DefaultCellStyle.Format = "dd-MMM-yyyy"
 
                     .Columns("nomer").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+                    For i As Short = 0 To dgvView.Columns.Count - 1
+                        If (.Columns(i).ReadOnly) Then
+                            .Columns(i).DefaultCellStyle.BackColor = Color.Gainsboro
+                        End If
+                    Next
+
+                    .Font = New Font("Arial", 8, FontStyle.Regular)
+                    .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False
+                End With
+            ElseIf (contentView = "FPAccess") Then
+                If (Trim(mKriteria).Length > 0) Then
+                    stSQL = "SELECT USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy') AS Tanggal, Format([CHECKTIME],'hh:nn:ss') AS Checkclock
+                            FROM CHECKINOUT INNER JOIN USERINFO ON CHECKINOUT.USERID = USERINFO.USERID
+                            WHERE (((Format([CHECKTIME],'dd-mmm-yyyy'))='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "')) AND ((" & mSelectedCriteria & ") LIKE '%" & mKriteria & "%')
+                            GROUP BY USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss')
+                            ORDER BY USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss');"
+                Else
+                    stSQL = "SELECT USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy') AS Tanggal, Format([CHECKTIME],'hh:nn:ss') AS Checkclock
+                            FROM CHECKINOUT INNER JOIN USERINFO ON CHECKINOUT.USERID = USERINFO.USERID
+                            WHERE (((Format([CHECKTIME],'dd-mmm-yyyy'))='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "'))
+                            GROUP BY USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss')
+                            ORDER BY USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss');"
+                End If
+                myDataTable = myCDBOperation.GetDataTableUsingReader(myConn, myComm, myReader, stSQL, "TBL " & lblTitle.Text)
+                myBindingTable.DataSource = myDataTable
+
+                With dgvView
+                    .DataSource = myBindingTable
+                    .ReadOnly = True
+
+                    .Columns("USERID").Frozen = True
+                    .Columns("name").Frozen = True
+                    .Columns("Tanggal").Frozen = True
+
+                    .EnableHeadersVisualStyles = False
+                    For i As Integer = 0 To .Columns.Count - 1
+                        If (.Columns(i).Frozen) Then
+                            .Columns(i).HeaderCell.Style.BackColor = Color.Moccasin
+                        End If
+                    Next
+
+                    For a As Integer = 0 To myDataTable.Columns.Count - 1
+                        .Columns(myDataTable.Columns(a).ColumnName).HeaderText = myDataTable.Columns(a).ColumnName.ToUpper
+                        .Columns(myDataTable.Columns(a).ColumnName).HeaderText = .Columns(myDataTable.Columns(a).ColumnName).HeaderText.Replace("_", " ")
+                    Next
+
+                    .Columns("USERID").Width = 90
+                    .Columns("Tanggal").Width = 80
+                    .Columns("name").Width = 180
+                    .Columns("Checkclock").Width = 150
+
+                    .Columns("tanggal").DefaultCellStyle.Format = "dd-MMM-yyyy"
+                    .Columns("Tanggal").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
+                    .Columns("USERID").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
                     For i As Short = 0 To dgvView.Columns.Count - 1
                         If (.Columns(i).ReadOnly) Then
@@ -1023,7 +1118,11 @@
         Try
             mCari = myCStringManipulation.SafeSqlLiteral(tbCari.Text, 1)
             cbTampilkanYangKosong.Checked = False
-            Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, contentView, True)
+            If (contentView = "FPAccess") Then
+                Call SetDGV(CONN_.dbFinger, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, contentView, True)
+            Else
+                Call SetDGV(CONN_.dbMain, CONN_.comm, CONN_.reader, 10, myDataTableDGV, myBindingTableDGV, mCari, contentView, True)
+            End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "btnTampilkan_Click Error")
         End Try

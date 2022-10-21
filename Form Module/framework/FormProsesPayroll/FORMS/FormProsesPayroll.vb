@@ -293,9 +293,12 @@ Public Class FormProsesPayroll
             'Dim upahKerja As Double
             'Dim totalJamLemburDiperhitungkanSusulan As Double
             'Dim tmpUpahKerja As Double
-            'Dim terlambat As Byte
+            Dim terlambat As Byte
             Dim myDataDendaTerlambat As New DataTable
             Dim nominalTerlambat As Double
+            Dim tidakCheckClock As Byte
+            Dim myDataDendaTidakCheckClock As New DataTable
+            Dim nominalTidakCheckClock As Double
             'Dim potonganTransportKehadiran As Double
             Dim tunjanganSertifikat As Double
             Dim tunjanganHadir As Double
@@ -440,6 +443,78 @@ Public Class FormProsesPayroll
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
             End If
+
+            'DENDA TIDAK CHECK CLOCK
+            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null);"
+            tidakCheckClock = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
+            If (tidakCheckClock > 0) Then
+                Dim pengaliKelipatan As Byte
+                stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendatidakcheckclock as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
+                myDataDendaTidakCheckClock = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
+                If (myDataDendaTidakCheckClock.Rows.Count > 0) Then
+                    If (tidakCheckClock > myDataDendaTidakCheckClock.Rows(0).Item("toleransi")) Then
+                        If (myDataDendaTidakCheckClock.Rows(0).Item("kelipatan")) Then
+                            'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
+                            pengaliKelipatan = tidakCheckClock / myDataDendaTidakCheckClock.Rows(0).Item("toleransi")
+                        Else
+                            pengaliKelipatan = 1
+                        End If
+                        nominalTidakCheckClock = (tidakCheckClock * myDataDendaTidakCheckClock.Rows(0).Item("dendaharian")) + (myDataDendaTidakCheckClock.Rows(0).Item("dendapenalty") * pengaliKelipatan)
+                    Else
+                        nominalTidakCheckClock = tidakCheckClock * myDataDendaTidakCheckClock.Rows(0).Item("dendaharian")
+                    End If
+                Else
+                    If (tidakCheckClock > 3) Then
+                        'pengaliKelipatan = terlambat / 4
+                        nominalTidakCheckClock = (tidakCheckClock * 5000) + (50000)
+                    Else
+                        nominalTidakCheckClock = tidakCheckClock * 5000
+                    End If
+                End If
+                lineNr += 1
+                newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TIDAK CHECK CLOCK " & tidakCheckClock & "X'," & nominalTidakCheckClock & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+                Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+            End If
+
+            'TERLAMBAT (KHUSUS DOKTER DIKASIH TOLERANSI 30 MENIT)
+            terlambat = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat >'00:30:00'", CONN_.dbType)
+            If (terlambat > 0) Then
+                Dim pengaliKelipatan As Byte
+                stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendaterlambat as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
+                myDataDendaTerlambat = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
+                If (myDataDendaTerlambat.Rows.Count > 0) Then
+                    If (terlambat > myDataDendaTerlambat.Rows(0).Item("toleransi")) Then
+                        If (myDataDendaTerlambat.Rows(0).Item("kelipatan")) Then
+                            'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
+                            pengaliKelipatan = terlambat / myDataDendaTerlambat.Rows(0).Item("toleransi")
+                        End If
+                        nominalTerlambat = (terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")) + (myDataDendaTerlambat.Rows(0).Item("dendapenalty") * pengaliKelipatan)
+                    Else
+                        nominalTerlambat = terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")
+                    End If
+                Else
+                    If (terlambat > 4) Then
+                        'pengaliKelipatan = terlambat / 4
+                        nominalTerlambat = (terlambat * 2500) + (50000)
+                    Else
+                        nominalTerlambat = terlambat * 2500
+                    End If
+                End If
+                lineNr += 1
+                newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TERLAMBAT " & terlambat & "X'," & nominalTerlambat & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+                Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                'potonganTransportKehadiran = terlambat * ((tunjanganHadir + tunjanganTransport) / hariKerja1Periode)
+                'lineNr += 1
+                'newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','POTONGAN KEHADIRAN DAN TRANSPORT KARENA TERLAMBAT " & terlambat & "X'," & potonganTransportKehadiran & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                'newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+                'Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                newValuesSummary &= "," & terlambat
+                newFieldsSummary &= ",terlambat"
+            End If
             '==========================================================================================================================================
 
             '==========================================================================================================================================
@@ -475,8 +550,8 @@ Public Class FormProsesPayroll
                 newFieldsSummary &= ",lain2"
             End If
 
-            totalTunjangan = tunjanganSertifikat + tunjanganHadir + tunjanganTransport + tunjanganHariLiburNasional + tunjanganLongShift + IIf(komponenLain2 > 0, komponenLain2, 0)
-            totalPotongan += potonganTidakMasuk + nominalTerlambat + IIf(komponenLain2 < 0, -komponenLain2, 0)
+            totalTunjangan += tunjanganSertifikat + tunjanganHadir + tunjanganTransport + tunjanganHariLiburNasional + tunjanganLongShift + IIf(komponenLain2 > 0, komponenLain2, 0)
+            totalPotongan += potonganTidakMasuk + nominalTerlambat + nominalTidakCheckClock + IIf(komponenLain2 < 0, -komponenLain2, 0)
 
             upahBersih = upahPokok + totalTunjangan - totalPotongan
             upahYangDibayar = Math.Ceiling(upahBersih / 100) * 100
@@ -507,6 +582,8 @@ Public Class FormProsesPayroll
             Dim myDataTableProcessedDetailLalu As New DataTable
             Dim myDataTableDataPresensiLalu As New DataTable
             Dim myDataTableDataPresensiLaluChanged As New DataTable
+            Dim myDataDendaTerlambat As New DataTable
+            Dim myDataDendaTidakCheckClock As New DataTable
 
             Dim tanggalMasuk As Date
             Dim newValuesSummary As String
@@ -544,9 +621,10 @@ Public Class FormProsesPayroll
             'Dim totalJamLemburDiperhitungkanSusulan As Double
             Dim tmpUpahKerja As Double
             Dim terlambat As Byte
-            Dim myDataDendaTerlambat As New DataTable
+            Dim tidakCheckClock As Byte
             Dim nominalTerlambat As Double
-            Dim potonganTransportKehadiran As Double
+            Dim nominalTidakCheckClock As Double
+            'Dim potonganTransportKehadiran As Double
             Dim tunjanganSertifikat As Double
             Dim tunjanganHadir As Double
             Dim tunjanganTransport As Double
@@ -987,6 +1065,39 @@ Public Class FormProsesPayroll
             foundRows = myDataTableKomponenGaji.Select("keterangan='TUNJANGAN TRANSPORT'")
             If (foundRows.Length > 0) Then
                 tunjanganTransport = myDataTableKomponenGaji.Rows(myDataTableKomponenGaji.Rows.IndexOf(foundRows(0))).Item("rupiah")
+            End If
+
+            'DENDA TIDAK CHECK CLOCK
+            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null);"
+            tidakCheckClock = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
+            If (tidakCheckClock > 0) Then
+                Dim pengaliKelipatan As Byte
+                stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendatidakcheckclock as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
+                myDataDendaTidakCheckClock = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
+                If (myDataDendaTidakCheckClock.Rows.Count > 0) Then
+                    If (tidakCheckClock > myDataDendaTidakCheckClock.Rows(0).Item("toleransi")) Then
+                        If (myDataDendaTidakCheckClock.Rows(0).Item("kelipatan")) Then
+                            'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
+                            pengaliKelipatan = tidakCheckClock / myDataDendaTidakCheckClock.Rows(0).Item("toleransi")
+                        Else
+                            pengaliKelipatan = 1
+                        End If
+                        nominalTidakCheckClock = (tidakCheckClock * myDataDendaTidakCheckClock.Rows(0).Item("dendaharian")) + (myDataDendaTidakCheckClock.Rows(0).Item("dendapenalty") * pengaliKelipatan)
+                    Else
+                        nominalTidakCheckClock = tidakCheckClock * myDataDendaTidakCheckClock.Rows(0).Item("dendaharian")
+                    End If
+                Else
+                    If (tidakCheckClock > 3) Then
+                        'pengaliKelipatan = terlambat / 4
+                        nominalTidakCheckClock = (tidakCheckClock * 5000) + (50000)
+                    Else
+                        nominalTidakCheckClock = tidakCheckClock * 5000
+                    End If
+                End If
+                lineNr += 1
+                newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TIDAK CHECK CLOCK " & tidakCheckClock & "X'," & nominalTidakCheckClock & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+                Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
             End If
 
             'TERLAMBAT
@@ -1541,8 +1652,8 @@ Public Class FormProsesPayroll
                 newFieldsSummary &= ",lain2"
             End If
 
-            totalTunjangan = tunjanganSertifikat + tunjanganHadir + tunjanganTransport + tunjanganHariLiburNasional + tunjanganLongShift + IIf(komponenLain2 > 0, komponenLain2, 0)
-            totalPotongan += potonganTidakMasuk + nominalTerlambat + IIf(komponenLain2 < 0, -komponenLain2, 0)
+            totalTunjangan += tunjanganSertifikat + tunjanganHadir + tunjanganTransport + tunjanganHariLiburNasional + tunjanganLongShift + IIf(komponenLain2 > 0, komponenLain2, 0)
+            totalPotongan += potonganTidakMasuk + nominalTerlambat + nominalTidakCheckClock + IIf(komponenLain2 < 0, -komponenLain2, 0)
 
             upahBersih = upahPokok + totalTunjangan - totalPotongan
             upahYangDibayar = Math.Ceiling(upahBersih / 100) * 100
