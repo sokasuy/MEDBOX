@@ -327,7 +327,7 @@ Public Class FormProsesPayroll
             '==========================================================================================================================================
             stSQL = "SELECT ((EXTRACT(YEAR FROM age)) + (EXTRACT(MONTH FROM age)/12) + (EXTRACT(DAY FROM age)/365)) AS months_between FROM (SELECT age(CURRENT_DATE,tanggalmasuk) as age FROM " & CONN_.schemaHRD & ".mskaryawan WHERE idk='" & myCStringManipulation.SafeSqlLiteral(_idk) & "') AS t(age);"
             masaKerjaRiil = myCDBOperation.GetDataIndividual(_conn, _comm, _reader, stSQL)
-            tahunMasaKerja = Math.Floor(masaKerjaRiil)
+            tahunMasaKerja = Math.Floor(Math.Round(masaKerjaRiil, 2) * 12)
             '---2B. AMBIL TUNJANGAN MASA KERJA
             If (IsNothing(_statuskepegawaian) Or (_statuskepegawaian = "TETAP")) And (_kelompok = "NON STAFF") Then
                 stSQL = "SELECT tunjangan FROM " & CONN_.schemaHRD & ".mstunjanganmasakerja WHERE mulaimasakerja<=" & tahunMasaKerja & " and sampaimasakerja>=" & tahunMasaKerja & ";"
@@ -371,7 +371,7 @@ Public Class FormProsesPayroll
             'totalKerjaShift = myDataTablePresensi.Rows(0).Item("totalkerjashift")
             'totalTunjanganShift = myDataTablePresensi.Rows(0).Item("tunjanganshift")
             newValuesSummary &= "," & myDataTablePresensi.Rows(0).Item("totaljamkerja")
-            newFieldsSummary &= ",totalharikerjariil"
+            newFieldsSummary &= ",totaljamkerja"
             '==========================================================================================================================================
 
             '4---INSERT KE trpayrollheader
@@ -428,6 +428,8 @@ Public Class FormProsesPayroll
             newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','GAJI POKOK','SITTING FEE " & myDataTablePresensi.Rows(0).Item("totaljamkerja") & " JAM'," & upahPokok & ",1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
             newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
             Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+            newValuesSummary &= "," & upahPokok
+            newFieldsSummary &= ",upahkerja"
 
             'RESEP / KONSUL / TINDAKAN (Konsul: pdokter * (qty*(harga-potongan)))
             'AMBIL DATA DARI MYSQL
@@ -442,6 +444,8 @@ Public Class FormProsesPayroll
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','TUNJANGAN TIDAK TETAP','KOMISI DOKTER'," & komisiDokter & ",1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+                newValuesSummary &= "," & komisiDokter
+                newFieldsSummary &= ",totalkomisi"
             End If
 
             'DENDA TIDAK CHECK CLOCK
@@ -475,28 +479,32 @@ Public Class FormProsesPayroll
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TIDAK CHECK CLOCK " & tidakCheckClock & "X'," & nominalTidakCheckClock & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+                newValuesSummary &= "," & tidakCheckClock & "," & nominalTidakCheckClock
+                newFieldsSummary &= ",tidakcheckclock,dendatidakcheckclock"
             End If
 
             'TERLAMBAT (KHUSUS DOKTER DIKASIH TOLERANSI 30 MENIT)
-            terlambat = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat >'00:30:00'", CONN_.dbType)
+            Dim terlambatSuper As Byte
+            terlambat = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "')", CONN_.dbType)
             If (terlambat > 0) Then
                 Dim pengaliKelipatan As Byte
                 stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendaterlambat as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
                 myDataDendaTerlambat = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
+                terlambatSuper = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat >'00:30:00'", CONN_.dbType)
                 If (myDataDendaTerlambat.Rows.Count > 0) Then
-                    If (terlambat > myDataDendaTerlambat.Rows(0).Item("toleransi")) Then
+                    If (terlambatSuper > myDataDendaTerlambat.Rows(0).Item("toleransi")) Then
                         If (myDataDendaTerlambat.Rows(0).Item("kelipatan")) Then
                             'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
-                            pengaliKelipatan = terlambat / myDataDendaTerlambat.Rows(0).Item("toleransi")
+                            pengaliKelipatan = terlambatSuper / myDataDendaTerlambat.Rows(0).Item("toleransi")
                         End If
                         nominalTerlambat = (terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")) + (myDataDendaTerlambat.Rows(0).Item("dendapenalty") * pengaliKelipatan)
                     Else
                         nominalTerlambat = terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")
                     End If
                 Else
-                    If (terlambat > 4) Then
-                        'pengaliKelipatan = terlambat / 4
-                        nominalTerlambat = (terlambat * 2500) + (50000)
+                    If (terlambatSuper > 4) Then
+                        pengaliKelipatan = terlambatSuper / 4
+                        nominalTerlambat = (terlambat * 2500) + (pengaliKelipatan * 50000)
                     Else
                         nominalTerlambat = terlambat * 2500
                     End If
@@ -512,8 +520,8 @@ Public Class FormProsesPayroll
                 'newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 'Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
 
-                newValuesSummary &= "," & terlambat
-                newFieldsSummary &= ",terlambat"
+                newValuesSummary &= "," & terlambat & "," & nominalTerlambat
+                newFieldsSummary &= ",terlambat,dendaterlambat"
             End If
             '==========================================================================================================================================
 
@@ -559,6 +567,7 @@ Public Class FormProsesPayroll
 
             newValuesSummary &= "," & upahBersih & "," & upahYangDibayar & "," & ADD_INFO_.newValues
             newFieldsSummary &= ",upahtotal,upahyangdibayar," & ADD_INFO_.newFields
+            Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableNameSummary, newValuesSummary, newFieldsSummary)
             '==========================================================================================================================================
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "ProsesPayrollDokter Error")
@@ -662,7 +671,7 @@ Public Class FormProsesPayroll
             '==========================================================================================================================================
             stSQL = "SELECT ((EXTRACT(YEAR FROM age)) + (EXTRACT(MONTH FROM age)/12) + (EXTRACT(DAY FROM age)/365)) AS months_between FROM (SELECT age(CURRENT_DATE,tanggalmasuk) as age FROM " & CONN_.schemaHRD & ".mskaryawan WHERE idk='" & myCStringManipulation.SafeSqlLiteral(_idk) & "') AS t(age);"
             masaKerjaRiil = myCDBOperation.GetDataIndividual(_conn, _comm, _reader, stSQL)
-            tahunMasaKerja = Math.Floor(masaKerjaRiil)
+            tahunMasaKerja = Math.Floor(Math.Round(masaKerjaRiil, 2) * 12)
             '---2B. AMBIL TUNJANGAN MASA KERJA
             If (IsNothing(_statuskepegawaian) Or (_statuskepegawaian = "TETAP")) And (_kelompok = "NON STAFF") Then
                 stSQL = "SELECT tunjangan FROM " & CONN_.schemaHRD & ".mstunjanganmasakerja WHERE mulaimasakerja<=" & tahunMasaKerja & " and sampaimasakerja>=" & tahunMasaKerja & ";"
@@ -686,22 +695,8 @@ Public Class FormProsesPayroll
                 stSQL = ""
                 hariKerja1Periode = 15
             ElseIf (_kelompok = "STAFF") Then
-                If (_departemen = "KLINIK") Then
-                    'AKAN DIPINDAH KE FUNGSI SENDIRI
-                    'hariKerja1Periode = Byte.Parse((_periodeMulai - _periodeSelesai).ToString)
-                    'Seharusnya hari kerja 1 periode di sini tidak diperlukan, karena gaji dokter dihitung harian
-                    hariKerja1Periode = 30
-                    stSQL = "SELECT (SUM(case when p.absen is null then (case when p.banyakjamkerjanyata is null then 0 else p.banyakjamkerjanyata end) else (k.persengaji/100)*4 end))::numeric(5,2) as totalharikerja, sum(case when p.shift is null then 0 else s.nilai end) as tunjanganshift,sum(case when p.shift is null then 0 else (case when p.shift>1 then 1 else 0 end) end) as totalkerjashift 
-                            FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi left join " & CONN_.schemaHRD & ".mstunjanganshift as s on p.shift=s.shift and p.lokasi=s.lokasi 
-                            WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' and p.tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' and p.tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "';"
-                ElseIf (_departemen = "APOTEK") Then
+                If (_departemen = "APOTEK") Then
                     hariKerja1Periode = 25
-                    stSQL = "SELECT count(p.nip) as totaltidakmasuk,p.absen,k.keterangan,k.potonggaji,k.persengaji,k.potongtunjangankehadiran,k.potongtunjangantransport,k.potongtunjangansertifikat
-                            FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi 
-                            WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' and (p.tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' and p.tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND (p.ijin='TM' AND p.absen<>'L')
-                            GROUP BY p.absen,k.keterangan,k.potonggaji,k.persengaji,k.potongtunjangankehadiran,k.potongtunjangantransport,k.potongtunjangansertifikat
-                            ORDER BY p.absen;"
-                    myDataTableAbsen = myCDBOperation.GetDataTableUsingReader(_conn, _comm, _reader, stSQL, "T_ABSEN")
 
                     stSQL = "SELECT count(p.nip) as totalharikerja, sum(case when p.shift is null then 0 else s.nilai end) as tunjanganshift,sum(case when p.shift is null then 0 else (case when p.shift>1 then 1 else 0 end) end) as totalkerjashift 
                             FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi left join " & CONN_.schemaHRD & ".mstunjanganshift as s on p.shift=s.shift and p.lokasi=s.lokasi 
@@ -957,6 +952,7 @@ Public Class FormProsesPayroll
             '==========================================================================================================================================
             'GAJI POKOK DAN KOMPONEN GAJI LAIN YANG SUDAH TERDAFTAR
             komponenLain2 = 0
+            tunjanganSertifikat = 0
             For i As Integer = 0 To myDataTableKomponenGaji.Rows.Count - 1
                 If (myDataTableKomponenGaji.Rows(i).Item("komponengaji") <> "TUNJANGAN TIDAK TETAP") Then
                     If (isProbation) Then
@@ -998,6 +994,9 @@ Public Class FormProsesPayroll
                                     proporsional = 1
                                 End If
                                 tunjanganSertifikat = myDataTableKomponenGaji.Rows(i).Item("rupiah") * proporsional
+
+                                newValuesSummary &= "," & myDataTableKomponenGaji.Rows(i).Item("rupiah")
+                                newFieldsSummary &= ",tunjangansertifikat"
                             Else
                                 proporsional = 1
                             End If
@@ -1056,15 +1055,21 @@ Public Class FormProsesPayroll
                 End If
             Next
             upahKerja = tmpUpahKerja
+            newValuesSummary &= "," & upahKerja
+            newFieldsSummary &= ",upahkerja"
 
             foundRows = myDataTableKomponenGaji.Select("keterangan='TUNJANGAN HADIR'")
             If (foundRows.Length > 0) Then
                 tunjanganHadir = myDataTableKomponenGaji.Rows(myDataTableKomponenGaji.Rows.IndexOf(foundRows(0))).Item("rupiah")
+                newValuesSummary &= "," & tunjanganHadir
+                newFieldsSummary &= ",tunjanganhadir"
             End If
 
             foundRows = myDataTableKomponenGaji.Select("keterangan='TUNJANGAN TRANSPORT'")
             If (foundRows.Length > 0) Then
                 tunjanganTransport = myDataTableKomponenGaji.Rows(myDataTableKomponenGaji.Rows.IndexOf(foundRows(0))).Item("rupiah")
+                newValuesSummary &= "," & tunjanganTransport
+                newFieldsSummary &= ",tunjangantransport"
             End If
 
             'DENDA TIDAK CHECK CLOCK
@@ -1098,6 +1103,9 @@ Public Class FormProsesPayroll
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TIDAK CHECK CLOCK " & tidakCheckClock & "X'," & nominalTidakCheckClock & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                newValuesSummary &= "," & tidakCheckClock & "," & nominalTidakCheckClock
+                newFieldsSummary &= ",tidakcheckclock,dendatidakcheckclock"
             End If
 
             'TERLAMBAT
@@ -1135,12 +1143,21 @@ Public Class FormProsesPayroll
                 'newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 'Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
 
-                newValuesSummary &= "," & terlambat
-                newFieldsSummary &= ",terlambat"
+                newValuesSummary &= "," & terlambat & "," & nominalTerlambat
+                newFieldsSummary &= ",terlambat,dendaterlambat"
             End If
 
             'POTONGAN TIDAK MASUK
+            stSQL = "SELECT count(p.nip) as totaltidakmasuk,p.absen,k.keterangan,k.potonggaji,k.persengaji,k.potongtunjangankehadiran,k.potongtunjangantransport,k.potongtunjangansertifikat
+                    FROM " & CONN_.schemaHRD & ".trdatapresensi as p left join " & CONN_.schemaHRD & ".mskategoriabsen as k on p.absen=k.absen and p.lokasi=k.lokasi 
+                    WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' and (p.tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' and p.tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND (p.ijin='TM' AND p.absen<>'L')
+                    GROUP BY p.absen,k.keterangan,k.potonggaji,k.persengaji,k.potongtunjangankehadiran,k.potongtunjangantransport,k.potongtunjangansertifikat
+                    ORDER BY p.absen;"
+            myDataTableAbsen = myCDBOperation.GetDataTableUsingReader(_conn, _comm, _reader, stSQL, "T_ABSEN")
             Dim keteranganAbsenLama As String = Nothing
+            Dim totalPotTidakMasuk As Double
+            Dim tidakMasuk As Integer
+            Dim alpha As Byte
             If (totalHariKerja < hariKerja1Periode) Then
                 totalTidakMasuk = (hariKerja1Periode - totalHariKerja)
             End If
@@ -1150,30 +1167,42 @@ Public Class FormProsesPayroll
                 For i As Integer = 0 To myDataTableAbsen.Rows.Count - 1
                     If (keteranganAbsenLama <> myDataTableAbsen.Rows(i).Item("keterangan")) Then
                         keteranganAbsenLama = myDataTableAbsen.Rows(i).Item("keterangan")
-                        totalTidakMasuk += myDataTableAbsen.Rows(i).Item("totaltidakmasuk")
-                        potonganTidakMasuk = totalTidakMasuk * (((upahPokok * (IIf(myDataTableAbsen.Rows(i).Item("persengaji") = 100, 0, 100) / 100)) / hariKerja1Periode) + ((IIf(myDataTableAbsen.Rows(i).Item("potongtunjangankehadiran"), tunjanganHadir, 0) + IIf(myDataTableAbsen.Rows(i).Item("potongtunjangantransport"), tunjanganTransport, 0) + IIf(myDataTableAbsen.Rows(i).Item("potongtunjangansertifikat"), tunjanganSertifikat, 0)) / hariKerja1Periode))
+                        tidakMasuk = myDataTableAbsen.Rows(i).Item("totaltidakmasuk")
+                        potonganTidakMasuk = tidakMasuk * (((upahPokok * (IIf(myDataTableAbsen.Rows(i).Item("persengaji") = 100, 0, 100) / 100)) / hariKerja1Periode) + ((IIf(myDataTableAbsen.Rows(i).Item("potongtunjangankehadiran"), tunjanganHadir, 0) + IIf(myDataTableAbsen.Rows(i).Item("potongtunjangantransport"), tunjanganTransport, 0) + IIf(myDataTableAbsen.Rows(i).Item("potongtunjangansertifikat"), tunjanganSertifikat, 0)) / hariKerja1Periode))
+                        totalTidakMasuk += tidakMasuk
+                        totalPotTidakMasuk += potonganTidakMasuk
                         lineNr += 1
-                        newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','" & myDataTableAbsen.Rows(i).Item("keterangan") & " " & totalTidakMasuk & " HARI'," & potonganTidakMasuk & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+                        newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','" & myDataTableAbsen.Rows(i).Item("keterangan") & " " & tidakMasuk & " HARI'," & potonganTidakMasuk & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                         newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                         Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                        If (myDataTableAbsen.Rows(i).Item("absen") = "SD") Then
+                            newValuesSummary &= "," & myDataTableAbsen.Rows(i).Item("totaltidakmasuk")
+                            newFieldsSummary &= ",sakit"
+                        ElseIf (myDataTableAbsen.Rows(i).Item("absen") = "IP") Then
+                            newValuesSummary &= "," & myDataTableAbsen.Rows(i).Item("totaltidakmasuk")
+                            newFieldsSummary &= ",ijinpemerintah"
+                        Else
+                            alpha += myDataTableAbsen.Rows(i).Item("totaltidakmasuk")
+                        End If
                     End If
                 Next
+                If (alpha > 0) Then
+                    newValuesSummary &= "," & alpha
+                    newFieldsSummary &= ",alpha"
+                End If
+                newValuesSummary &= "," & totalPotTidakMasuk
+                newFieldsSummary &= ",potongantidakmasuk"
             Else
                 If (totalTidakMasuk > 0) Then
-                    'If (Date.Parse(myDataTableDataPresensiSekarang.Rows(0).Item("tanggal")).Day <= 20) Then
-                    '    'Kalau masuknya di antara tanggal 1-20, maka perlu di cek apakah bulan sebelumnya sampai tanggal 31 apa nggak
-                    '    'Kalau sampai tanggal 31, maka 1 nya di bulan lalu itu dianggap bonus
-                    '    Dim jumlahHariPeriodeMulai As Byte
-                    '    jumlahHariPeriodeMulai = Date.DaysInMonth(_periodeMulai.Year, _periodeMulai.Month)
-                    '    If (jumlahHariPeriodeMulai > 30) Then
-                    '        totalTidakMasuk -= (jumlahHariPeriodeMulai - 30)
-                    '    End If
-                    'End If
                     potonganTidakMasuk = totalTidakMasuk * ((upahPokok / hariKerja1Periode) + ((tunjanganHadir + tunjanganTransport + tunjanganSertifikat) / hariKerja1Periode))
                     lineNr += 1
                     newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','PROPORSIONAL BARU MASUK DARI TANGGAL " & _periodeMulai & "'," & potonganTidakMasuk & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                     newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                     Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                    newValuesSummary &= "," & potonganTidakMasuk
+                    newFieldsSummary &= ",potongantidakmasuk"
                 End If
             End If
 
@@ -1192,6 +1221,9 @@ Public Class FormProsesPayroll
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','TUNJANGAN TIDAK TETAP','LIBUR NASIONAL " & totalMasukHariLiburNasional & " HARI'," & tunjanganHariLiburNasional & ",1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                newValuesSummary &= "," & totalMasukHariLiburNasional & "," & tunjanganHariLiburNasional
+                newFieldsSummary &= ",publicholiday,totaltunjanganharilibur"
             End If
 
             'CEK LONG SHIFT
@@ -1214,6 +1246,9 @@ Public Class FormProsesPayroll
                 newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','TUNJANGAN TIDAK TETAP','LONG SHIFT " & totalKerjaLongShift & " HARI'," & tunjanganLongShift & ",1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
                 newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
                 Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+
+                newValuesSummary &= "," & totalKerjaLongShift & "," & tunjanganLongShift
+                newFieldsSummary &= ",longshift,totaltunjanganlongshift"
             End If
             '==========================================================================================================================================
 
@@ -1661,6 +1696,11 @@ Public Class FormProsesPayroll
 
             newValuesSummary &= "," & upahBersih & "," & upahYangDibayar & "," & ADD_INFO_.newValues
             newFieldsSummary &= ",upahtotal,upahyangdibayar," & ADD_INFO_.newFields
+
+            'InputBox("", "", newValuesSummary)
+            'InputBox("", "", newFieldsSummary)
+
+            Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableNameSummary, newValuesSummary, newFieldsSummary)
             '==========================================================================================================================================
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "ProsesPayrollApotek Error")
@@ -1789,9 +1829,9 @@ Public Class FormProsesPayroll
 
                 If (cboKaryawanIndividu.SelectedIndex <> -1) Then
                     stSQL = "SELECT h." & tableKey & ",h.idk,h.nip,h.nama,h.lokasi,h.perusahaan,h.departemen,h.divisi,h.bagian,h.kelompok,h.katpenggajian,h.tanggalpenggajian,h.periode,h.periodemulai,h.periodeselesai,h.upahpokok,h.totaltunjangan,h.totalpotongan,h.upahbersih,h.upahyangdibayar,h.keterangan as catatanhrd,d.linenr,d.komponengaji,d.keterangan,d.persen,d.rupiah,d.faktorqty
-                    FROM " & tableNameHeader & " as h inner join " & tableNameDetail & " as d on h." & tableKey & "=d." & tableKey & "
-                    WHERE h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "' and h.periodemulai='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'
-                    ORDER BY d.linenr;"
+                            FROM " & tableNameHeader & " as h inner join " & tableNameDetail & " as d on h." & tableKey & "=d." & tableKey & "
+                            WHERE h.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawanIndividu.SelectedValue) & "' and h.periodemulai='" & Format(dtpPeriodeMulai.Value.Date, "dd-MMM-yyyy") & "' and h.periodeselesai='" & Format(dtpPeriodeSelesai.Value.Date, "dd-MMM-yyyy") & "'
+                            ORDER BY d.faktorqty DESC,d.linenr ASC;"
 
                     Dim rdlcRptSource As New ReportDataSource
                     Dim myDataTable As New DataTable
@@ -1981,10 +2021,10 @@ Public Class FormProsesPayroll
     Private Sub btnCetakRekap_Click(sender As Object, e As EventArgs) Handles btnCetakRekap.Click
         Try
             If (cboPeriode.SelectedIndex <> -1 And cboKuartal.SelectedIndex <> -1) Then
-                stSQL = "SELECT h.nopayroll,h.lokasi,h.perusahaan,h.departemen,h.divisi,h.bagian,h.periode,h.periodemulai,h.periodeselesai,h.idk,h.nip,h.nama,s.tanggalmasuk,s.masakerjariil,s.masakerja,s.upahpokokperbulan,s.tunjanganmasakerja,s.tunjanganprestasi,s.tunjanganhadir,s.totalharikerjariil,s.totalharikerja,s.totalkerjashift,s.jamlemburharibiasa1,s.jamlemburharibiasa2,s.jamlemburharilibur1,s.jamlemburharilibur2,s.jamlemburharilibur3,s.totaljamlembur,s.upahkerja,s.upahlembur,s.premi,s.tunjanganshift,s.lain2,s.potonganjhtjpbpjs,s.potonganpph,s.upahtotal,s.upahyangdibayar,p.tanggal,p.kdr,p.revised,p.ijin,p.absen,p.banyakjamkerjanyata,p.terlambat,p.pulangcepat,p.shift,p.spkmulai,p.spkselesai,p.jamlembur,p.mulailembur,p.selesailembur
+                stSQL = "SELECT h.nopayroll,h.lokasi,h.perusahaan,h.departemen,h.divisi,h.bagian,h.periode,h.periodemulai,h.periodeselesai,h.idk,h.nip,h.nama,s.tanggalmasuk,s.masakerjariil,s.masakerja,s.upahpokokperbulan,s.tunjanganmasakerja,s.tunjangantransport,s.tunjanganhadir,s.totalharikerjariil,s.totalharikerja,s.totalkerjashift,s.jamlemburharibiasa1,s.jamlemburharibiasa2,s.jamlemburharilibur1,s.jamlemburharilibur2,s.jamlemburharilibur3,s.totaljamlembur,s.upahkerja,s.upahlembur,s.premi,s.tunjanganshift,s.lain2,s.potonganjhtjpbpjs,s.potonganpph,s.upahtotal,s.upahyangdibayar,p.tanggal,p.kdr,p.revised,p.ijin,p.absen,p.banyakjamkerjanyata,p.terlambat,p.pulangcepat,p.shift,p.spkmulai,p.spkselesai,p.jamlembur,p.mulailembur,p.selesailembur,s.terlambat,s.dendaterlambat,s.sakit,s.alpha,s.ijinpemerintah,s.longshift,s.publicholiday,s.tunjangansertifikat,s.tidakcheckclock,s.dendatidakcheckclock,s.totaltunjanganharilibur,s.totaltunjanganlongshift,s.potongantidakmasuk,s.totaljamkerja
                         FROM (" & tableNameHeader & " as h inner join " & tableNameSummary & " as s on h." & tableKey & "=s." & tableKey & ") inner join " & tableNameProcessedDetail & " as p on h." & tableKey & "=p." & tableKey & "
                         WHERE periode='" & cboPeriode.SelectedValue & "-" & cboKuartal.SelectedItem & "' and h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "' and h.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "' and h.kelompok='" & strKelompok & "'
-                        GROUP BY h.nopayroll,h.lokasi,h.perusahaan,h.departemen,h.divisi,h.bagian,h.periode,h.periodemulai,h.periodeselesai,h.idk,h.nip,h.nama,s.tanggalmasuk,s.masakerjariil,s.masakerja,s.upahpokokperbulan,s.tunjanganmasakerja,s.tunjanganprestasi,s.tunjanganhadir,s.totalharikerjariil,s.totalharikerja,s.totalkerjashift,s.jamlemburharibiasa1,s.jamlemburharibiasa2,s.jamlemburharilibur1,s.jamlemburharilibur2,s.jamlemburharilibur3,s.totaljamlembur,s.upahkerja,s.upahlembur,s.premi,s.tunjanganshift,s.lain2,s.potonganjhtjpbpjs,s.potonganpph,s.upahtotal,s.upahyangdibayar,p.tanggal,p.kdr,p.revised,p.ijin,p.absen,p.banyakjamkerjanyata,p.terlambat,p.pulangcepat,p.shift,p.spkmulai,p.spkselesai,p.jamlembur,p.mulailembur,p.selesailembur
+                        GROUP BY h.nopayroll,h.lokasi,h.perusahaan,h.departemen,h.divisi,h.bagian,h.periode,h.periodemulai,h.periodeselesai,h.idk,h.nip,h.nama,s.tanggalmasuk,s.masakerjariil,s.masakerja,s.upahpokokperbulan,s.tunjanganmasakerja,s.tunjangantransport,s.tunjanganhadir,s.totalharikerjariil,s.totalharikerja,s.totalkerjashift,s.jamlemburharibiasa1,s.jamlemburharibiasa2,s.jamlemburharilibur1,s.jamlemburharilibur2,s.jamlemburharilibur3,s.totaljamlembur,s.upahkerja,s.upahlembur,s.premi,s.tunjanganshift,s.lain2,s.potonganjhtjpbpjs,s.potonganpph,s.upahtotal,s.upahyangdibayar,p.tanggal,p.kdr,p.revised,p.ijin,p.absen,p.banyakjamkerjanyata,p.terlambat,p.pulangcepat,p.shift,p.spkmulai,p.spkselesai,p.jamlembur,p.mulailembur,p.selesailembur,s.terlambat,s.dendaterlambat,s.sakit,s.alpha,s.ijinpemerintah,s.longshift,s.publicholiday,s.tunjangansertifikat,s.tidakcheckclock,s.dendatidakcheckclock,s.totaltunjanganharilibur,s.totaltunjanganlongshift,s.potongantidakmasuk,s.totaljamkerja
                         ORDER BY h.nama;"
                 Dim frmdisplayreport As New FormDisplayReport.FormDisplayReport(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, stSQL, "RekapPayroll",, Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(strKelompok.ToLower()).Replace(" ", ""))
                 Call myCFormManipulation.GoToForm(Me.MdiParent, frmdisplayreport)

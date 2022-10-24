@@ -200,6 +200,7 @@
     <EmbeddedResource Include="REPORTS\IjinAbsen\rptPrintOutIjinAbsen.rdlc" />
     <EmbeddedResource Include="REPORTS\IjinAbsen\rptPrintOutRekapIjinAbsen.rdlc" />
     <EmbeddedResource Include="REPORTS\Payroll\rptPrintOutRekapPayrollNonStaff.rdlc" />
+    <EmbeddedResource Include="REPORTS\Payroll\rptPrintOutRekapPayrollStaff.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutDataMentahPANDAAN.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutDataPresensiSIDOARJO.rdlc" />
     <EmbeddedResource Include="REPORTS\Presensi\rptPrintOutJadwalPresensi.rdlc" />
