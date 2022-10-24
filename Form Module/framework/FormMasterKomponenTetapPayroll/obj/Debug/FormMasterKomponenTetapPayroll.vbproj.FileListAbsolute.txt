@@ -26,6 +26,7 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayro
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\bin\Debug\FormMasterKomponenTetapPayroll.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\bin\Debug\FormMasterKomponenTetapPayroll.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\bin\Debug\FormMasterKomponenTetapPayroll.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.FormMasterKomponenTetapPayroll.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.vbproj.GenerateResource.cache
@@ -33,4 +34,3 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayro
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.pdb
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterKomponenTetapPayroll\obj\Debug\FormMasterKomponenTetapPayroll.vbproj.AssemblyReference.cache

@@ -228,6 +228,7 @@
     <None Include="My Project\DataSources\CDtSetPrintOutPresensiSecurity.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutPresensiStaff.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutRekapIjinAbsen.datasource" />
+    <None Include="My Project\DataSources\CDtSetPrintOutRekapPayroll.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutScheduleShift.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutSPK.datasource" />
     <None Include="My Project\DataSources\CDtSetPrintOutSPL.datasource" />

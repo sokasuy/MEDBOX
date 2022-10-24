@@ -1,6 +1,7 @@
 ﻿Public Class CDtSetPrintOutRekapPayroll
     Inherits DataSet
     Private dt As DataTable
+
     Public Sub New()
         dt = New DataTable("dtSetPrintOutRekapPayroll")
         dt.Columns.Add("nopayroll", GetType(String))
@@ -46,7 +47,6 @@
         dt.Columns.Add("ijin", GetType(String))
         dt.Columns.Add("absen", GetType(String))
         dt.Columns.Add("banyakjamkerjanyata", GetType(Double))
-        dt.Columns.Add("terlambat", GetType(TimeSpan))
         dt.Columns.Add("pulangcepat", GetType(TimeSpan))
         dt.Columns.Add("shift", GetType(String))
         dt.Columns.Add("spkmulai", GetType(Date))
