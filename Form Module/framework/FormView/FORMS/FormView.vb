@@ -31,7 +31,7 @@
 
     Private WithEvents tbCellText As New DataGridViewTextBoxEditingControl
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String, _connFinger As Object)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String, Optional _connFinger As Object = Nothing)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -425,8 +425,8 @@
                     .Columns("jamkerja").ReadOnly = True
                     .Columns("banyakjamkerja").ReadOnly = True
                     .Columns("banyakjamkerjanyata").ReadOnly = True
-                    .Columns("fpmasuk").ReadOnly = True
-                    .Columns("fpkeluar").ReadOnly = True
+                    '.Columns("fpmasuk").ReadOnly = True
+                    '.Columns("fpkeluar").ReadOnly = True
                     .Columns("isfpmanual").ReadOnly = True
                     .Columns("isspkmanual").ReadOnly = True
                     .Columns("islemburmanual").ReadOnly = True
@@ -501,11 +501,6 @@
                         FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi
                         WHERE (tbl.tanggal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' AND tbl.tanggal<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')" & mGroupCriteria & "
                         ORDER BY tbl.lokasi ASC,tbl.nama ASC,tbl.tanggal ASC,tbl.mesin ASC;"
-                stSQL = "SELECT USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy') AS Tanggal, Format([CHECKTIME],'hh:nn:ss') AS Checkclock
-                        FROM CHECKINOUT INNER JOIN USERINFO ON CHECKINOUT.USERID = USERINFO.USERID
-                        WHERE (((Format([CHECKTIME],'dd-mmm-yyyy'))='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "')) AND (name LIKE '*" & mKriteria.ToUpper & "*')
-                        GROUP BY USERINFO.USERID, USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss')
-                        ORDER BY USERINFO.name, Format([CHECKTIME],'dd-mmm-yyyy'), Format([CHECKTIME],'hh:nn:ss');"
                 myDataTable = myCDBOperation.GetDataTableUsingReader(myConn, myComm, myReader, stSQL, "TBL " & lblTitle.Text)
                 myBindingTable.DataSource = myDataTable
 
@@ -1666,6 +1661,14 @@
                             Else
                                 dgvView.CurrentRow.Cells("banyakjamkerjanyata").Value = DBNull.Value
                                 Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,banyakjamkerjanyata=Null,isjamkerjamanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            End If
+                            isPartialChanged = False
+                        Case "fpmasuk", "fpkeluar"
+                            isPartialChanged = True
+                            If Not IsDBNull(dgvView.CurrentCell.Value) Then
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "='" & dgvView.CurrentCell.Value.ToString & "',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
+                            Else
+                                Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "" & dgvView.Columns(e.ColumnIndex).DataPropertyName & "=Null,userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "kdr='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("kdr").Value) & "'")
                             End If
                             isPartialChanged = False
                         Case "jamlembur"

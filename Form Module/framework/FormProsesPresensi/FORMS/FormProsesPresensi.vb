@@ -1978,7 +1978,8 @@
                     Cursor = Cursors.WaitCursor
                     Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-                    stSQL = "SELECT concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian) as karyawan,d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif as d inner join " & CONN_.schemaHRD & ".mskaryawan as h on h.idk=d.idk WHERE " & IIf(USER_.lokasi = "ALL", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') AND ") & "(case when d.statuskepegawaian is null or d.statuskepegawaian='TETAP' then h.tanggalmasuk<=CURRENT_DATE else d.tglmulaikontrak<=CURRENT_DATE end) GROUP BY concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian),d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian ORDER BY karyawan;"
+                    'stSQL = "SELECT concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian) as karyawan,d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif as d inner join " & CONN_.schemaHRD & ".mskaryawan as h on h.idk=d.idk WHERE " & IIf(USER_.lokasi = "ALL", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') AND ") & "(case when d.statuskepegawaian is null or d.statuskepegawaian='TETAP' then h.tanggalmasuk<=CURRENT_DATE else d.tglmulaikontrak<=CURRENT_DATE end) GROUP BY concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian),d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian ORDER BY karyawan;"
+                    stSQL = "SELECT concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian) as karyawan,d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian FROM " & tableName(0) & " as d inner join " & CONN_.schemaHRD & ".mskaryawan as h on h.idk=d.idk WHERE " & IIf(USER_.lokasi = "ALL", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') AND ") & "(tanggal>='" & Format(dtpPeriodeAwal.Value.Date, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpPeriodeAkhir.Value.Date, "dd-MMM-yyyy") & "') GROUP BY concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian),d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian ORDER BY karyawan;"
                     Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "nip", "karyawan", isCboPrepared, True)
 
                     Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
@@ -2031,6 +2032,29 @@
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "cboLokasiCetak_SelectedIndexChanged Error")
+        End Try
+    End Sub
+
+    Private Sub dtpPeriodeAwal_ValueChanged(sender As Object, e As EventArgs) Handles dtpPeriodeAwal.ValueChanged, dtpPeriodeAkhir.ValueChanged
+        Try
+            If (rbKaryawan.Checked) Then
+                If (cboLokasi.SelectedIndex <> -1) Then
+                    Cursor = Cursors.WaitCursor
+                    Call myCDBConnection.OpenConn(CONN_.dbMain)
+
+                    'stSQL = "SELECT concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian) as karyawan,d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif as d inner join " & CONN_.schemaHRD & ".mskaryawan as h on h.idk=d.idk WHERE " & IIf(USER_.lokasi = "ALL", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') AND ") & "(case when d.statuskepegawaian is null or d.statuskepegawaian='TETAP' then h.tanggalmasuk<=CURRENT_DATE else d.tglmulaikontrak<=CURRENT_DATE end) GROUP BY concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian),d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian ORDER BY karyawan;"
+                    stSQL = "SELECT concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian) as karyawan,d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian FROM " & tableName(0) & " as d inner join " & CONN_.schemaHRD & ".mskaryawan as h on h.idk=d.idk WHERE " & IIf(USER_.lokasi = "ALL", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ", "(d.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "') AND ") & "(tanggal>='" & Format(dtpPeriodeAwal.Value.Date, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpPeriodeAkhir.Value.Date, "dd-MMM-yyyy") & "') GROUP BY concat(d.nama,' || ',d.nip,' || ',d.departemen,' || ',d.divisi,' || ',d.bagian),d.idk,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian ORDER BY karyawan;"
+                    Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "nip", "karyawan", isCboPrepared, True)
+
+                    Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
+                    Cursor = Cursors.Default
+                Else
+                    Call myCShowMessage.ShowWarning("Silahkan tentukan lokasinya dulu!")
+                    cboLokasi.Focus()
+                End If
+            End If
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "dtpPeriodeAwal_ValueChanged Error")
         End Try
     End Sub
 End Class

@@ -7,7 +7,7 @@
 
         ' Add any initialization after the InitializeComponent() call.
         Try
-            Call myCStartup.StartUp("MAIN", COMPANY_.name, PROGRAM_.name, PROGRAM_.type, CONN_.dbMain, CONN_.dbLokal, CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbFinger, CONN_.dbMySql)
+            Call myCStartup.StartUp("MAIN", COMPANY_.name, PROGRAM_.name, PROGRAM_.type, CONN_.dbMain, CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMySql)
 
             CONN_.dbType = CONN_.dbType.ToLower
 
@@ -91,6 +91,10 @@
                     USER_.username = Trim(tbUserID.Text)
                     stSQL = "SELECT superuser,lokasi FROM " & CONN_.schemaHRD & ".msuser WHERE userid='" & myCStringManipulation.SafeSqlLiteral(tbUserID.Text) & "'and passwd='" & myCStringManipulation.GetSHA1Hash(tbPassword.Text) & "'"
                     myUserInformation = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_UserInformation")
+
+                    If (USER_.username <> "Olivia") Then
+                        Call myCStartup.SetDBAccess(CONN_.dbFinger)
+                    End If
 
                     USER_.isSuperuser = myUserInformation.Rows(0).Item("superuser")
                     USER_.lokasi = myUserInformation.Rows(0).Item("lokasi")

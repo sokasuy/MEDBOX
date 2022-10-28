@@ -172,7 +172,7 @@
     End Sub
 
     Private Sub mnViewDataPresensi_Click(sender As Object, e As EventArgs) Handles mnViewPresensi.Click
-        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Presensi", USER_.lokasi, CONN_.dbFinger)
+        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Presensi", USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmView)
     End Sub
 
@@ -207,7 +207,7 @@
     End Sub
 
     Private Sub mnViewFingerprint_Click(sender As Object, e As EventArgs) Handles mnViewFingerprint.Click
-        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Fingerprint", USER_.lokasi, CONN_.dbFinger)
+        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Fingerprint", USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmView)
     End Sub
 

@@ -84,6 +84,10 @@ Partial Class FormProsesPresensi
         Me.lblNamaSheet = New System.Windows.Forms.Label()
         Me.tbNamaSheet = New System.Windows.Forms.TextBox()
         Me.tpPrintOut = New System.Windows.Forms.TabPage()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.rbJadwalPresensi = New System.Windows.Forms.RadioButton()
         Me.rbLaporanKaryawanTidakMasukHarian = New System.Windows.Forms.RadioButton()
         Me.rbRekapDataPresensi = New System.Windows.Forms.RadioButton()
         Me.cboDepartemenCetak = New System.Windows.Forms.ComboBox()
@@ -102,10 +106,6 @@ Partial Class FormProsesPresensi
         Me.lblPeriodeCetak = New System.Windows.Forms.Label()
         Me.dtpTanggalCetakAwal = New System.Windows.Forms.DateTimePicker()
         Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
-        Me.rbJadwalPresensi = New System.Windows.Forms.RadioButton()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.tcPresensi.SuspendLayout()
         Me.tpProsesAbsen.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -791,6 +791,43 @@ Partial Class FormProsesPresensi
         Me.tpPrintOut.Text = "PRINT OUT"
         Me.tpPrintOut.UseVisualStyleBackColor = True
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(3, 182)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(739, 13)
+        Me.Label5.TabIndex = 238
+        Me.Label5.Text = resources.GetString("Label5.Text")
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 123)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(739, 13)
+        Me.Label4.TabIndex = 237
+        Me.Label4.Text = resources.GetString("Label4.Text")
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(3, 84)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(739, 13)
+        Me.Label6.TabIndex = 236
+        Me.Label6.Text = resources.GetString("Label6.Text")
+        '
+        'rbJadwalPresensi
+        '
+        Me.rbJadwalPresensi.AutoSize = True
+        Me.rbJadwalPresensi.Location = New System.Drawing.Point(163, 41)
+        Me.rbJadwalPresensi.Name = "rbJadwalPresensi"
+        Me.rbJadwalPresensi.Size = New System.Drawing.Size(126, 17)
+        Me.rbJadwalPresensi.TabIndex = 235
+        Me.rbJadwalPresensi.Text = "JADWAL PRESENSI"
+        Me.rbJadwalPresensi.UseVisualStyleBackColor = True
+        '
         'rbLaporanKaryawanTidakMasukHarian
         '
         Me.rbLaporanKaryawanTidakMasukHarian.AutoSize = True
@@ -966,43 +1003,6 @@ Partial Class FormProsesPresensi
         '
         'ofd1
         '
-        '
-        'rbJadwalPresensi
-        '
-        Me.rbJadwalPresensi.AutoSize = True
-        Me.rbJadwalPresensi.Location = New System.Drawing.Point(163, 41)
-        Me.rbJadwalPresensi.Name = "rbJadwalPresensi"
-        Me.rbJadwalPresensi.Size = New System.Drawing.Size(126, 17)
-        Me.rbJadwalPresensi.TabIndex = 235
-        Me.rbJadwalPresensi.Text = "JADWAL PRESENSI"
-        Me.rbJadwalPresensi.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 84)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(739, 13)
-        Me.Label6.TabIndex = 236
-        Me.Label6.Text = resources.GetString("Label6.Text")
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 123)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(739, 13)
-        Me.Label4.TabIndex = 237
-        Me.Label4.Text = resources.GetString("Label4.Text")
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(3, 182)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(739, 13)
-        Me.Label5.TabIndex = 238
-        Me.Label5.Text = resources.GetString("Label5.Text")
         '
         'FormProsesPresensi
         '
