@@ -2050,7 +2050,7 @@ Public Class FormProsesPayroll
                     For i As Integer = 0 To myDataTablePresensi.Rows.Count - 1
                         'Cek apakah gaji pokoknya sudah diinputkan
                         isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", CONN_.schemaHRD & ".mskomponentetappayroll", "komponengaji='GAJI POKOK' AND nip='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("nip")) & "'")
-                        If Not isExist Then
+                        If isExist Then
                             If (myDataTablePresensi.Rows(i).Item("departemen") = "APOTEK") Then
                                 Call ProsesPayrollApotek(CONN_.dbMain, CONN_.comm, CONN_.reader, myDataTablePresensi.Rows(i).Item("idk"), myDataTablePresensi.Rows(i).Item("nip"), myDataTablePresensi.Rows(i).Item("nama"), dtpPeriodeMulai.Value.Date, dtpPeriodeSelesai.Value.Date, cboLokasi.SelectedValue, cboPerusahaan.SelectedValue, myDataTablePresensi.Rows(i).Item("departemen"), myDataTablePresensi.Rows(i).Item("kelompok"), myDataTablePresensi.Rows(i).Item("katpenggajian"), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("statuskepegawaian")), Nothing, myDataTablePresensi.Rows(i).Item("statuskepegawaian")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("divisi")), Nothing, myDataTablePresensi.Rows(i).Item("divisi")), IIf(IsDBNull(myDataTablePresensi.Rows(i).Item("bagian")), Nothing, myDataTablePresensi.Rows(i).Item("bagian")), Nothing, True)
                             ElseIf (myDataTablePresensi.Rows(i).Item("departemen") = "KLINIK") Then

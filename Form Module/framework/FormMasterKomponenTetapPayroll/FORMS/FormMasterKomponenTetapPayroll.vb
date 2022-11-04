@@ -86,10 +86,10 @@
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-            stSQL = "SELECT kode,keterangan,faktorqty FROM " & CONN_.schemaHRD & ".msgeneral where kategori='komponengaji' order by keterangan;"
-            Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKomponenGaji, myBindingKomponenGaji, cboKomponenGaji, "T_" & cboKomponenGaji.Name, "keterangan", "keterangan", isCboPrepared)
             stSQL = "SELECT kode,keterangan,faktorqty FROM " & CONN_.schemaHRD & ".msgeneral where kategori='keteranganpayroll' order by keterangan;"
-            Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKeteranganKomponenGaji, myBindingKeteranganKomponenGaji, cboKeterangan, "T_" & cboKeterangan.Name, "keterangan", "keterangan", isCboPrepared)
+            Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKomponenGaji, myBindingKomponenGaji, cboKomponenGaji, "T_" & cboKomponenGaji.Name, "kode", "keterangan", isCboPrepared)
+            'stSQL = "SELECT kode,keterangan,faktorqty FROM " & CONN_.schemaHRD & ".msgeneral where kategori='keteranganpayroll' order by keterangan;"
+            'Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKeteranganKomponenGaji, myBindingKeteranganKomponenGaji, cboKeterangan, "T_" & cboKeterangan.Name, "keterangan", "keterangan", isCboPrepared)
 
             Call myCFormManipulation.SetCheckListBoxUserRights(clbUserRight, USER_.isSuperuser, Me.Name, USER_.T_USER_RIGHT)
             Call myCFormManipulation.SetButtonSimpanAvailabilty(btnSimpan, clbUserRight, "load")
@@ -523,23 +523,23 @@
                     tbNIP.Text = karyawan.nip
                     tbNamaKaryawan.Text = karyawan.nama
                     'Komponen Gaji
-                    If Not IsDBNull(dgvView.CurrentRow.Cells("komponen_gaji").Value) Then
+                    If Not IsDBNull(dgvView.CurrentRow.Cells("keterangan").Value) Then
                         For i As Integer = 0 To cboKomponenGaji.Items.Count - 1
-                            If (DirectCast(cboKomponenGaji.Items(i), DataRowView).Item("keterangan") = dgvView.CurrentRow.Cells("komponen_gaji").Value) Then
+                            If (DirectCast(cboKomponenGaji.Items(i), DataRowView).Item("keterangan") = dgvView.CurrentRow.Cells("keterangan").Value) Then
                                 cboKomponenGaji.SelectedIndex = i
-                                arrDefValues(1) = dgvView.CurrentRow.Cells("komponen_gaji").Value
+                                arrDefValues(1) = dgvView.CurrentRow.Cells("keterangan").Value
                             End If
                         Next
                     End If
                     'Keterangan
-                    If Not IsDBNull(dgvView.CurrentRow.Cells("keterangan").Value) Then
-                        For i As Integer = 0 To cboKeterangan.Items.Count - 1
-                            If (DirectCast(cboKeterangan.Items(i), DataRowView).Item("keterangan") = dgvView.CurrentRow.Cells("keterangan").Value) Then
-                                cboKeterangan.SelectedIndex = i
-                                arrDefValues(2) = dgvView.CurrentRow.Cells("keterangan").Value
-                            End If
-                        Next
-                    End If
+                    'If Not IsDBNull(dgvView.CurrentRow.Cells("keterangan").Value) Then
+                    '    For i As Integer = 0 To cboKeterangan.Items.Count - 1
+                    '        If (DirectCast(cboKeterangan.Items(i), DataRowView).Item("keterangan") = dgvView.CurrentRow.Cells("keterangan").Value) Then
+                    '            cboKeterangan.SelectedIndex = i
+                    '            arrDefValues(2) = dgvView.CurrentRow.Cells("keterangan").Value
+                    '        End If
+                    '    Next
+                    'End If
                     'Kuartal 1
                     cboPeriode1.Checked = dgvView.CurrentRow.Cells("kuartal1").Value
                     arrDefValues(3) = dgvView.CurrentRow.Cells("kuartal1").Value
@@ -567,7 +567,7 @@
 
     Private Sub btnSimpan_Click(sender As Object, e As EventArgs) Handles btnSimpan.Click
         Try
-            If (cboKomponenGaji.SelectedIndex <> -1 And cboKeterangan.SelectedIndex <> -1 And Trim(tbNominal.Text).Length > 0) Then
+            If (cboKomponenGaji.SelectedIndex <> -1 And Trim(tbNominal.Text).Length > 0) Then
                 Me.Cursor = Cursors.WaitCursor
                 Call myCDBConnection.OpenConn(CONN_.dbMain)
                 'Dim created_at As Date
@@ -575,10 +575,10 @@
                 'ADD_INFO_.newValues = "'" & created_at & "','" & USER_.username & "'"
                 If isNew Then
                     'CREATE NEW
-                    isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & tbNIP.Text & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
+                    isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & tbNIP.Text & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & "'")
                     If Not isExist Then
                         'CREATE NEW
-                        newValues = "'" & myCStringManipulation.SafeSqlLiteral(karyawan.idk) & "','" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "','" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "','" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "','" & cboPeriode1.Checked & "'," & DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("faktorqty") & "," & ADD_INFO_.newValues
+                        newValues = "'" & myCStringManipulation.SafeSqlLiteral(karyawan.idk) & "','" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "','" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "','" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & "','" & cboPeriode1.Checked & "'," & DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("faktorqty") & "," & ADD_INFO_.newValues
                         newFields = "idk,nip,komponengaji,keterangan,kuartal1,faktorqty," & ADD_INFO_.newFields
                         If rbPersen.Checked Then
                             newValues &= "," & Double.Parse(tbNominal.Text)
@@ -588,13 +588,13 @@
                             newFields &= ",rupiah"
                         End If
                         Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableName, newValues, newFields)
-                        Call myCShowMessage.ShowSavedMsg("Komponen gaji " & cboKomponenGaji.SelectedValue & " dengan keterangan " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text))
+                        Call myCShowMessage.ShowSavedMsg("Komponen gaji " & cboKomponenGaji.SelectedValue & " dengan keterangan " & Trim(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & " untuk karyawan " & Trim(tbNamaKaryawan.Text))
                         Call btnTampilkan_Click(sender, e)
 
                         Call myCFormManipulation.ResetForm(gbDataEntry)
                         Call btnCreateNew_Click(sender, e)
                     Else
-                        Call myCShowMessage.ShowWarning("Sudah ada komponen gaji " & cboKomponenGaji.SelectedValue & " dengan keterangan " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " !!")
+                        Call myCShowMessage.ShowWarning("Sudah ada komponen gaji " & cboKomponenGaji.SelectedValue & " dengan keterangan " & Trim(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " !!")
                     End If
                 Else
                     'UDPATE
@@ -602,27 +602,28 @@
                     updateString = Nothing
                     foundRows = myDataTableDGV.Select("rid=" & arrDefValues(0))
                     If (arrDefValues(1) <> cboKomponenGaji.SelectedValue) Then
-                        isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
+                        isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & "'")
                         If Not isExist Then
-                            updateString = "komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "'"
+                            updateString = "komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "',keterangan='" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & "'"
                             If (foundRows.Length > 0) Then
                                 myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("komponen_gaji") = Trim(cboKomponenGaji.SelectedValue)
+                                myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("keterangan") = Trim(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan"))
                             End If
                         Else
-                            Call myCShowMessage.ShowWarning("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " dengan keterangan " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " sudah terdaftar!!")
+                            Call myCShowMessage.ShowWarning("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " dengan keterangan " & Trim(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " sudah terdaftar!!")
                         End If
                     End If
-                    If (arrDefValues(2) <> cboKeterangan.SelectedValue) Then
-                        isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
-                        If Not isExist Then
-                            updateString &= IIf(IsNothing(updateString), "", ",") & "keterangan=" & IIf(Trim(cboKeterangan.SelectedValue).Length = 0, "Null", "'" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
-                            If (foundRows.Length > 0) Then
-                                myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("keterangan") = Trim(cboKeterangan.SelectedValue)
-                            End If
-                        Else
-                            Call myCShowMessage.ShowWarning("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " dengan keterangan " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " sudah terdaftar!!")
-                        End If
-                    End If
+                    'If (arrDefValues(2) <> cboKeterangan.SelectedValue) Then
+                    '    isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "nip='" & myCStringManipulation.SafeSqlLiteral(tbNIP.Text) & "' and komponengaji='" & myCStringManipulation.SafeSqlLiteral(cboKomponenGaji.SelectedValue) & "' and keterangan='" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
+                    '    If Not isExist Then
+                    '        updateString &= IIf(IsNothing(updateString), "", ",") & "keterangan=" & IIf(Trim(cboKeterangan.SelectedValue).Length = 0, "Null", "'" & myCStringManipulation.SafeSqlLiteral(cboKeterangan.SelectedValue) & "'")
+                    '        If (foundRows.Length > 0) Then
+                    '            myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("keterangan") = Trim(cboKeterangan.SelectedValue)
+                    '        End If
+                    '    Else
+                    '        Call myCShowMessage.ShowWarning("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " dengan keterangan " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text) & " sudah terdaftar!!")
+                    '    End If
+                    'End If
                     If (arrDefValues(3) <> cboPeriode1.Checked) Then
                         updateString &= IIf(IsNothing(updateString), "", ",") & "kuartal1='" & cboPeriode1.Checked & "'"
                         If (foundRows.Length > 0) Then
@@ -651,7 +652,7 @@
                         updateString &= "," & ADD_INFO_.updateString
                         'Call myCDBOperation.EditUpdatedAt(CONN_.dbMain, CONN_.comm, CONN_.reader, updateString, tableName, CONN_.dbType)
                         Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName, updateString, "rid=" & arrDefValues(0))
-                        Call myCShowMessage.ShowUpdatedMsg("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " - " & Trim(cboKeterangan.SelectedValue) & " untuk karyawan " & Trim(tbNamaKaryawan.Text))
+                        Call myCShowMessage.ShowUpdatedMsg("Komponen gaji " & Trim(cboKomponenGaji.SelectedValue) & " - " & Trim(DirectCast(cboKomponenGaji.SelectedItem, DataRowView).Item("keterangan")) & " untuk karyawan " & Trim(tbNamaKaryawan.Text))
 
                         Call myCFormManipulation.ResetForm(gbDataEntry)
                         Call btnCreateNew_Click(sender, e)

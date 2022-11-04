@@ -28,9 +28,10 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.btnCreateNew = New System.Windows.Forms.Button()
         Me.clbUserRight = New System.Windows.Forms.CheckedListBox()
         Me.gbDataEntry = New System.Windows.Forms.GroupBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cboKeterangan = New System.Windows.Forms.ComboBox()
         Me.cboPeriode1 = New System.Windows.Forms.CheckBox()
         Me.lblNilai = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.pnlNominal = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tbNominal = New System.Windows.Forms.TextBox()
@@ -60,8 +61,6 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.lblCari = New System.Windows.Forms.Label()
         Me.cboKriteria = New System.Windows.Forms.ComboBox()
         Me.dgvView = New System.Windows.Forms.DataGridView()
-        Me.cboKeterangan = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.gbDataEntry.SuspendLayout()
         Me.pnlNominal.SuspendLayout()
         Me.gbView.SuspendLayout()
@@ -125,7 +124,6 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.gbDataEntry.Controls.Add(Me.cboPeriode1)
         Me.gbDataEntry.Controls.Add(Me.lblNilai)
         Me.gbDataEntry.Controls.Add(Me.btnCreateNew)
-        Me.gbDataEntry.Controls.Add(Me.Label3)
         Me.gbDataEntry.Controls.Add(Me.pnlNominal)
         Me.gbDataEntry.Controls.Add(Me.lblKeterangan)
         Me.gbDataEntry.Controls.Add(Me.Label1)
@@ -143,10 +141,33 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.gbDataEntry.TabStop = False
         Me.gbDataEntry.Text = "DATA ENTRY"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label4.ForeColor = System.Drawing.Color.Red
+        Me.Label4.Location = New System.Drawing.Point(362, 67)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(12, 15)
+        Me.Label4.TabIndex = 218
+        Me.Label4.Text = "*"
+        Me.Label4.Visible = False
+        '
+        'cboKeterangan
+        '
+        Me.cboKeterangan.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cboKeterangan.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cboKeterangan.FormattingEnabled = True
+        Me.cboKeterangan.Location = New System.Drawing.Point(109, 64)
+        Me.cboKeterangan.Name = "cboKeterangan"
+        Me.cboKeterangan.Size = New System.Drawing.Size(247, 23)
+        Me.cboKeterangan.TabIndex = 4
+        Me.cboKeterangan.Visible = False
+        '
         'cboPeriode1
         '
         Me.cboPeriode1.AutoSize = True
-        Me.cboPeriode1.Location = New System.Drawing.Point(413, 42)
+        Me.cboPeriode1.Location = New System.Drawing.Point(606, 119)
         Me.cboPeriode1.Name = "cboPeriode1"
         Me.cboPeriode1.Size = New System.Drawing.Size(75, 19)
         Me.cboPeriode1.TabIndex = 217
@@ -163,17 +184,6 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.lblNilai.Size = New System.Drawing.Size(37, 15)
         Me.lblNilai.TabIndex = 216
         Me.lblNilai.Text = "Nilai :"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label3.ForeColor = System.Drawing.Color.Red
-        Me.Label3.Location = New System.Drawing.Point(680, 67)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(12, 15)
-        Me.Label3.TabIndex = 215
-        Me.Label3.Text = "*"
         '
         'pnlNominal
         '
@@ -236,13 +246,14 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.lblKeterangan.Size = New System.Drawing.Size(73, 15)
         Me.lblKeterangan.TabIndex = 213
         Me.lblKeterangan.Text = "Keterangan :"
+        Me.lblKeterangan.Visible = False
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label1.ForeColor = System.Drawing.Color.Red
-        Me.Label1.Location = New System.Drawing.Point(395, 43)
+        Me.Label1.Location = New System.Drawing.Point(682, 48)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(12, 15)
         Me.Label1.TabIndex = 211
@@ -256,7 +267,7 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.cboKomponenGaji.IntegralHeight = False
         Me.cboKomponenGaji.Location = New System.Drawing.Point(109, 40)
         Me.cboKomponenGaji.Name = "cboKomponenGaji"
-        Me.cboKomponenGaji.Size = New System.Drawing.Size(280, 23)
+        Me.cboKomponenGaji.Size = New System.Drawing.Size(511, 23)
         Me.cboKomponenGaji.TabIndex = 3
         '
         'lblKomponenGaji
@@ -478,27 +489,6 @@ Partial Class FormMasterKomponenTetapPayroll
         Me.dgvView.Size = New System.Drawing.Size(948, 263)
         Me.dgvView.TabIndex = 130
         '
-        'cboKeterangan
-        '
-        Me.cboKeterangan.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cboKeterangan.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cboKeterangan.FormattingEnabled = True
-        Me.cboKeterangan.Location = New System.Drawing.Point(109, 64)
-        Me.cboKeterangan.Name = "cboKeterangan"
-        Me.cboKeterangan.Size = New System.Drawing.Size(247, 23)
-        Me.cboKeterangan.TabIndex = 4
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label4.ForeColor = System.Drawing.Color.Red
-        Me.Label4.Location = New System.Drawing.Point(362, 67)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(12, 15)
-        Me.Label4.TabIndex = 218
-        Me.Label4.Text = "*"
-        '
         'FormMasterKomponenTetapPayroll
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -562,7 +552,6 @@ Partial Class FormMasterKomponenTetapPayroll
     Friend WithEvents rbRupiah As RadioButton
     Friend WithEvents tbNominal As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents lblNilai As Label
     Friend WithEvents cboPeriode1 As CheckBox
     Friend WithEvents cboKeterangan As ComboBox
