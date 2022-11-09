@@ -438,6 +438,8 @@
                     .Columns("kodewaktushift").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                     .Columns("masuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                     .Columns("keluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                    .Columns("fpmasuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                    .Columns("fpkeluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                     .Columns("jamkerjanyata").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                     .Columns("terlambat").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                     .Columns("pulangcepat").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
@@ -643,9 +645,13 @@
 
                                 .Rows(i).Cells("masuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                                 .Rows(i).Cells("keluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                .Rows(i).Cells("fpmasuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                .Rows(i).Cells("fpkeluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
 
                                 .Rows(i).Cells("masuk").Style.BackColor = IIf(.Rows(i).Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
-                                .Rows(i).Cells("keluar").Style.BackColor = IIf(.Rows(i).Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
+                                .Rows(i).Cells("keluar").Style.BackColor = IIf(.Rows(i).Cells("keluar").ReadOnly, Color.Gainsboro, Color.White)
+                                .Rows(i).Cells("fpmasuk").Style.BackColor = IIf(.Rows(i).Cells("fpmasuk").ReadOnly, Color.Gainsboro, Color.White)
+                                .Rows(i).Cells("fpkeluar").Style.BackColor = IIf(.Rows(i).Cells("fpkeluar").ReadOnly, Color.Gainsboro, Color.White)
                             End With
                         Else
                             'Jika kolom ijinnya tidak kosong, maka di cek isinya apa
@@ -661,9 +667,13 @@
                                     .Rows(i).Cells("terlambat").ReadOnly = True
                                     .Rows(i).Cells("pulangcepat").ReadOnly = True
                                     .Rows(i).Cells("shift").ReadOnly = True
+                                    .Rows(i).Cells("fpmasuk").ReadOnly = True
+                                    .Rows(i).Cells("fpkeluar").ReadOnly = True
 
                                     .Rows(i).Cells("masuk").Style.BackColor = Color.Gainsboro
                                     .Rows(i).Cells("keluar").Style.BackColor = Color.Gainsboro
+                                    .Rows(i).Cells("fpmasuk").Style.BackColor = Color.Gainsboro
+                                    .Rows(i).Cells("fpkeluar").Style.BackColor = Color.Gainsboro
                                     .Rows(i).Cells("cekfp").Style.BackColor = Color.Gainsboro
                                     .Rows(i).Cells("terlambat").Style.BackColor = Color.Gainsboro
                                     .Rows(i).Cells("pulangcepat").Style.BackColor = Color.Gainsboro
@@ -677,9 +687,13 @@
 
                                     .Rows(i).Cells("masuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                                     .Rows(i).Cells("keluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                    .Rows(i).Cells("fpmasuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                    .Rows(i).Cells("fpkeluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
 
                                     .Rows(i).Cells("masuk").Style.BackColor = IIf(.Rows(i).Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
-                                    .Rows(i).Cells("keluar").Style.BackColor = IIf(.Rows(i).Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
+                                    .Rows(i).Cells("keluar").Style.BackColor = IIf(.Rows(i).Cells("keluar").ReadOnly, Color.Gainsboro, Color.White)
+                                    .Rows(i).Cells("fpmasuk").Style.BackColor = IIf(.Rows(i).Cells("fpmasuk").ReadOnly, Color.Gainsboro, Color.White)
+                                    .Rows(i).Cells("fpkeluar").Style.BackColor = IIf(.Rows(i).Cells("fpkeluar").ReadOnly, Color.Gainsboro, Color.White)
                                 End With
                             End If
                         End If
@@ -694,9 +708,13 @@
 
                             .CurrentRow.Cells("masuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                             .CurrentRow.Cells("keluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                            .CurrentRow.Cells("fpmasuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                            .CurrentRow.Cells("fpkeluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
 
                             .CurrentRow.Cells("masuk").Style.BackColor = IIf(.CurrentRow.Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
-                            .CurrentRow.Cells("keluar").Style.BackColor = IIf(.CurrentRow.Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
+                            .CurrentRow.Cells("keluar").Style.BackColor = IIf(.CurrentRow.Cells("keluar").ReadOnly, Color.Gainsboro, Color.White)
+                            .CurrentRow.Cells("fpmasuk").Style.BackColor = IIf(.CurrentRow.Cells("fpmasuk").ReadOnly, Color.Gainsboro, Color.White)
+                            .CurrentRow.Cells("fpkeluar").Style.BackColor = IIf(.CurrentRow.Cells("fpkeluar").ReadOnly, Color.Gainsboro, Color.White)
                         End With
                     Else
                         'Jika kolom ijinnya tidak kosong, maka di cek isinya apa
@@ -708,9 +726,13 @@
 
                                 .CurrentRow.Cells("masuk").ReadOnly = True
                                 .CurrentRow.Cells("keluar").ReadOnly = True
+                                .CurrentRow.Cells("fpmasuk").ReadOnly = True
+                                .CurrentRow.Cells("fpkeluar").ReadOnly = True
 
                                 .CurrentRow.Cells("masuk").Style.BackColor = Color.Gainsboro
                                 .CurrentRow.Cells("keluar").Style.BackColor = Color.Gainsboro
+                                .CurrentRow.Cells("fpmasuk").Style.BackColor = Color.Gainsboro
+                                .CurrentRow.Cells("fpkeluar").Style.BackColor = Color.Gainsboro
                             End With
                         Else
                             'Kalau isinya bukan TM, maka kolom absen dibuat read only
@@ -720,9 +742,13 @@
 
                                 .CurrentRow.Cells("masuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
                                 .CurrentRow.Cells("keluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                .CurrentRow.Cells("fpmasuk").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
+                                .CurrentRow.Cells("fpkeluar").ReadOnly = Not clbUserRight.GetItemChecked(clbUserRight.Items.IndexOf("Memperbaharui"))
 
                                 .CurrentRow.Cells("masuk").Style.BackColor = IIf(.CurrentRow.Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
-                                .CurrentRow.Cells("keluar").Style.BackColor = IIf(.CurrentRow.Cells("masuk").ReadOnly, Color.Gainsboro, Color.White)
+                                .CurrentRow.Cells("keluar").Style.BackColor = IIf(.CurrentRow.Cells("keluar").ReadOnly, Color.Gainsboro, Color.White)
+                                .CurrentRow.Cells("fpmasuk").Style.BackColor = IIf(.CurrentRow.Cells("fpmasuk").ReadOnly, Color.Gainsboro, Color.White)
+                                .CurrentRow.Cells("fpkeluar").Style.BackColor = IIf(.CurrentRow.Cells("fpkeluar").ReadOnly, Color.Gainsboro, Color.White)
                             End With
                         End If
                     End If
