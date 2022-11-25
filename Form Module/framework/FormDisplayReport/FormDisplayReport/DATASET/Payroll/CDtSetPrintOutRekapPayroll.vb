@@ -68,6 +68,8 @@
         dt.Columns.Add("totaltunjanganlongshift", GetType(Double))
         dt.Columns.Add("potongantidakmasuk", GetType(Double))
         dt.Columns.Add("totaljamkerja", GetType(Double))
+        dt.Columns.Add("totalkomisi", GetType(Double))
+        dt.Columns.Add("tuslah", GetType(Double))
         dt.AcceptChanges()
         Tables.Add(dt)
     End Sub
