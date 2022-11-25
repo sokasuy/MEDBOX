@@ -578,12 +578,12 @@
                     If (isProses) Then
                         stSQL = Nothing
                         If (rbSemua.Checked) Then
-                            stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk
+                            stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk,tbl2.parentnip
                                     FROM (" & tableName(10) & " as tbl1 inner join " & tableName(11) & " as tbl2 on tbl1.idk=tbl2.idk) 
                                     WHERE (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ((tbl1.statusbekerja='AKTIF' AND tbl1.tanggalmasuk<='" & Format(tanggalProses, "dd-MMM-yyyy") & "') OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
                                     ORDER BY tbl2.lokasi,tbl2.perusahaan,tbl2.departemen,tbl2.nama;"
                         ElseIf (rbKaryawan.Checked And cboKaryawan.SelectedIndex <> -1) Then
-                            stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk
+                            stSQL = "SELECT tbl2.idk,tbl2.nip,tbl2.fpid,tbl2.nama,tbl2.bagian,tbl2.divisi,tbl2.departemen,tbl2.perusahaan,tbl2.lokasi,tbl2.kelompok,tbl2.katpenggajian,tbl2.statuskepegawaian,(case when tbl2.statuskepegawaian='KONTRAK' then tbl2.tglmulaikontrak else tbl1.tanggalmasuk end) as tanggalmasuk,tbl2.parentnip
                                     FROM (" & tableName(10) & " as tbl1 inner join " & tableName(11) & " as tbl2 on tbl1.idk=tbl2.idk) 
                                     WHERE (tbl2.nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "') AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND ((tbl1.statusbekerja='AKTIF' AND tbl1.tanggalmasuk<='" & Format(tanggalProses, "dd-MMM-yyyy") & "') OR (tbl1.statusbekerja<>'AKTIF' AND tbl1.tanggalterakhirbekerja>='" & Format(tanggalProses, "dd-MMM-yyyy") & "'))
                                     ORDER BY tbl2.lokasi,tbl2.perusahaan,tbl2.departemen,tbl2.nama;"
@@ -646,6 +646,7 @@
                                         newRow("userid") = USER_.username
                                         newRow("userpc") = myCManagementSystem.GetComputerName
                                         newRow("isnew") = Not isExist
+                                        newRow("parentnip") = .Rows(idx).Item("parentnip")
                                         .Rows.Add(newRow)
                                     End With
                                 End If
@@ -670,6 +671,11 @@
                         GC.Collect()
                     End If
                 End While
+
+                'UPDATE PARENT NIP KHUSUS DOKTER DI KLINIK, TIDAK DIPAKAI DI PIM, HPS, MAUPUN SRF
+                'Hanya update yang parent nip dio mskaryawanaktif ada isinya, tapi di data presensi parent nip nya masih kosong
+                'stSQL = "update " & tableName(0) & " as p set parentnip=k.parentnip FROM " & tableName(11) & " as k where p.nip=k.nip and k.parentnip is not null and p.parentnip is null and (tanggal>='" & Format(dtpPeriodeAwal.Value.Date, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpPeriodeAkhir.Value.Date, "dd-MMM-yyyy") & "');"
+                'Call myCDBOperation.ExecuteCmd(CONN_.dbMain, CONN_.comm, stSQL)
 
                 Call myCShowMessage.ShowInfo("DONE!!" & ControlChars.NewLine & "Sebanyak " & totalKaryawan & " data karyawan dari tanggal " & Format(dtpPeriodeAwal.Value.Date, "dd-MMM-yyyy") & " - " & Format(dtpPeriodeAkhir.Value.Date, "dd-MMM-yyyy") & " siap untuk diproses presensinya!")
                 pnlLoading.Visible = False
