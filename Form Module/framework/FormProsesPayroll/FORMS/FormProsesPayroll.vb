@@ -611,47 +611,48 @@ Public Class FormProsesPayroll
             End If
 
             'TERLAMBAT (KHUSUS DOKTER DIKASIH TOLERANSI 30 MENIT)
-            Dim terlambatSuper As Byte
-            terlambat = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "(nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat>'00:00:59'", CONN_.dbType)
-            If (terlambat > 0) Then
-                Dim pengaliKelipatan As Byte
-                stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendaterlambat as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
-                myDataDendaTerlambat = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
-                terlambatSuper = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "(nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat >'00:30:00'", CONN_.dbType)
-                If (myDataDendaTerlambat.Rows.Count > 0) Then
-                    If (terlambatSuper > myDataDendaTerlambat.Rows(0).Item("toleransi")) Then
-                        If (myDataDendaTerlambat.Rows(0).Item("kelipatan")) Then
-                            'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
-                            pengaliKelipatan = terlambatSuper / myDataDendaTerlambat.Rows(0).Item("toleransi")
-                        Else
-                            pengaliKelipatan = 1
-                        End If
-                        nominalTerlambat = (terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")) + (myDataDendaTerlambat.Rows(0).Item("dendapenalty") * pengaliKelipatan)
-                    Else
-                        nominalTerlambat = terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")
-                    End If
-                Else
-                    If (terlambatSuper > 4) Then
-                        pengaliKelipatan = terlambatSuper / 4
-                        nominalTerlambat = (terlambat * 2500) + (pengaliKelipatan * 50000)
-                    Else
-                        nominalTerlambat = terlambat * 2500
-                    End If
-                End If
-                lineNr += 1
-                newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TERLAMBAT " & terlambat & "X'," & nominalTerlambat & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
-                newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
-                Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+            'PER 28 NOVEMBER 2022, DOKTER TIDAK ADA DENDA TERLAMBAT, DILIHAT JAM KERJA SAJA
+            'Dim terlambatSuper As Byte
+            'terlambat = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "(nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat>'00:00:59'", CONN_.dbType)
+            'If (terlambat > 0) Then
+            '    Dim pengaliKelipatan As Byte
+            '    stSQL = "SELECT d.dendaharian,d.toleransi,d.dendapenalty,d.kelipatan FROM " & CONN_.schemaHRD & ".msdendaterlambat as d inner join " & CONN_.schemaHRD & ".msposisikaryawan as p on d.leveljabatan=p.level WHERE p.nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "';"
+            '    myDataDendaTerlambat = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_DataDenda")
+            '    terlambatSuper = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".trdatapresensi", "Count", "(nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') AND terlambat >'00:30:00'", CONN_.dbType)
+            '    If (myDataDendaTerlambat.Rows.Count > 0) Then
+            '        If (terlambatSuper > myDataDendaTerlambat.Rows(0).Item("toleransi")) Then
+            '            If (myDataDendaTerlambat.Rows(0).Item("kelipatan")) Then
+            '                'Jika kelipatan true, maka denda penalty nya akan berulang tiap kelipatan toleransinya
+            '                pengaliKelipatan = terlambatSuper / myDataDendaTerlambat.Rows(0).Item("toleransi")
+            '            Else
+            '                pengaliKelipatan = 1
+            '            End If
+            '            nominalTerlambat = (terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")) + (myDataDendaTerlambat.Rows(0).Item("dendapenalty") * pengaliKelipatan)
+            '        Else
+            '            nominalTerlambat = terlambat * myDataDendaTerlambat.Rows(0).Item("dendaharian")
+            '        End If
+            '    Else
+            '        If (terlambatSuper > 4) Then
+            '            pengaliKelipatan = terlambatSuper / 4
+            '            nominalTerlambat = (terlambat * 2500) + (pengaliKelipatan * 50000)
+            '        Else
+            '            nominalTerlambat = terlambat * 2500
+            '        End If
+            '    End If
+            '    lineNr += 1
+            '    newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','TERLAMBAT " & terlambat & "X'," & nominalTerlambat & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+            '    newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+            '    Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
 
-                'potonganTransportKehadiran = terlambat * ((tunjanganHadir + tunjanganTransport) / hariKerja1Periode)
-                'lineNr += 1
-                'newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','POTONGAN KEHADIRAN DAN TRANSPORT KARENA TERLAMBAT " & terlambat & "X'," & potonganTransportKehadiran & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
-                'newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
-                'Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
+            '    'potonganTransportKehadiran = terlambat * ((tunjanganHadir + tunjanganTransport) / hariKerja1Periode)
+            '    'lineNr += 1
+            '    'newValues = "'" & strNoPayroll & "'," & lineNr & ",'" & myCStringManipulation.SafeSqlLiteral(_idk) & "','" & myCStringManipulation.SafeSqlLiteral(_nip) & "','" & myCStringManipulation.SafeSqlLiteral(_nama) & "','POTONGAN TIDAK TETAP','POTONGAN KEHADIRAN DAN TRANSPORT KARENA TERLAMBAT " & terlambat & "X'," & potonganTransportKehadiran & ",-1,'" & myCManagementSystem.GetComputerName & "'," & ADD_INFO_.newValues
+            '    'newFields = tableKey & ",linenr,idk,nip,nama,komponengaji,keterangan,rupiah,faktorqty,userpc," & ADD_INFO_.newFields
+            '    'Call myCDBOperation.InsertData(_conn, _comm, tableNameDetail, newValues, newFields)
 
-                newValuesSummary &= "," & terlambat & "," & nominalTerlambat
-                newFieldsSummary &= ",terlambat,dendaterlambat"
-            End If
+            '    newValuesSummary &= "," & terlambat & "," & nominalTerlambat
+            '    newFieldsSummary &= ",terlambat,dendaterlambat"
+            'End If
             '==========================================================================================================================================
 
             '==========================================================================================================================================

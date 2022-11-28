@@ -1123,7 +1123,7 @@
                                             arrUpdateValues(5) = arrUpdateValues(3)
                                             arrUpdateValues(6) = Nothing
                                             'Kalau selisih jam masuknya positif (lebih dari 59 detik), berarti fp masuknya lebih besar dari jadwal jam masuknya, berarti terlambat
-                                            arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:00"), strSelisihJamMasuk.Duration.ToString, Nothing)
+                                            arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:59"), strSelisihJamMasuk.Duration.ToString, Nothing)
                                             arrUpdateValues(8) = Nothing
                                         Else
                                             'Kalau fp masuk lebih dekat ke jadwal pulang, maka fp pulang dianggap jam pulang
@@ -1144,7 +1144,7 @@
                                         arrUpdateValues(5) = arrUpdateValues(3)
                                         arrUpdateValues(6) = arrUpdateValues(4)
                                         'Kalau selisih jam masuknya positif, berarti fp masuknya lebih besar dari jadwal jam masuknya, berarti terlambat
-                                        arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:00"), strSelisihJamMasuk.Duration.ToString, Nothing)
+                                        arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:59"), strSelisihJamMasuk.Duration.ToString, Nothing)
                                         'Kalau selisih jam keluarnya negatif, berarti fp keluarnya lebih kecil dari jadwal jam keluarnya, berarti pulang lebih cepat
                                         arrUpdateValues(8) = IIf(strSelisihJamKeluar < TimeSpan.Parse("00:00:00"), strSelisihJamKeluar.Duration.ToString, Nothing)
                                     End If
@@ -1162,7 +1162,7 @@
                                                 arrUpdateValues(5) = arrUpdateValues(3)
                                                 arrUpdateValues(6) = Nothing
                                                 'Kalau selisih jam masuknya positif, berarti fp masuknya lebih besar dari jadwal jam masuknya, berarti terlambat
-                                                arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:00"), strSelisihJamMasuk.Duration.ToString, Nothing)
+                                                arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:59"), strSelisihJamMasuk.Duration.ToString, Nothing)
                                                 arrUpdateValues(8) = Nothing
                                             Else
                                                 'Kalau fp masuk lebih dekat ke jadwal pulang, maka fp masuk dianggap jam pulang
@@ -1184,7 +1184,7 @@
                                                 arrUpdateValues(5) = arrUpdateValues(4)
                                                 arrUpdateValues(6) = Nothing
                                                 'Kalau selisih jam masuknya positif, berarti fp masuknya lebih besar dari jadwal jam masuknya, berarti terlambat
-                                                arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:00"), strSelisihJamMasuk.Duration.ToString, Nothing)
+                                                arrUpdateValues(7) = IIf(strSelisihJamMasuk > TimeSpan.Parse("00:00:59"), strSelisihJamMasuk.Duration.ToString, Nothing)
                                                 arrUpdateValues(8) = Nothing
                                             Else
                                                 'Kalau fp masuk lebih dekat ke jadwal pulang, maka fp masuk dianggap jam pulang
