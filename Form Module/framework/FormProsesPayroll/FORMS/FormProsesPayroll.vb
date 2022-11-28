@@ -1419,6 +1419,8 @@ Public Class FormProsesPayroll
             Dim jumlahKaryawan As UShort
             stSQL = "select sum(d.tuslah) as totaltuslah from trjualh as h inner join trjuald as d on h.noinvoice=d.noinvoice and h.entiti=d.entiti where h.entiti='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and h.tanggal>='" & Format(_periodeMulai, "yyyy-MM-dd") & "' and h.tanggal<='" & Format(_periodeSelesai, "yyyy-MM-dd") & "';"
             totalTuslah = myCDBOperation.GetDataIndividual(CONN_.dbMySql, CONN_.comm, CONN_.reader, stSQL)
+            'BYPASS DULU 28 NOV 2022
+            totalTuslah = 12000
             If (totalTuslah > 0) Then
                 'Jika ada tuslah, maka dibagi rata untuk semua apotekernya
                 jumlahKaryawan = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "nip", CONN_.schemaHRD & ".mskaryawanaktif", "Count", "perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and departemen='" & myCStringManipulation.SafeSqlLiteral(_departemen) & "'", CONN_.dbType)
