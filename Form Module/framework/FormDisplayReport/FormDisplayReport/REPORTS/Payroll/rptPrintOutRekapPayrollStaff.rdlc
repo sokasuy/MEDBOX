@@ -493,79 +493,76 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.15604cm</Width>
+                  <Width>2.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.8836cm</Width>
+                  <Width>1.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.53458cm</Width>
+                  <Width>2cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.8cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.2cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.1cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.9cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.2cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.4cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.83854cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.62688cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.12958cm</Width>
+                  <Width>1.4cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>1.3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.4cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.3cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.2cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.5cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.73813cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.42604cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -601,10 +598,9 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>25</ColSpan>
+                        <ColSpan>24</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -653,41 +649,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox67</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>None</Style>
-                            </BottomBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox68">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>BAGIAN</Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox68</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -781,7 +742,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>TGL MASUK</Value>
+                                  <Value>TGL</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -816,7 +777,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>MASA KERJA</Value>
+                                  <Value>MASA</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -851,7 +812,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>UPAH POKOK</Value>
+                                  <Value>UPAH</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1158,7 +1119,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>TOTAL JAM KERJA</Value>
+                                  <Value>TOTAL </Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1193,7 +1154,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>UPAH YANG DIBAYAR</Value>
+                                  <Value>UPAH</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1245,41 +1206,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox229</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <TopBorder>
-                              <Style>None</Style>
-                            </TopBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox230">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox230</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1373,7 +1299,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>MASUK</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1408,7 +1334,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>KERJA</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1443,7 +1369,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>POKOK</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1478,7 +1404,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>T. SERTIFIKAT</Value>
+                                  <Value>T.SERTIFIKAT</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1510,7 +1436,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>T. TRANSPORT</Value>
+                                  <Value>T.TRANSPORT</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1542,7 +1468,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>T. TUNJ HADIR</Value>
+                                  <Value>T.TUNJ HADIR</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1602,15 +1528,14 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox11">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>(RESEP + KONSUL)</Value>
+                                  <Value>RESEP + KONSUL</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7.5pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1962,7 +1887,7 @@
                                 <TextRun>
                                   <Value>IJIN PEMERINTAH</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1973,9 +1898,7 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox34</rd:DefaultName>
                           <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
+                            <Border />
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1992,7 +1915,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>JAM KERJA</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2027,7 +1950,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>YANG DIBAYAR</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2077,36 +2000,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>departemen</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="bagian">
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!bagian.Value</Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>bagian</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2394,7 +2287,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2855,7 +2747,6 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -2900,7 +2791,7 @@
             <Top>3.15323cm</Top>
             <Left>0.0762cm</Left>
             <Height>2cm</Height>
-            <Width>59.33339cm</Width>
+            <Width>45.1cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -2912,7 +2803,7 @@
         <Height>6.35323cm</Height>
         <Style />
       </Body>
-      <Width>59.90959cm</Width>
+      <Width>45.30459cm</Width>
       <Page>
         <PageHeight>21cm</PageHeight>
         <PageWidth>29.7cm</PageWidth>
