@@ -481,6 +481,7 @@
             Dim myDataTableFinger As New DataTable
             Dim myDataTableDataPresensi As New DataTable
             Dim jamKeluar As TimeSpan
+            'Dim cekSelisihCheckclock As TimeSpan
 
             tanggalBerjalan = Format(dtpPeriodeAwal.Value.Date, "dd-MMM-yyyy")
             tanggalAkhir = Format(dtpPeriodeAkhir.Value.Date, "dd-MMM-yyyy")
@@ -513,7 +514,8 @@
                     myDataTableDataPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_PresensiMedbox")
                     myDataTableDataPresensi.Columns.Add("jamkeluar", GetType(TimeSpan))
                     For i As Integer = 0 To myDataTableDataPresensi.Rows.Count - 1
-                        jamKeluar = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "checkclock", tableName(13),, "mesin='" & myCStringManipulation.SafeSqlLiteral(myDataTableDataPresensi.Rows(i).Item("mesin")) & "' and fpid=" & myDataTableDataPresensi.Rows(i).Item("fpid") & " and tanggal='" & Format(tanggalBerjalan, "dd-MMM-yyyy") & "'")
+                        jamKeluar = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "checkclock", tableName(13), "desc", "mesin='" & myCStringManipulation.SafeSqlLiteral(myDataTableDataPresensi.Rows(i).Item("mesin")) & "' and fpid=" & myDataTableDataPresensi.Rows(i).Item("fpid") & " and tanggal='" & Format(tanggalBerjalan, "dd-MMM-yyyy") & "'")
+                        'jamKeluar = myCDBOperation.GetFormulationRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "checkclock", tableName(13), "Max", "mesin='" & myCStringManipulation.SafeSqlLiteral(myDataTableDataPresensi.Rows(i).Item("mesin")) & "' and fpid=" & myDataTableDataPresensi.Rows(i).Item("fpid") & " and tanggal='" & Format(tanggalBerjalan, "dd-MMM-yyyy") & "'", CONN_.dbType)
                         myDataTableDataPresensi.Rows(i).Item("jamkeluar") = jamKeluar
                         If (i Mod 100 = 0) Then
                             GC.Collect()
@@ -832,6 +834,9 @@
                 'Dim batasToleransi As TimeSpan
                 'Dim pengurangJamKerja As String
                 Dim nipKaryawan As String = Nothing
+                Dim cekSelisihCheckClock As TimeSpan
+                Dim cekSelisihJamMasuk As TimeSpan
+                Dim cekSelisihJamKeluar As TimeSpan
 
                 tanggalBerjalan = dtpPeriodeAwal.Value.Date
                 tanggalAkhir = dtpPeriodeAkhir.Value.Date
@@ -1074,6 +1079,21 @@
                                 'MsgBox("FP masuk: " & myDataTableTmpFP.Rows(myDataTableTmpFP.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString)
                                 arrUpdateValues(3) = IIf(IsDBNull(myDataTableTmpFP.Rows(myDataTableTmpFP.Rows.IndexOf(foundRows(0))).Item("jammasuk")), Nothing, myDataTableTmpFP.Rows(myDataTableTmpFP.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString)
                                 arrUpdateValues(4) = IIf(IsDBNull(myDataTableTmpFP.Rows(myDataTableTmpFP.Rows.IndexOf(foundRows(0))).Item("jamkeluar")), Nothing, myDataTableTmpFP.Rows(myDataTableTmpFP.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString)
+                                cekSelisihCheckClock = (TimeSpan.Parse(arrUpdateValues(4)) - TimeSpan.Parse(arrUpdateValues(3))).Duration
+                                If (cekSelisihCheckClock <= TimeSpan.Parse("00:15:00")) Then
+                                    'Jika selisih checkclock fp masuk dan fp keluar kurang dari 15 menit, maka dianggap checkclock di jam yang sama, tinggal menentukan mana yang harus dihapus
+                                    'apakah FP masuk atau FP keluarnya
+                                    'Cara menentukannya dibandingkan mana yang terdekat dengan masing2 jadwal masuk dan jadwal keluarnya
+                                    cekSelisihJamMasuk = (TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(1))).Duration
+                                    cekSelisihJamKeluar = (TimeSpan.Parse(arrUpdateValues(4)) - TimeSpan.Parse(arrUpdateValues(2))).Duration
+                                    If (cekSelisihJamMasuk > cekSelisihJamKeluar) Then
+                                        'Jika selisih fp masuk lebih besar dari selisih fp keluar, maka bisa dipastikan fp nya untuk jam pulang
+                                        arrUpdateValues(3) = Nothing
+                                    Else
+                                        'Jika selisih fp masuk lebih kecil dari selisih fp keluar, maka bisa dipastikan fp nya untuk jam masuk
+                                        arrUpdateValues(4) = Nothing
+                                    End If
+                                End If
                             Else
                                 arrUpdateValues(3) = Nothing
                                 arrUpdateValues(4) = Nothing
