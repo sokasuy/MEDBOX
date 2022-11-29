@@ -14,7 +14,6 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\bin\Debug\
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\bin\Debug\FormMasterGeneral.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\bin\Debug\FormMasterGeneral.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\bin\Debug\FormMasterGeneral.xml
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\obj\Debug\FormMasterGeneral.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\obj\Debug\FormMasterGeneral.FormMasterGeneral.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\obj\Debug\FormMasterGeneral.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterGeneral\obj\Debug\FormMasterGeneral.vbproj.GenerateResource.cache

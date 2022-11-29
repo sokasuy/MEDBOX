@@ -14,6 +14,7 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\bin\Debug\
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\bin\Debug\FormGantiGambarBG.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\bin\Debug\FormGantiGambarBG.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\bin\Debug\FormGantiGambarBG.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\obj\Debug\FormGantiGambarBG.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\obj\Debug\FormGantiGambarBG.FormGantiGambarBG.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\obj\Debug\FormGantiGambarBG.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormGantiGambarBG\obj\Debug\FormGantiGambarBG.vbproj.GenerateResource.cache

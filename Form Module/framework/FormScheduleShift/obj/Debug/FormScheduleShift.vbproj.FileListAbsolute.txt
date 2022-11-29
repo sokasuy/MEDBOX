@@ -14,6 +14,7 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\bin\Debug\
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\bin\Debug\FormScheduleShift.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\bin\Debug\FormScheduleShift.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\bin\Debug\FormScheduleShift.xml
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.FormMasterScheduleShift.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.FormDetailScheduleShift.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.Resources.resources
@@ -22,4 +23,3 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.pdb
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormScheduleShift\obj\Debug\FormScheduleShift.vbproj.AssemblyReference.cache

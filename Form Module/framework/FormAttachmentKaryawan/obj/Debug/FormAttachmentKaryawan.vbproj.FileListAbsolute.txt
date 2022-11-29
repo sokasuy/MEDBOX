@@ -13,7 +13,6 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\bin\D
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\bin\Debug\FormAttachmentKaryawan.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\bin\Debug\FormAttachmentKaryawan.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\bin\Debug\FormAttachmentKaryawan.xml
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\obj\Debug\FormAttachmentKaryawan.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\obj\Debug\FormAttachmentKaryawan.FormAttachmentKaryawan.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\obj\Debug\FormAttachmentKaryawan.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormAttachmentKaryawan\obj\Debug\FormAttachmentKaryawan.vbproj.GenerateResource.cache

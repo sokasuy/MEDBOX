@@ -18,7 +18,6 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\bin\Debug\FormView.
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\bin\Debug\FormView.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\bin\Debug\FormView.pdb
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\bin\Debug\FormView.xml
-G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.vbproj.AssemblyReference.cache
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.FormView.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.Resources.resources
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.vbproj.GenerateResource.cache

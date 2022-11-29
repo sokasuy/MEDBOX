@@ -576,7 +576,7 @@ Public Class FormProsesPayroll
             End If
 
             'DENDA TIDAK CHECK CLOCK
-            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null);"
+            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "' or parentnip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null or (absen='L' and kodewaktushift<>'X'));"
             tidakCheckClock = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
             If (tidakCheckClock > 0) Then
                 Dim pengaliKelipatan As Byte
@@ -1221,7 +1221,7 @@ Public Class FormProsesPayroll
             End If
 
             'DENDA TIDAK CHECK CLOCK
-            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null);"
+            stSQL = "SELECT Sum(case when fpmasuk is null then 1 else 0 end) + Sum(case when fpkeluar is null then 1 else 0 end) as hitung FROM " & CONN_.schemaHRD & ".trdatapresensi WHERE (nip='" & myCStringManipulation.SafeSqlLiteral(_nip) & "') AND (tanggal>='" & Format(_periodeMulai, "dd-MMM-yyyy") & "' AND tanggal<='" & Format(_periodeSelesai, "dd-MMM-yyyy") & "') and (fpmasuk is null or fpkeluar is null) and (absen is null or (absen='L' and kodewaktushift<>'X'));"
             tidakCheckClock = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
             If (tidakCheckClock > 0) Then
                 Dim pengaliKelipatan As Byte
