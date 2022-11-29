@@ -1048,9 +1048,10 @@
                                         <Paragraph>
                                           <TextRuns>
                                             <TextRun>
-                                              <Value />
+                                              <Value>=Fields!tanggal.Value</Value>
                                               <Style>
                                                 <FontWeight>Bold</FontWeight>
+                                                <Format>dd</Format>
                                               </Style>
                                             </TextRun>
                                           </TextRuns>
@@ -1086,11 +1087,10 @@
                                             <Paragraph>
                                               <TextRuns>
                                                 <TextRun>
-                                                  <Value>=Fields!tanggal.Value</Value>
+                                                  <Value>=WeekdayName(Weekday(Fields!tanggal.Value),True,1)</Value>
                                                   <Style>
                                                     <FontSize>9pt</FontSize>
                                                     <FontWeight>Bold</FontWeight>
-                                                    <Format>dd</Format>
                                                   </Style>
                                                 </TextRun>
                                               </TextRuns>
@@ -1209,7 +1209,7 @@
                                                 <Paragraph>
                                                   <TextRuns>
                                                     <TextRun>
-                                                      <Value />
+                                                      <Value>=Sum(Switch(Fields!kodewaktushift.Value&lt;&gt;"X",Switch(isnothing(Fields!absen.Value) or Fields!absen.Value="L",1)))</Value>
                                                       <Style>
                                                         <FontFamily>arial</FontFamily>
                                                         <FontSize>8pt</FontSize>
