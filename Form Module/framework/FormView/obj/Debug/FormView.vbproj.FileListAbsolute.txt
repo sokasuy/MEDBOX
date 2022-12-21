@@ -25,3 +25,4 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormView\obj\Debug\FormView.vbproj.AssemblyReference.cache

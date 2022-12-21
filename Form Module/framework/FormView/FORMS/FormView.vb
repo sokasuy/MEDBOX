@@ -1462,11 +1462,19 @@
                                 ElseIf (e.ColumnIndex = dgvView.Columns("jamkerjanyata").Index) Then
                                     Dim limitJamKerja As String
                                     Call myCDBConnection.OpenConn(CONN_.dbMain)
-                                    limitJamKerja = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("lokasi").Value) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("perusahaan").Value) & "' AND issecurity='" & IIf(dgvView.CurrentRow.Cells("departemen").Value = "SECURITY", "True", "False") & "' AND hari='" & WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)) & "' AND bagian='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("bagian").Value) & "'")
+                                    If Not IsDBNull(dgvView.CurrentRow.Cells("spkmulai").Value) And Not IsDBNull(dgvView.CurrentRow.Cells("spkselesai").Value) Then
+                                        limitJamKerja = (dgvView.CurrentRow.Cells("spkselesai").Value - dgvView.CurrentRow.Cells("spkmulai").Value).ToString
+                                    Else
+                                        limitJamKerja = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "jamkerja", CONN_.schemaHRD & ".msdefaultjamkerja",, "lokasi='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("lokasi").Value) & "' AND perusahaan='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("perusahaan").Value) & "' AND issecurity='" & IIf(dgvView.CurrentRow.Cells("departemen").Value = "SECURITY", "True", "False") & "' AND hari='" & WeekdayName(Weekday(dgvView.CurrentRow.Cells("tanggal").Value)) & "' AND bagian='" & myCStringManipulation.SafeSqlLiteral(dgvView.CurrentRow.Cells("bagian").Value) & "'")
+                                    End If
                                     Call myCDBConnection.CloseConn(CONN_.dbMain, -1)
                                     If (dgvView.CurrentCell.Value > TimeSpan.Parse(limitJamKerja)) Then
                                         'Jam Kerja di PANDAAN tidak boleh lebih dari 8 Jam, Lemburan dihitung terpisah, tidak dihitung sebagai jam kerja normal
-                                        Call myCShowMessage.ShowWarning("Jam kerja di " & dgvView.CurrentRow.Cells("lokasi").Value & " untuk departemen " & dgvView.CurrentRow.Cells("departemen").Value & " tidak boleh lebih dari " & limitJamKerja & " jam!!" & ControlChars.NewLine & "Jika ada lembur masukkan di kolom lemburan")
+                                        If ((TimeSpan.Parse(limitJamKerja).Duration) <= TimeSpan.Parse("08:00:00")) Then
+                                            Call myCShowMessage.ShowWarning("Jam kerja di " & dgvView.CurrentRow.Cells("lokasi").Value & " untuk departemen " & dgvView.CurrentRow.Cells("departemen").Value & " tidak boleh lebih dari " & limitJamKerja & " jam!!" & ControlChars.NewLine & "Jika long shift, inputkan dulu SPK nya")
+                                        Else
+                                            Call myCShowMessage.ShowWarning("Jam kerja maksimal sesuai SPK untuk karyawan " & dgvView.CurrentRow.Cells("nama").Value & " sebanyak " & limitJamKerja & ControlChars.NewLine & "Jika ada penambahan jam kerja, silahkan sesuaikan dulu SPK nya!")
+                                        End If
                                         isValueChanged = False
                                     Else
                                         isValueChanged = True

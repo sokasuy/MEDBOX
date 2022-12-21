@@ -28,6 +28,7 @@
         dt.Columns.Add("jamselesai", GetType(TimeSpan))
         dt.Columns.Add("jamspk", GetType(String))
         dt.Columns.Add("tanggalshift", GetType(Date))
+        dt.Columns.Add("banyakjam", GetType(String))
         dt.AcceptChanges()
         Tables.Add(dt)
     End Sub

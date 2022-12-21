@@ -484,7 +484,7 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <BackgroundColor>=iif(Fields!kodewaktushift.Value="X","Silver",iif(Fields!kategori.Value="S" or Fields!kategori.Value="I","Aqua",iif(Fields!kategori.Value="A","Red","Transparent")))</BackgroundColor>
+                                          <BackgroundColor>=iif(Fields!kodewaktushift.Value="X","Silver",iif(Fields!kategori.Value="S" or Fields!kategori.Value="I","Aqua",iif(Fields!kategori.Value="A","Red",iif(Fields!banyakjamkerjanyata.Value&gt;8,"Gold","Transparent"))))</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -896,6 +896,10 @@
         <Field Name="jamkerja">
           <DataField>jamkerja</DataField>
           <rd:TypeName>System.TimeSpan</rd:TypeName>
+        </Field>
+        <Field Name="banyakjamkerjanyata">
+          <DataField>banyakjamkerjanyata</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="terlambat">
           <DataField>terlambat</DataField>

@@ -15,6 +15,7 @@
         dt.Columns.Add("fpmasuk", GetType(TimeSpan))
         dt.Columns.Add("fpkeluar", GetType(TimeSpan))
         dt.Columns.Add("jamkerja", GetType(TimeSpan))
+        dt.Columns.Add("banyakjamkerjanyata", GetType(Double))
         dt.Columns.Add("terlambat", GetType(TimeSpan))
         dt.Columns.Add("pulangcepat", GetType(TimeSpan))
         dt.Columns.Add("absen", GetType(String))

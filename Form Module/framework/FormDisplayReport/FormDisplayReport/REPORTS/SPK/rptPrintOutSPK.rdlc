@@ -715,15 +715,15 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="tanggalshift1">
+                    <Textbox Name="banyakjam">
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(isnothing(Fields!tanggalshift.Value),"-",8)</Value>
+                              <Value>=Fields!banyakjam.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -732,7 +732,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>tanggalshift1</rd:DefaultName>
+                      <rd:DefaultName>banyakjam</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -743,6 +743,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2704,6 +2705,10 @@
         <Field Name="tanggalshift">
           <DataField>tanggalshift</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="banyakjam">
+          <DataField>banyakjam</DataField>
+          <rd:TypeName>System.TimeSpan</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

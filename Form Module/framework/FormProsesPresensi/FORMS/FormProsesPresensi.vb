@@ -1850,25 +1850,25 @@
             If (isCetak) Then
                 Select Case rptType
                     Case "PresensiMingguan"
-                        If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            'NON STAFF PANDAAN
-                            stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur
-                                    FROM " & tableName(0) & " " & "
-                                    WHERE (tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaanCetak.SelectedValue) & "' " & IIf(cboDepartemenCetak.SelectedIndex <> -1, "and departemen='" & myCStringManipulation.SafeSqlLiteral(cboDepartemenCetak.SelectedValue) & "'", "") & " and lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and kelompok='NON STAFF' and katpenggajian='MINGGUAN'
-                                    ORDER BY tanggal,nama,departemen,divisi,bagian;"
-                        ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = Nothing
-                        End If
+                        'If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                        '    'NON STAFF PANDAAN
+                        '    stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur
+                        '            FROM " & tableName(0) & " " & "
+                        '            WHERE (tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaanCetak.SelectedValue) & "' " & IIf(cboDepartemenCetak.SelectedIndex <> -1, "and departemen='" & myCStringManipulation.SafeSqlLiteral(cboDepartemenCetak.SelectedValue) & "'", "") & " and lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and kelompok='NON STAFF' and katpenggajian='MINGGUAN'
+                        '            ORDER BY tanggal,nama,departemen,divisi,bagian;"
+                        'ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                        '    stSQL = Nothing
+                        'End If
                     Case "PresensiSecurity"
-                        If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            'SECURITY PANDAAN
-                            stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur
-                                    FROM " & tableName(0) & " " & "
-                                    WHERE (tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and divisi='SECURITY' and lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "'
-                                    ORDER BY tanggal,nama,departemen,divisi,bagian;"
-                        ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = Nothing
-                        End If
+                        'If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                        '    'SECURITY PANDAAN
+                        '    stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur
+                        '            FROM " & tableName(0) & " " & "
+                        '            WHERE (tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and divisi='SECURITY' and lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "'
+                        '            ORDER BY tanggal,nama,departemen,divisi,bagian;"
+                        'ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                        '    stSQL = Nothing
+                        'End If
                     Case "PresensiStaff"
                         If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
                             stSQL = Nothing
@@ -1879,7 +1879,7 @@
                                     GROUP BY k.idk,k.nip,k.nama,e.level"
 
                             stSQL = "SELECT d.lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,d.tanggal,d.fpid,d.nip,d.nama,d.perusahaan,d.departemen,d.divisi,d.bagian,d.kelompok,d.katpenggajian,d.ijin,d.absen,d.kodewaktushift,a.kategori as kategoriabsen,d.masuk,d.keluar,d.jamkerja,d.jamkerjanyata,d.banyakjamkerja,d.banyakjamkerjanyata,d.fpmasuk,d.fpkeluar,d.shift,d.terlambat,d.pulangcepat,d.jamlembur,d.mulailembur,d.selesailembur,t.dendaharian,t.toleransi,t.dendapenalty,c.dendaharian as dendatidakfp,c.toleransi as toleransitidakfp,c.dendapenalty as penaltytidakfp
-                                    FROM " & tableName(0) & " as d INNER JOIN (" & subSQL & ") as p on d.nip=p.nip left join " & CONN_.schemaHRD & ".msdendaterlambat as t on p.level=t.leveljabatan and d.lokasi=t.lokasi left join " & CONN_.schemaHRD & ".mskategoriabsen as a on d.absen=a.absen and d.lokasi=a.lokasi left join " & CONN_.schemaHRD & ".msdendatidakcheckclock as c on p.level=c.leveljabatan and d.lokasi=c.lokasi
+                                    FROM " & tableName(0) & " as d LEFT JOIN (" & subSQL & ") as p on d.nip=p.nip left join " & CONN_.schemaHRD & ".msdendaterlambat as t on p.level=t.leveljabatan and d.lokasi=t.lokasi LEFT JOIN " & CONN_.schemaHRD & ".mskategoriabsen as a on d.absen=a.absen and d.lokasi=a.lokasi LEFT JOIN " & CONN_.schemaHRD & ".msdendatidakcheckclock as c on p.level=c.leveljabatan and d.lokasi=c.lokasi
                                     WHERE (d.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and d.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and d.kelompok='STAFF' and d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' 
                                     ORDER BY tanggal,nama,departemen,divisi,bagian;"
                         End If
@@ -1887,45 +1887,45 @@
                         If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
                             stSQL = Nothing
                         ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = "SELECT d.lokasi,d.departemen,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,d.tanggal,d.nip,d.fpid,d.nama,d.perusahaan,d.fpmasuk,d.fpkeluar,d.jamkerja,d.terlambat,d.pulangcepat,d.absen,g.keterangan,d.kodewaktushift,k.kategori,p.mesin
+                            stSQL = "SELECT d.lokasi,d.departemen,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,d.tanggal,d.nip,d.fpid,d.nama,d.perusahaan,d.fpmasuk,d.fpkeluar,d.jamkerja,d.banyakjamkerjanyata,d.terlambat,d.pulangcepat,d.absen,g.keterangan,d.kodewaktushift,k.kategori,p.mesin
                                     FROM " & tableName(0) & " as d LEFT JOIN " & tableName(8) & " as p on d.tanggal=p.tanggal and d.fpid=p.fpid and d.lokasi=p.lokasi and p.mesin='" & myCStringManipulation.SafeSqlLiteral(cboDaftarMesinCetak.SelectedValue) & "' and p.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' left join " & CONN_.schemaHRD & ".msgeneral as g on d.absen=g.kode and g.kategori='absen' left join " & CONN_.schemaHRD & ".mskategoriabsen as k on d.absen=k.absen and d.lokasi=k.lokasi
                                     WHERE (d.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and d.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "'
                                     ORDER BY d.tanggal,d.nama;"
                         End If
                     Case "DataMentah"
-                        If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            stSQL = "SELECT h.tanggal,h.fpid,h.idk,d.mesin,h.nip,h.nama,h.masuk,h.keluar,h.fpmasuk,h.fpkeluar
-                                    FROM " & tableName(0) & " as h left join " & tableName(8) & " as d on h.fpid=d.fpid and h.lokasi=d.lokasi and h.tanggal=d.tanggal
-                                    WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and h.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and h.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' and d.mesin='" & myCStringManipulation.SafeSqlLiteral(cboDaftarMesinCetak.SelectedValue) & "'
-                                    GROUP BY h.tanggal,h.fpid,h.idk,d.mesin,h.nip,h.nama,h.masuk,h.keluar,h.fpmasuk,h.fpkeluar
-                                    ORDER BY h.tanggal,h.nama;"
-                        ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = Nothing
-                        End If
+                        'If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                        '    stSQL = "SELECT h.tanggal,h.fpid,h.idk,d.mesin,h.nip,h.nama,h.masuk,h.keluar,h.fpmasuk,h.fpkeluar
+                        '            FROM " & tableName(0) & " as h left join " & tableName(8) & " as d on h.fpid=d.fpid and h.lokasi=d.lokasi and h.tanggal=d.tanggal
+                        '            WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and h.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and h.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' and d.mesin='" & myCStringManipulation.SafeSqlLiteral(cboDaftarMesinCetak.SelectedValue) & "'
+                        '            GROUP BY h.tanggal,h.fpid,h.idk,d.mesin,h.nip,h.nama,h.masuk,h.keluar,h.fpmasuk,h.fpkeluar
+                        '            ORDER BY h.tanggal,h.nama;"
+                        'ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                        '    stSQL = Nothing
+                        'End If
                     Case "RekapDataPresensi"
-                        If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            stSQL = "SELECT h.tanggal,g.kode,h.perusahaan,h.lokasi,h.fpid,h.idk,tbl2.mesin,h.nip,h.nama,h.kelompok,h.departemen,h.divisi,h.bagian,p.posisi,h.ijin,h.absen,h.masuk,h.keluar,h.terlambat,h.pulangcepat,h.fpmasuk,h.fpkeluar,h.kodewaktushift,(case when h.departemen='SECURITY' then 'SATPAM' else (case when h.divisi='SECURITY' then 'SATPAM' else (case when h.bagian='SECURITY' then 'SATPAM' else (case when h.kelompok='STAFF' then (case when p.posisi like '%MANAGER%' then 'MANAGER' else 'STAFF' end) else 'NON STAFF' end) end) end) end) as grupkelompok,h.tanggalmasuk
-                                    FROM (" & tableName(0) & " as h left join " & CONN_.schemaHRD & ".msgeneral as g on h.perusahaan=g.keterangan) left join " & CONN_.schemaHRD & ".msposisikaryawan as p on h.nip=p.nip and p.aktif='True' left join (
-                                        SELECT d.fpid,d.mesin
-                                        FROM " & tableName(8) & " as d
-                                        WHERE d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and d.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and d.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "'
-                                        GROUP BY d.fpid,d.mesin
-                                        ORDER BY d.mesin,d.fpid) as tbl2 on tbl2.fpid=h.fpid
-                                    WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and h.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and h.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "'
-                                    GROUP BY h.tanggal,h.perusahaan,g.kode,h.lokasi,h.fpid,h.idk,tbl2.mesin,h.nip,h.nama,h.kelompok,h.departemen,h.divisi,h.bagian,p.posisi,h.ijin,h.absen,h.masuk,h.keluar,h.terlambat,h.pulangcepat,h.fpmasuk,h.fpkeluar,h.kodewaktushift,h.tanggalmasuk
-                                    ORDER BY h.tanggalmasuk;"
-                        ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = Nothing
-                        End If
+                        'If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                        '    stSQL = "SELECT h.tanggal,g.kode,h.perusahaan,h.lokasi,h.fpid,h.idk,tbl2.mesin,h.nip,h.nama,h.kelompok,h.departemen,h.divisi,h.bagian,p.posisi,h.ijin,h.absen,h.masuk,h.keluar,h.terlambat,h.pulangcepat,h.fpmasuk,h.fpkeluar,h.kodewaktushift,(case when h.departemen='SECURITY' then 'SATPAM' else (case when h.divisi='SECURITY' then 'SATPAM' else (case when h.bagian='SECURITY' then 'SATPAM' else (case when h.kelompok='STAFF' then (case when p.posisi like '%MANAGER%' then 'MANAGER' else 'STAFF' end) else 'NON STAFF' end) end) end) end) as grupkelompok,h.tanggalmasuk
+                        '            FROM (" & tableName(0) & " as h left join " & CONN_.schemaHRD & ".msgeneral as g on h.perusahaan=g.keterangan) left join " & CONN_.schemaHRD & ".msposisikaryawan as p on h.nip=p.nip and p.aktif='True' left join (
+                        '                SELECT d.fpid,d.mesin
+                        '                FROM " & tableName(8) & " as d
+                        '                WHERE d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and d.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and d.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "'
+                        '                GROUP BY d.fpid,d.mesin
+                        '                ORDER BY d.mesin,d.fpid) as tbl2 on tbl2.fpid=h.fpid
+                        '            WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and h.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and h.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "'
+                        '            GROUP BY h.tanggal,h.perusahaan,g.kode,h.lokasi,h.fpid,h.idk,tbl2.mesin,h.nip,h.nama,h.kelompok,h.departemen,h.divisi,h.bagian,p.posisi,h.ijin,h.absen,h.masuk,h.keluar,h.terlambat,h.pulangcepat,h.fpmasuk,h.fpkeluar,h.kodewaktushift,h.tanggalmasuk
+                        '            ORDER BY h.tanggalmasuk;"
+                        'ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                        '    stSQL = Nothing
+                        'End If
                     Case "KaryawanTidakMasuk"
-                        If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
-                            stSQL = "SELECT h.tanggal,h.fpid,h.nip,h.nama,h.perusahaan,h.departemen,h.divisi,h.bagian,h.kelompok,h.katpenggajian,h.ijin,h.absen,(case when h.absen='M' then 'N/I' else g.keterangan end) as keterangan,(case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.tanggalmulai FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else h.tanggal end) as tglmulaitidakmasuk, (case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.catatan FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else (case when h.absen='M' then 'N/I' else g.keterangan end) end) as ketabsen
-                                    FROM " & tableName(0) & " as h left join " & CONN_.schemaHRD & ".msgeneral as g on h.absen=g.kode and g.kategori='absen' 
-                                    WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and (h.tanggal='" & Format(dtpTanggalCetakAwal.Value.Date, "dd-MMM-yyyy") & "') and h.ijin='TM' and (h.absen<>'L' and h.absen<>'C' and h.absen<>'NC') 
-                                    ORDER BY h.perusahaan,h.nama;"
-                        ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
-                            stSQL = Nothing
-                        End If
+                        'If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
+                        '    stSQL = "SELECT h.tanggal,h.fpid,h.nip,h.nama,h.perusahaan,h.departemen,h.divisi,h.bagian,h.kelompok,h.katpenggajian,h.ijin,h.absen,(case when h.absen='M' then 'N/I' else g.keterangan end) as keterangan,(case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.tanggalmulai FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else h.tanggal end) as tglmulaitidakmasuk, (case when exists(select 1 FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) then (select i.catatan FROM " & CONN_.schemaHRD & ".trijinabsen as i where h.nip=i.nip and h.absen=i.kodeabsen and h.tanggal>=i.tanggalmulai and h.tanggal<=i.tanggalselesai) else (case when h.absen='M' then 'N/I' else g.keterangan end) end) as ketabsen
+                        '            FROM " & tableName(0) & " as h left join " & CONN_.schemaHRD & ".msgeneral as g on h.absen=g.kode and g.kategori='absen' 
+                        '            WHERE h.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' and (h.tanggal='" & Format(dtpTanggalCetakAwal.Value.Date, "dd-MMM-yyyy") & "') and h.ijin='TM' and (h.absen<>'L' and h.absen<>'C' and h.absen<>'NC') 
+                        '            ORDER BY h.perusahaan,h.nama;"
+                        'ElseIf (cboLokasiCetak.SelectedValue = "SIDOARJO") Then
+                        '    stSQL = Nothing
+                        'End If
                     Case "JadwalPresensi"
                         stSQL = "SELECT lokasi,'" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' as tanggalawal, '" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "' as tanggalakhir,tanggal,fpid,nip,nama,perusahaan,departemen,divisi,bagian,kelompok,katpenggajian,ijin,absen,jadwalmasuk,jadwalkeluar,masuk,keluar,jamkerja,jamkerjanyata,banyakjamkerja,banyakjamkerjanyata,shift,terlambat,pulangcepat,jamlembur,mulailembur,selesailembur,spkmulai,spkselesai
                                 FROM " & tableName(0) & " " & "

@@ -1417,7 +1417,7 @@
 
     Private Sub btnCetak_Click(sender As Object, e As EventArgs) Handles btnCetak.Click
         Try
-            stSQL = "SELECT h.perusahaan,h.lokasi,h.departemen as deptspk,h.periodemulai,h.periodeselesai,h." & tableKey & ",h.tanggalpengajuan,h.nipkepala,h.namakepala,h.jumlahpersonil,h.catatan as catheader,d.nip,d.nama,d.departemen,d.divisi,d.bagian,d.shift,d.mulai,d.selesai,d.pekerjaan,cast(d.mulai as time) as jammulai,cast(d.selesai as time) as jamselesai,to_char(cast(d.mulai as time),'HH24:MI') ||'-'|| to_char(cast(d.selesai as time),'HH24:MI') as jamspk,date(d.mulai) as tanggalshift
+            stSQL = "SELECT h.perusahaan,h.lokasi,h.departemen as deptspk,h.periodemulai,h.periodeselesai,h." & tableKey & ",h.tanggalpengajuan,h.nipkepala,h.namakepala,h.jumlahpersonil,h.catatan as catheader,d.nip,d.nama,d.departemen,d.divisi,d.bagian,d.shift,d.mulai,d.selesai,d.pekerjaan,cast(d.mulai as time) as jammulai,cast(d.selesai as time) as jamselesai,to_char(cast(d.mulai as time),'HH24:MI') ||'-'|| to_char(cast(d.selesai as time),'HH24:MI') as jamspk,date(d.mulai) as tanggalshift, to_char(cast(d.selesai-d.mulai as time),'HH24:MI') as banyakjam
                     FROM " & tableNameHeader & " as h inner join " & tableNameDetail & " as d on h." & tableKey & "=d." & tableKey & " " & "
                     WHERE h." & tableKey & " = '" & myCStringManipulation.SafeSqlLiteral(tbNoSPK.Text) & "'
                     ORDER BY d.mulai,d.nama;"

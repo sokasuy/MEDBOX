@@ -182,12 +182,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>15.83354cm</Width>
+                  <Width>14.21958cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>3.91552cm</Height>
+                  <Height>7.12663cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -330,6 +330,7 @@
                                             <BottomBorder>
                                               <Style>None</Style>
                                             </BottomBorder>
+                                            <BackgroundColor>Gray</BackgroundColor>
                                             <VerticalAlign>Bottom</VerticalAlign>
                                             <PaddingLeft>2pt</PaddingLeft>
                                             <PaddingRight>2pt</PaddingRight>
@@ -551,76 +552,6 @@
                                         </Textbox>
                                       </CellContents>
                                     </TablixCornerCell>
-                                    <TablixCornerCell>
-                                      <CellContents>
-                                        <Textbox Name="Textbox37">
-                                          <KeepTogether>true</KeepTogether>
-                                          <Paragraphs>
-                                            <Paragraph>
-                                              <TextRuns>
-                                                <TextRun>
-                                                  <Value>LK</Value>
-                                                  <Style>
-                                                    <FontSize>9pt</FontSize>
-                                                    <FontWeight>Bold</FontWeight>
-                                                  </Style>
-                                                </TextRun>
-                                              </TextRuns>
-                                              <Style>
-                                                <TextAlign>Center</TextAlign>
-                                              </Style>
-                                            </Paragraph>
-                                          </Paragraphs>
-                                          <rd:DefaultName>Textbox37</rd:DefaultName>
-                                          <Style>
-                                            <Border>
-                                              <Style>Solid</Style>
-                                            </Border>
-                                            <BottomBorder>
-                                              <Style>None</Style>
-                                            </BottomBorder>
-                                            <VerticalAlign>Bottom</VerticalAlign>
-                                            <PaddingLeft>2pt</PaddingLeft>
-                                            <PaddingRight>2pt</PaddingRight>
-                                          </Style>
-                                        </Textbox>
-                                      </CellContents>
-                                    </TablixCornerCell>
-                                    <TablixCornerCell>
-                                      <CellContents>
-                                        <Textbox Name="Textbox40">
-                                          <KeepTogether>true</KeepTogether>
-                                          <Paragraphs>
-                                            <Paragraph>
-                                              <TextRuns>
-                                                <TextRun>
-                                                  <Value>%</Value>
-                                                  <Style>
-                                                    <FontSize>9pt</FontSize>
-                                                    <FontWeight>Bold</FontWeight>
-                                                  </Style>
-                                                </TextRun>
-                                              </TextRuns>
-                                              <Style>
-                                                <TextAlign>Center</TextAlign>
-                                              </Style>
-                                            </Paragraph>
-                                          </Paragraphs>
-                                          <rd:DefaultName>Textbox40</rd:DefaultName>
-                                          <Style>
-                                            <Border>
-                                              <Style>Solid</Style>
-                                            </Border>
-                                            <BottomBorder>
-                                              <Style>None</Style>
-                                            </BottomBorder>
-                                            <VerticalAlign>Bottom</VerticalAlign>
-                                            <PaddingLeft>2pt</PaddingLeft>
-                                            <PaddingRight>2pt</PaddingRight>
-                                          </Style>
-                                        </Textbox>
-                                      </CellContents>
-                                    </TablixCornerCell>
                                   </TablixCornerRow>
                                   <TablixCornerRow>
                                     <TablixCornerCell>
@@ -755,6 +686,7 @@
                                             <TopBorder>
                                               <Style>None</Style>
                                             </TopBorder>
+                                            <BackgroundColor>Gray</BackgroundColor>
                                             <PaddingLeft>2pt</PaddingLeft>
                                             <PaddingRight>2pt</PaddingRight>
                                             <PaddingTop>2pt</PaddingTop>
@@ -821,6 +753,7 @@
                                             <Border>
                                               <Style>Solid</Style>
                                             </Border>
+                                            <BackgroundColor>Gray</BackgroundColor>
                                             <PaddingLeft>2pt</PaddingLeft>
                                             <PaddingRight>2pt</PaddingRight>
                                             <PaddingTop>2pt</PaddingTop>
@@ -1082,80 +1015,6 @@
                                         </Textbox>
                                       </CellContents>
                                     </TablixCornerCell>
-                                    <TablixCornerCell>
-                                      <CellContents>
-                                        <Textbox Name="Textbox38">
-                                          <CanGrow>true</CanGrow>
-                                          <KeepTogether>true</KeepTogether>
-                                          <Paragraphs>
-                                            <Paragraph>
-                                              <TextRuns>
-                                                <TextRun>
-                                                  <Value />
-                                                  <Style>
-                                                    <FontWeight>Bold</FontWeight>
-                                                  </Style>
-                                                </TextRun>
-                                              </TextRuns>
-                                              <Style>
-                                                <TextAlign>Center</TextAlign>
-                                              </Style>
-                                            </Paragraph>
-                                          </Paragraphs>
-                                          <rd:DefaultName>Textbox38</rd:DefaultName>
-                                          <Style>
-                                            <Border>
-                                              <Style>Solid</Style>
-                                            </Border>
-                                            <TopBorder>
-                                              <Style>None</Style>
-                                            </TopBorder>
-                                            <VerticalAlign>Top</VerticalAlign>
-                                            <PaddingLeft>2pt</PaddingLeft>
-                                            <PaddingRight>2pt</PaddingRight>
-                                            <PaddingTop>2pt</PaddingTop>
-                                            <PaddingBottom>2pt</PaddingBottom>
-                                          </Style>
-                                        </Textbox>
-                                      </CellContents>
-                                    </TablixCornerCell>
-                                    <TablixCornerCell>
-                                      <CellContents>
-                                        <Textbox Name="Textbox41">
-                                          <CanGrow>true</CanGrow>
-                                          <KeepTogether>true</KeepTogether>
-                                          <Paragraphs>
-                                            <Paragraph>
-                                              <TextRuns>
-                                                <TextRun>
-                                                  <Value />
-                                                  <Style>
-                                                    <FontWeight>Bold</FontWeight>
-                                                  </Style>
-                                                </TextRun>
-                                              </TextRuns>
-                                              <Style>
-                                                <TextAlign>Center</TextAlign>
-                                              </Style>
-                                            </Paragraph>
-                                          </Paragraphs>
-                                          <rd:DefaultName>Textbox41</rd:DefaultName>
-                                          <Style>
-                                            <Border>
-                                              <Style>Solid</Style>
-                                            </Border>
-                                            <TopBorder>
-                                              <Style>None</Style>
-                                            </TopBorder>
-                                            <VerticalAlign>Top</VerticalAlign>
-                                            <PaddingLeft>2pt</PaddingLeft>
-                                            <PaddingRight>2pt</PaddingRight>
-                                            <PaddingTop>2pt</PaddingTop>
-                                            <PaddingBottom>2pt</PaddingBottom>
-                                          </Style>
-                                        </Textbox>
-                                      </CellContents>
-                                    </TablixCornerCell>
                                   </TablixCornerRow>
                                 </TablixCornerRows>
                               </TablixCorner>
@@ -1194,7 +1053,7 @@
                                               <Border>
                                                 <Style>Solid</Style>
                                               </Border>
-                                              <BackgroundColor>=iif(Value="X","LightGrey","Transparent")</BackgroundColor>
+                                              <BackgroundColor>=iif(Value="X","LightGrey",iif(Fields!banyakjamkerjanyata.Value&gt;8,"Gold","Transparent"))</BackgroundColor>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
                                               <PaddingTop>2pt</PaddingTop>
@@ -1435,6 +1294,7 @@
                                                         <Border>
                                                           <Style>Solid</Style>
                                                         </Border>
+                                                        <BackgroundColor>Gray</BackgroundColor>
                                                         <PaddingLeft>2pt</PaddingLeft>
                                                         <PaddingRight>2pt</PaddingRight>
                                                         <PaddingTop>2pt</PaddingTop>
@@ -1505,6 +1365,7 @@
                                                                 <Border>
                                                                   <Style>Solid</Style>
                                                                 </Border>
+                                                                <BackgroundColor>Gray</BackgroundColor>
                                                                 <PaddingLeft>2pt</PaddingLeft>
                                                                 <PaddingRight>2pt</PaddingRight>
                                                                 <PaddingTop>2pt</PaddingTop>
@@ -1752,70 +1613,7 @@
                                                                                       </CellContents>
                                                                                     </TablixHeader>
                                                                                     <TablixMembers>
-                                                                                      <TablixMember>
-                                                                                        <TablixHeader>
-                                                                                          <Size>0.8cm</Size>
-                                                                                          <CellContents>
-                                                                                            <Textbox Name="Textbox39">
-                                                                                              <KeepTogether>true</KeepTogether>
-                                                                                              <Paragraphs>
-                                                                                                <Paragraph>
-                                                                                                  <TextRuns>
-                                                                                                    <TextRun>
-                                                                                                      <Value />
-                                                                                                      <Style />
-                                                                                                    </TextRun>
-                                                                                                  </TextRuns>
-                                                                                                  <Style />
-                                                                                                </Paragraph>
-                                                                                              </Paragraphs>
-                                                                                              <rd:DefaultName>Textbox39</rd:DefaultName>
-                                                                                              <Style>
-                                                                                                <Border>
-                                                                                                  <Style>Solid</Style>
-                                                                                                </Border>
-                                                                                                <PaddingLeft>2pt</PaddingLeft>
-                                                                                                <PaddingRight>2pt</PaddingRight>
-                                                                                                <PaddingTop>2pt</PaddingTop>
-                                                                                                <PaddingBottom>2pt</PaddingBottom>
-                                                                                              </Style>
-                                                                                            </Textbox>
-                                                                                          </CellContents>
-                                                                                        </TablixHeader>
-                                                                                        <TablixMembers>
-                                                                                          <TablixMember>
-                                                                                            <TablixHeader>
-                                                                                              <Size>0.8cm</Size>
-                                                                                              <CellContents>
-                                                                                                <Textbox Name="Textbox42">
-                                                                                                  <KeepTogether>true</KeepTogether>
-                                                                                                  <Paragraphs>
-                                                                                                    <Paragraph>
-                                                                                                      <TextRuns>
-                                                                                                        <TextRun>
-                                                                                                          <Value />
-                                                                                                          <Style />
-                                                                                                        </TextRun>
-                                                                                                      </TextRuns>
-                                                                                                      <Style />
-                                                                                                    </Paragraph>
-                                                                                                  </Paragraphs>
-                                                                                                  <rd:DefaultName>Textbox42</rd:DefaultName>
-                                                                                                  <Style>
-                                                                                                    <Border>
-                                                                                                      <Style>Solid</Style>
-                                                                                                    </Border>
-                                                                                                    <PaddingLeft>2pt</PaddingLeft>
-                                                                                                    <PaddingRight>2pt</PaddingRight>
-                                                                                                    <PaddingTop>2pt</PaddingTop>
-                                                                                                    <PaddingBottom>2pt</PaddingBottom>
-                                                                                                  </Style>
-                                                                                                </Textbox>
-                                                                                              </CellContents>
-                                                                                            </TablixHeader>
-                                                                                          </TablixMember>
-                                                                                        </TablixMembers>
-                                                                                      </TablixMember>
+                                                                                      <TablixMember />
                                                                                     </TablixMembers>
                                                                                   </TablixMember>
                                                                                 </TablixMembers>
@@ -1849,7 +1647,7 @@
                               <Top>2.03588cm</Top>
                               <Left>0cm</Left>
                               <Height>1.8cm</Height>
-                              <Width>15.7cm</Width>
+                              <Width>14.1cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2051,6 +1849,365 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
+                            <Textbox Name="Textbox47">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value />
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox47</rd:DefaultName>
+                              <Top>4.01227cm</Top>
+                              <Left>10.47902cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>7</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>Gold</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox48">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Long Shift</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox48</rd:DefaultName>
+                              <Top>4.01227cm</Top>
+                              <Left>11.25541cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>2.5cm</Width>
+                              <ZIndex>8</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox49">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>HK</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox49</rd:DefaultName>
+                              <Top>4.01227cm</Top>
+                              <Left>0.8cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>9</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox50">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Hari Kerja</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>4.01227cm</Top>
+                              <Left>1.6cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>5.75944cm</Width>
+                              <ZIndex>10</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox51">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>A</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox49</rd:DefaultName>
+                              <Top>4.61227cm</Top>
+                              <Left>0.8cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>11</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox52">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Tanpa Keterangan yang diijinkan</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>4.61227cm</Top>
+                              <Left>1.6cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>5.75944cm</Width>
+                              <ZIndex>12</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox53">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>I</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox49</rd:DefaultName>
+                              <Top>5.21227cm</Top>
+                              <Left>0.8cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>13</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox54">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Ijin Pemerintah yang diijinkan</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>5.21227cm</Top>
+                              <Left>1.6cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>5.75944cm</Width>
+                              <ZIndex>14</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox55">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>S</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox49</rd:DefaultName>
+                              <Top>5.81227cm</Top>
+                              <Left>0.8cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>15</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox56">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Surat Dokter</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>5.81227cm</Top>
+                              <Left>1.6cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>5.75944cm</Width>
+                              <ZIndex>16</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox57">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>TB</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox49</rd:DefaultName>
+                              <Top>6.41227cm</Top>
+                              <Left>0.8cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>17</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox58">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Terlambat</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>6.41227cm</Top>
+                              <Left>1.6cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>5.75944cm</Width>
+                              <ZIndex>18</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
                           </ReportItems>
                           <PageName>=Fields!departemen.Value</PageName>
                           <KeepTogether>true</KeepTogether>
@@ -2093,8 +2250,8 @@
             <DataSetName>dtSetPrintOutPresensiStaff</DataSetName>
             <Top>0.02273cm</Top>
             <Left>0.02911cm</Left>
-            <Height>3.91552cm</Height>
-            <Width>15.83354cm</Width>
+            <Height>7.12663cm</Height>
+            <Width>14.21958cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2102,10 +2259,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.08782cm</Height>
+        <Height>7.28928cm</Height>
         <Style />
       </Body>
-      <Width>15.95525cm</Width>
+      <Width>14.47358cm</Width>
       <Page>
         <PageHeight>21cm</PageHeight>
         <PageWidth>29.7cm</PageWidth>
