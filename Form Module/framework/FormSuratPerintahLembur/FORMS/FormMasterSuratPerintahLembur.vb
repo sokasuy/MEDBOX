@@ -152,7 +152,7 @@
                         banyakPages = 1
                     End If
                     tempSisa = mJumlah Mod 10
-                    If (tempSisa < 5 And tempSisa > 0 And mJumlah > 10) Then
+                    If (tempSisa <= 5 And tempSisa > 0 And mJumlah > 10) Then
                         'karena 5 ke atas dibulatkan ke atas
                         'misal 15/10 hasilnya adalah 2
                         'sedangkan kalau 14/10 hasilnya adalah 1

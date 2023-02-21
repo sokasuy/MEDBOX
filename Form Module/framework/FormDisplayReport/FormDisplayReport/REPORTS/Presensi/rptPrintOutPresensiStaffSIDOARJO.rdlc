@@ -165,6 +165,10 @@
           <DataField>penaltytidakfp</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
+        <Field Name="libur">
+          <DataField>libur</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>FormDisplayReport</rd:DataSetName>
@@ -1103,6 +1107,7 @@
                                             <BottomBorder>
                                               <Style>None</Style>
                                             </BottomBorder>
+                                            <BackgroundColor>=iif(Fields!libur.Value=True,"Red","Transparent")</BackgroundColor>
                                             <PaddingLeft>2pt</PaddingLeft>
                                             <PaddingRight>2pt</PaddingRight>
                                             <PaddingTop>2pt</PaddingTop>
@@ -1142,6 +1147,7 @@
                                                 <TopBorder>
                                                   <Style>None</Style>
                                                 </TopBorder>
+                                                <BackgroundColor>=iif(Fields!libur.Value=True,"Red","Transparent")</BackgroundColor>
                                                 <PaddingLeft>2pt</PaddingLeft>
                                                 <PaddingRight>2pt</PaddingRight>
                                                 <PaddingTop>2pt</PaddingTop>
@@ -2198,6 +2204,65 @@
                               <Height>0.6cm</Height>
                               <Width>5.75944cm</Width>
                               <ZIndex>18</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox59">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value />
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox47</rd:DefaultName>
+                              <Top>4.61227cm</Top>
+                              <Left>10.47902cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>0.8cm</Width>
+                              <ZIndex>19</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>Red</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox60">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Public Holiday</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox48</rd:DefaultName>
+                              <Top>4.61227cm</Top>
+                              <Left>11.25541cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>2.5cm</Width>
+                              <ZIndex>20</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>

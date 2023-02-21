@@ -40,6 +40,7 @@
         dt.Columns.Add("dendatidakfp", GetType(Double))
         dt.Columns.Add("toleransitidakfp", GetType(Integer))
         dt.Columns.Add("penaltytidakfp", GetType(Double))
+        dt.Columns.Add("libur", GetType(Boolean))
         dt.AcceptChanges()
         Tables.Add(dt)
     End Sub
