@@ -1,0 +1,3 @@
+30 Jun 2024
+-Menambahkan kolom maxtoleransi pada table msskemapresensi
+-Menambahkan skema presensi untuk dokter jam 17-21.00

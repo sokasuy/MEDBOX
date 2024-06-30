@@ -14,7 +14,7 @@
     Private cmbDgvHapusButton As New DataGridViewButtonColumn()
     Private cmbDgvEditButton As New DataGridViewButtonColumn()
     Private cekTambahButton(1) As Boolean
-    Private arrDefValues(15) As String
+    Private arrDefValues(16) As String
     Private tableName As String
 
     Private myDataTableCboLokasi As New DataTable
@@ -199,11 +199,11 @@
                 batas = 10
             End If
 
-            stSQL = "SELECT rid,lokasi,perusahaan,umum,departemen,grup,ketgrup as ket_grup,posisi,hari,waktushift as waktu_shift,kodewaktushift as kode_waktu_shift,jammasuk as jam_masuk,jamkeluar as jam_keluar,spesifik,nip,nama,created_at,updated_at " &
+            stSQL = "SELECT rid,lokasi,perusahaan,umum,departemen,grup,ketgrup as ket_grup,posisi,hari,waktushift as waktu_shift,kodewaktushift as kode_waktu_shift,jammasuk as jam_masuk,jamkeluar as jam_keluar,maxtoleransi as max_toleransi,spesifik,nip,nama,created_at,updated_at " &
                     "FROM ( " &
-                        "SELECT sub.rid,sub.lokasi,sub.perusahaan,sub.departemen,sub.umum,sub.grup,sub.ketgrup,sub.posisi,sub.spesifik,sub.nip,sub.nama,sub.hari,sub.waktushift,sub.kodewaktushift,sub.jammasuk,sub.jamkeluar,sub.created_at,sub.updated_at " &
+                        "SELECT sub.rid,sub.lokasi,sub.perusahaan,sub.departemen,sub.umum,sub.grup,sub.ketgrup,sub.posisi,sub.spesifik,sub.nip,sub.nama,sub.hari,sub.waktushift,sub.kodewaktushift,sub.jammasuk,sub.jamkeluar,sub.maxtoleransi,sub.created_at,sub.updated_at " &
                         "FROM ( " &
-                            "SELECT tbl.rid,tbl.lokasi,tbl.perusahaan,tbl.departemen,tbl.umum,tbl.grup,tbl.ketgrup,tbl.posisi,tbl.spesifik,tbl.nip,tbl.nama,tbl.hari,tbl.waktushift,tbl.kodewaktushift,tbl.jammasuk,tbl.jamkeluar,tbl.created_at,tbl.updated_at " &
+                            "SELECT tbl.rid,tbl.lokasi,tbl.perusahaan,tbl.departemen,tbl.umum,tbl.grup,tbl.ketgrup,tbl.posisi,tbl.spesifik,tbl.nip,tbl.nama,tbl.hari,tbl.waktushift,tbl.kodewaktushift,tbl.jammasuk,tbl.jamkeluar,tbl.maxtoleransi,tbl.created_at,tbl.updated_at " &
                             "FROM " & tableName & " as tbl " &
                             "WHERE ((upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " & IIf(USER_.lokasi = "ALL", "", "AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " " &
                             "ORDER BY (case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC " &
@@ -247,6 +247,7 @@
                 .Columns("kode_waktu_shift").Width = 50
                 .Columns("jam_masuk").Width = 60
                 .Columns("jam_keluar").Width = 60
+                .Columns("max_toleransi").Width = 50
                 .Columns("spesifik").Width = 60
                 .Columns("nip").Width = 60
                 .Columns("nama").Width = 100
@@ -613,6 +614,11 @@
                         tbJamKeluar.Text = dgvView.CurrentRow.Cells("jam_keluar").Value.ToString
                         arrDefValues(14) = dgvView.CurrentRow.Cells("jam_keluar").Value.ToString
                     End If
+                    'Max Toleransi
+                    If Not IsDBNull(dgvView.CurrentRow.Cells("max_toleransi").Value) Then
+                        tbMaxToleransi.Text = dgvView.CurrentRow.Cells("max_toleransi").Value.ToString
+                        arrDefValues(16) = dgvView.CurrentRow.Cells("max_toleransi").Value.ToString
+                    End If
                     isDataPrepared = True
                 End If
             End If
@@ -664,6 +670,10 @@
                                 newValues &= ",'-','-','-','" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKaryawan.SelectedItem, DataRowView).Item("idk")) & "','" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "','" & myCStringManipulation.SafeSqlLiteral(DirectCast(cboKaryawan.SelectedItem, DataRowView).Item("nama")) & "'"
                                 newFields &= ",departemen,grup,ketgrup,idk,nip,nama"
                             End If
+                            If (Trim(tbMaxToleransi.Text).Length > 0) Then
+                                newValues &= ",'" & myCStringManipulation.SafeSqlLiteral(tbMaxToleransi.Text) & "'"
+                                newFields &= ",maxtoleransi"
+                            End If
                             Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableName, newValues, newFields)
                             Call myCShowMessage.ShowSavedMsg("Data skema presensi di hari " & cboHari.SelectedItem & " untuk departemen " & cboKetGrup.SelectedValue & " di perusahaan " & cboPerusahaan.SelectedValue)
                             Call btnTampilkan_Click(sender, e)
@@ -703,7 +713,7 @@
                             End If
                         End If
                         If (rbUmum.Checked) Then
-                            isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "' and umum='" & rbUmum.Checked & "'" & IIf(rbUmum.Checked, " and grup='" & myCStringManipulation.SafeSqlLiteral(cboGrup.SelectedItem) & "' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(cboKetGrup.SelectedValue) & "' and posisi='" & IIf(cboJabatan.SelectedIndex = -1, "-", cboJabatan.SelectedValue) & "'", Nothing) & " and spesifik='" & rbSpesifik.Checked & "'" & IIf(rbSpesifik.Checked, " and nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "'", Nothing) & " and hari='" & myCStringManipulation.SafeSqlLiteral(cboHari.SelectedItem) & "' and waktushift='" & strWaktuShift & "' and jammasuk='" & tbJamMasuk.Text & "' and jamkeluar='" & tbJamKeluar.Text & "'")
+                            isExist = myCDBOperation.IsExistRecords(CONN_.dbMain, CONN_.comm, CONN_.reader, "rid", tableName, "lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboPerusahaan.SelectedValue) & "' and umum='" & rbUmum.Checked & "'" & IIf(rbUmum.Checked, " and grup='" & myCStringManipulation.SafeSqlLiteral(cboGrup.SelectedItem) & "' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(cboKetGrup.SelectedValue) & "' and posisi='" & IIf(cboJabatan.SelectedIndex = -1, "-", cboJabatan.SelectedValue) & "'", Nothing) & " and spesifik='" & rbSpesifik.Checked & "'" & IIf(rbSpesifik.Checked, " and nip='" & myCStringManipulation.SafeSqlLiteral(cboKaryawan.SelectedValue) & "'", Nothing) & " and hari='" & myCStringManipulation.SafeSqlLiteral(cboHari.SelectedItem) & "' and waktushift='" & strWaktuShift & "' and jammasuk='" & tbJamMasuk.Text & "' and jamkeluar='" & tbJamKeluar.Text & "' and rid<>" & arrDefValues(0))
                             If Not isExist Then
                                 If (arrDefValues(3) <> rbUmum.Checked) Then
                                     updateString &= IIf(IsNothing(updateString), "", ",") & "umum='" & rbUmum.Checked & "',spesifik='False',nip=Null,nama=Null"
@@ -818,6 +828,12 @@
                                 Call myCShowMessage.ShowWarning("Sudah ada data skema presensi di hari " & cboHari.SelectedItem & " untuk " & IIf(rbUmum.Checked, cboGrup.SelectedItem & " " & cboKetGrup.SelectedValue, "karyawan " & DirectCast(cboKaryawan.SelectedItem, DataRowView).Item("nama")) & " di perusahaan " & cboPerusahaan.SelectedValue & " !!")
                             End If
                         End If
+                        If (arrDefValues(16) <> tbMaxToleransi.Text) Then
+                            updateString &= IIf(IsNothing(updateString), "", ",") & "maxtoleransi='" & tbMaxToleransi.Text & "'"
+                            If (foundRows.Length > 0) Then
+                                myDataTableDGV.Rows(myDataTableDGV.Rows.IndexOf(foundRows(0))).Item("max_toleransi") = tbMaxToleransi.Text
+                            End If
+                        End If
 
                         If Not IsNothing(updateString) Then
                             updateString &= "," & ADD_INFO_.updateString
@@ -863,6 +879,14 @@
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "cboFields_Validated Error")
+        End Try
+    End Sub
+
+    Private Sub tbMaxToleransi_Validated(sender As Object, e As EventArgs) Handles tbMaxToleransi.Validated
+        Try
+            tbMaxToleransi.Text = myCStringManipulation.CleanInputInteger(tbMaxToleransi.Text)
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "tbMaxToleransi_Validated Error")
         End Try
     End Sub
 

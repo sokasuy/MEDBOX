@@ -40,6 +40,7 @@ Partial Class FormMasterSkemaPresensi
         Me.cboKriteria = New System.Windows.Forms.ComboBox()
         Me.dgvView = New System.Windows.Forms.DataGridView()
         Me.gbDataEntry = New System.Windows.Forms.GroupBox()
+        Me.gbKelompok = New System.Windows.Forms.GroupBox()
         Me.rbSpesifik = New System.Windows.Forms.RadioButton()
         Me.pnlUmum = New System.Windows.Forms.Panel()
         Me.lblDepartemen = New System.Windows.Forms.Label()
@@ -48,10 +49,10 @@ Partial Class FormMasterSkemaPresensi
         Me.cboJabatan = New System.Windows.Forms.ComboBox()
         Me.lblJabatan = New System.Windows.Forms.Label()
         Me.cboKetGrup = New System.Windows.Forms.ComboBox()
+        Me.rbUmum = New System.Windows.Forms.RadioButton()
         Me.pnlSpesifik = New System.Windows.Forms.Panel()
         Me.cboKaryawan = New System.Windows.Forms.ComboBox()
         Me.lblKaryawan = New System.Windows.Forms.Label()
-        Me.rbUmum = New System.Windows.Forms.RadioButton()
         Me.pnlWaktuHari = New System.Windows.Forms.Panel()
         Me.rbMalam = New System.Windows.Forms.RadioButton()
         Me.rbSiang = New System.Windows.Forms.RadioButton()
@@ -78,15 +79,17 @@ Partial Class FormMasterSkemaPresensi
         Me.btnKeluar = New System.Windows.Forms.Button()
         Me.lblEntryType = New System.Windows.Forms.Label()
         Me.clbUserRight = New System.Windows.Forms.CheckedListBox()
-        Me.gbKelompok = New System.Windows.Forms.GroupBox()
+        Me.tbMaxToleransi = New System.Windows.Forms.TextBox()
+        Me.lblMaxToleransi = New System.Windows.Forms.Label()
+        Me.lblMenitToleransi = New System.Windows.Forms.Label()
         Me.gbView.SuspendLayout()
         Me.pnlNavigasi.SuspendLayout()
         CType(Me.dgvView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbDataEntry.SuspendLayout()
+        Me.gbKelompok.SuspendLayout()
         Me.pnlUmum.SuspendLayout()
         Me.pnlSpesifik.SuspendLayout()
         Me.pnlWaktuHari.SuspendLayout()
-        Me.gbKelompok.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblTitle
@@ -261,6 +264,9 @@ Partial Class FormMasterSkemaPresensi
         '
         'gbDataEntry
         '
+        Me.gbDataEntry.Controls.Add(Me.lblMenitToleransi)
+        Me.gbDataEntry.Controls.Add(Me.lblMaxToleransi)
+        Me.gbDataEntry.Controls.Add(Me.tbMaxToleransi)
         Me.gbDataEntry.Controls.Add(Me.gbKelompok)
         Me.gbDataEntry.Controls.Add(Me.pnlWaktuHari)
         Me.gbDataEntry.Controls.Add(Me.btnCreateNew)
@@ -289,6 +295,19 @@ Partial Class FormMasterSkemaPresensi
         Me.gbDataEntry.TabIndex = 193
         Me.gbDataEntry.TabStop = False
         Me.gbDataEntry.Text = "DATA ENTRY"
+        '
+        'gbKelompok
+        '
+        Me.gbKelompok.Controls.Add(Me.rbSpesifik)
+        Me.gbKelompok.Controls.Add(Me.pnlUmum)
+        Me.gbKelompok.Controls.Add(Me.rbUmum)
+        Me.gbKelompok.Controls.Add(Me.pnlSpesifik)
+        Me.gbKelompok.Location = New System.Drawing.Point(6, 66)
+        Me.gbKelompok.Name = "gbKelompok"
+        Me.gbKelompok.Size = New System.Drawing.Size(648, 108)
+        Me.gbKelompok.TabIndex = 201
+        Me.gbKelompok.TabStop = False
+        Me.gbKelompok.Text = "Kelompok"
         '
         'rbSpesifik
         '
@@ -378,6 +397,17 @@ Partial Class FormMasterSkemaPresensi
         Me.cboKetGrup.Size = New System.Drawing.Size(198, 23)
         Me.cboKetGrup.TabIndex = 4
         '
+        'rbUmum
+        '
+        Me.rbUmum.AutoSize = True
+        Me.rbUmum.Location = New System.Drawing.Point(6, 22)
+        Me.rbUmum.Name = "rbUmum"
+        Me.rbUmum.Size = New System.Drawing.Size(68, 19)
+        Me.rbUmum.TabIndex = 201
+        Me.rbUmum.TabStop = True
+        Me.rbUmum.Text = "Umum :"
+        Me.rbUmum.UseVisualStyleBackColor = True
+        '
         'pnlSpesifik
         '
         Me.pnlSpesifik.Controls.Add(Me.cboKaryawan)
@@ -407,17 +437,6 @@ Partial Class FormMasterSkemaPresensi
         Me.lblKaryawan.Size = New System.Drawing.Size(64, 15)
         Me.lblKaryawan.TabIndex = 227
         Me.lblKaryawan.Text = "Karyawan :"
-        '
-        'rbUmum
-        '
-        Me.rbUmum.AutoSize = True
-        Me.rbUmum.Location = New System.Drawing.Point(6, 22)
-        Me.rbUmum.Name = "rbUmum"
-        Me.rbUmum.Size = New System.Drawing.Size(68, 19)
-        Me.rbUmum.TabIndex = 201
-        Me.rbUmum.TabStop = True
-        Me.rbUmum.Text = "Umum :"
-        Me.rbUmum.UseVisualStyleBackColor = True
         '
         'pnlWaktuHari
         '
@@ -696,18 +715,31 @@ Partial Class FormMasterSkemaPresensi
         Me.clbUserRight.Size = New System.Drawing.Size(100, 64)
         Me.clbUserRight.TabIndex = 199
         '
-        'gbKelompok
+        'tbMaxToleransi
         '
-        Me.gbKelompok.Controls.Add(Me.rbSpesifik)
-        Me.gbKelompok.Controls.Add(Me.pnlUmum)
-        Me.gbKelompok.Controls.Add(Me.rbUmum)
-        Me.gbKelompok.Controls.Add(Me.pnlSpesifik)
-        Me.gbKelompok.Location = New System.Drawing.Point(6, 66)
-        Me.gbKelompok.Name = "gbKelompok"
-        Me.gbKelompok.Size = New System.Drawing.Size(648, 108)
-        Me.gbKelompok.TabIndex = 201
-        Me.gbKelompok.TabStop = False
-        Me.gbKelompok.Text = "Kelompok"
+        Me.tbMaxToleransi.Location = New System.Drawing.Point(86, 228)
+        Me.tbMaxToleransi.Name = "tbMaxToleransi"
+        Me.tbMaxToleransi.Size = New System.Drawing.Size(100, 23)
+        Me.tbMaxToleransi.TabIndex = 260
+        Me.tbMaxToleransi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lblMaxToleransi
+        '
+        Me.lblMaxToleransi.AutoSize = True
+        Me.lblMaxToleransi.Location = New System.Drawing.Point(21, 231)
+        Me.lblMaxToleransi.Name = "lblMaxToleransi"
+        Me.lblMaxToleransi.Size = New System.Drawing.Size(59, 15)
+        Me.lblMaxToleransi.TabIndex = 261
+        Me.lblMaxToleransi.Text = "Toleransi :"
+        '
+        'lblMenitToleransi
+        '
+        Me.lblMenitToleransi.AutoSize = True
+        Me.lblMenitToleransi.Location = New System.Drawing.Point(192, 231)
+        Me.lblMenitToleransi.Name = "lblMenitToleransi"
+        Me.lblMenitToleransi.Size = New System.Drawing.Size(38, 15)
+        Me.lblMenitToleransi.TabIndex = 262
+        Me.lblMenitToleransi.Text = "Menit"
         '
         'FormMasterSkemaPresensi
         '
@@ -731,14 +763,14 @@ Partial Class FormMasterSkemaPresensi
         CType(Me.dgvView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbDataEntry.ResumeLayout(False)
         Me.gbDataEntry.PerformLayout()
+        Me.gbKelompok.ResumeLayout(False)
+        Me.gbKelompok.PerformLayout()
         Me.pnlUmum.ResumeLayout(False)
         Me.pnlUmum.PerformLayout()
         Me.pnlSpesifik.ResumeLayout(False)
         Me.pnlSpesifik.PerformLayout()
         Me.pnlWaktuHari.ResumeLayout(False)
         Me.pnlWaktuHari.PerformLayout()
-        Me.gbKelompok.ResumeLayout(False)
-        Me.gbKelompok.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -800,4 +832,7 @@ Partial Class FormMasterSkemaPresensi
     Friend WithEvents lblDepartemen As Label
     Friend WithEvents cboDepartemen As ComboBox
     Friend WithEvents gbKelompok As GroupBox
+    Friend WithEvents lblMaxToleransi As Label
+    Friend WithEvents tbMaxToleransi As TextBox
+    Friend WithEvents lblMenitToleransi As Label
 End Class

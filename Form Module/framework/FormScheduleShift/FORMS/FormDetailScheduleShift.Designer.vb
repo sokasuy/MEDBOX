@@ -182,7 +182,7 @@ Partial Class FormDetailScheduleShift
         Me.btnGenerate.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.btnGenerate.Image = CType(resources.GetObject("btnGenerate.Image"), System.Drawing.Image)
         Me.btnGenerate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnGenerate.Location = New System.Drawing.Point(1054, 9)
+        Me.btnGenerate.Location = New System.Drawing.Point(898, 9)
         Me.btnGenerate.Name = "btnGenerate"
         Me.btnGenerate.Size = New System.Drawing.Size(120, 54)
         Me.btnGenerate.TabIndex = 7
@@ -194,7 +194,7 @@ Partial Class FormDetailScheduleShift
         '
         Me.dtpAkhir.CustomFormat = "dd-MMM-yyyy"
         Me.dtpAkhir.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpAkhir.Location = New System.Drawing.Point(929, 19)
+        Me.dtpAkhir.Location = New System.Drawing.Point(772, 38)
         Me.dtpAkhir.Name = "dtpAkhir"
         Me.dtpAkhir.Size = New System.Drawing.Size(120, 23)
         Me.dtpAkhir.TabIndex = 6
@@ -213,7 +213,7 @@ Partial Class FormDetailScheduleShift
         '
         Me.lblSD.AutoSize = True
         Me.lblSD.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.lblSD.Location = New System.Drawing.Point(901, 25)
+        Me.lblSD.Location = New System.Drawing.Point(744, 39)
         Me.lblSD.Name = "lblSD"
         Me.lblSD.Size = New System.Drawing.Size(22, 15)
         Me.lblSD.TabIndex = 228
@@ -223,7 +223,7 @@ Partial Class FormDetailScheduleShift
         '
         Me.lblPeriode.AutoSize = True
         Me.lblPeriode.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.lblPeriode.Location = New System.Drawing.Point(716, 25)
+        Me.lblPeriode.Location = New System.Drawing.Point(713, 15)
         Me.lblPeriode.Name = "lblPeriode"
         Me.lblPeriode.Size = New System.Drawing.Size(53, 15)
         Me.lblPeriode.TabIndex = 227
@@ -241,7 +241,7 @@ Partial Class FormDetailScheduleShift
         '
         Me.dtpAwal.CustomFormat = "dd-MMM-yyyy"
         Me.dtpAwal.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpAwal.Location = New System.Drawing.Point(775, 19)
+        Me.dtpAwal.Location = New System.Drawing.Point(772, 12)
         Me.dtpAwal.Name = "dtpAwal"
         Me.dtpAwal.Size = New System.Drawing.Size(120, 23)
         Me.dtpAwal.TabIndex = 5
@@ -451,7 +451,7 @@ Partial Class FormDetailScheduleShift
         Me.btnCreateNew.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.btnCreateNew.Image = CType(resources.GetObject("btnCreateNew.Image"), System.Drawing.Image)
         Me.btnCreateNew.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCreateNew.Location = New System.Drawing.Point(943, 9)
+        Me.btnCreateNew.Location = New System.Drawing.Point(792, 9)
         Me.btnCreateNew.Name = "btnCreateNew"
         Me.btnCreateNew.Size = New System.Drawing.Size(120, 54)
         Me.btnCreateNew.TabIndex = 10
