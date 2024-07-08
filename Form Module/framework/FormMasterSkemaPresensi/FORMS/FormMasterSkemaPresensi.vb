@@ -247,7 +247,7 @@
                 .Columns("kode_waktu_shift").Width = 50
                 .Columns("jam_masuk").Width = 60
                 .Columns("jam_keluar").Width = 60
-                .Columns("max_toleransi").Width = 50
+                .Columns("max_toleransi").Width = 60
                 .Columns("spesifik").Width = 60
                 .Columns("nip").Width = 60
                 .Columns("nama").Width = 100
@@ -671,7 +671,7 @@
                                 newFields &= ",departemen,grup,ketgrup,idk,nip,nama"
                             End If
                             If (Trim(tbMaxToleransi.Text).Length > 0) Then
-                                newValues &= ",'" & myCStringManipulation.SafeSqlLiteral(tbMaxToleransi.Text) & "'"
+                                newValues &= ",'" & tbMaxToleransi.Text & "'"
                                 newFields &= ",maxtoleransi"
                             End If
                             Call myCDBOperation.InsertData(CONN_.dbMain, CONN_.comm, tableName, newValues, newFields)
@@ -882,20 +882,20 @@
         End Try
     End Sub
 
-    Private Sub tbMaxToleransi_Validated(sender As Object, e As EventArgs) Handles tbMaxToleransi.Validated
-        Try
-            tbMaxToleransi.Text = myCStringManipulation.CleanInputInteger(tbMaxToleransi.Text)
-        Catch ex As Exception
-            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "tbMaxToleransi_Validated Error")
-        End Try
-    End Sub
+    'Private Sub tbMaxToleransi_Validated(sender As Object, e As EventArgs) Handles tbMaxToleransi.Validated
+    '    Try
+    '        tbMaxToleransi.Text = myCStringManipulation.CleanInputInteger(tbMaxToleransi.Text)
+    '    Catch ex As Exception
+    '        Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "tbMaxToleransi_Validated Error")
+    '    End Try
+    'End Sub
 
-    Private Sub tbJam_Validated(sender As Object, e As EventArgs) Handles tbJamMasuk.Validated, tbJamKeluar.Validated
+    Private Sub tbJam_Validated(sender As Object, e As EventArgs) Handles tbJamMasuk.Validated, tbJamKeluar.Validated, tbMaxToleransi.Validated
         Try
             If (isDataPrepared) Then
                 tbJamMasuk.Text = myCStringManipulation.CleanInputTime(tbJamMasuk.Text)
                 tbJamKeluar.Text = myCStringManipulation.CleanInputTime(tbJamKeluar.Text)
-                If (tbJamMasuk.Text.Length > 0 And tbJamKeluar.Text.Length > 0) Then
+                If (Trim(tbJamMasuk.Text).Length > 0 And Trim(tbJamKeluar.Text).Length > 0) Then
                     'Dim strJamMasuk As TimeSpan
                     'Dim strJamKeluar As TimeSpan
 
@@ -918,6 +918,7 @@
                     tbJamMasuk.Text = "08:00"
                     tbJamKeluar.Text = "17:00"
                 End If
+                tbMaxToleransi.Text = myCStringManipulation.CleanInputTime(tbMaxToleransi.Text)
             End If
         Catch ex As Exception
             Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "tbJam_Validated Error")

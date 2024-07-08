@@ -78,6 +78,11 @@
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
 
+            'Dim ts1 As TimeSpan = TimeSpan.Parse("17:00:00")
+            'Dim ts2 As TimeSpan = TimeSpan.Parse("00:30:00")
+            'Dim tsSum As TimeSpan = ts1 + ts2
+            'MessageBox.Show(tsSum.ToString)
+
             CONN_.excelPrvdrType = myCFileIO.ReadIniFile("EXCEL", "PRVDRTYPE", Application.StartupPath & "\SETTING.ini")
 
             stSQL = "SELECT keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='lokasi' " & IIf(USER_.lokasi = "ALL", "", "AND keterangan='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "'") & " order by keterangan;"
@@ -823,7 +828,7 @@
                 Dim jumDataPresensi As Short
                 Dim updateString As String
                 Dim foundRows As DataRow()
-                Dim arrUpdateValues(15) As String
+                Dim arrUpdateValues(16) As String
                 Dim strSelisihJam As TimeSpan
                 Dim strSelisihJamKeluar As TimeSpan
                 Dim strSelisihJamMasuk As TimeSpan
@@ -862,6 +867,7 @@
                 'arrUpdateValues(13) = tidak masuk
                 'arrUpdateValues(14) = jam kerja nyata
                 'arrUpdateValues(15) = banyak jam kerja nyata
+                'arrUpdateValues(16) = maxtoleransi
 
                 While tanggalBerjalan <= tanggalAkhir
                     queryBuilder.Clear()
@@ -887,7 +893,7 @@
                     newColumn.DefaultValue = False
                     myDataTableScheduleShift.Columns.Add(newColumn)
 
-                    stSQL = "SELECT grup,ketgrup,spesifik,nip,nama,perusahaan,departemen,posisi,kodewaktushift,jammasuk,jamkeluar FROM " & tableName(9) & " WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (hari='" & myCStringManipulation.TranslateWeekdayName(WeekdayName(Weekday(tanggalBerjalan))).ToUpper & "');"
+                    stSQL = "SELECT grup,ketgrup,spesifik,nip,nama,perusahaan,departemen,posisi,kodewaktushift,jammasuk,jamkeluar,maxtoleransi FROM " & tableName(9) & " WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') and (hari='" & myCStringManipulation.TranslateWeekdayName(WeekdayName(Weekday(tanggalBerjalan))).ToUpper & "');"
                     myDataTableSkemaPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_SkemaPresensi")
 
                     stSQL = "SELECT fpid,nama,jammasuk,jamkeluar,kodewaktushift FROM " & tableName(8) & " WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (tanggal='" & Format(tanggalBerjalan, "dd-MMM-yyyy") & "');"
@@ -1010,6 +1016,11 @@
                                 'Jika ada skema presensi yang spesifik untuk karyawan tersebut saja, maka pake data skema presensi yang spesifik ini
                                 arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                 arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
+                                If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                Else
+                                    arrUpdateValues(16) = Nothing
+                                End If
                             Else
                                 'ambil jabatan dulu di table msposisikaryawan
                                 jabatan = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "posisi", CONN_.schemaHRD & ".msposisikaryawan",, "nip='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("nip")) & "' AND untukskemafp='True'", CONN_.dbType)
@@ -1029,12 +1040,22 @@
                                 If (foundRows.Length > 0) Then
                                     arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                     arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
+                                    If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                        arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                    Else
+                                        arrUpdateValues(16) = Nothing
+                                    End If
                                 Else
                                     'DIVISI
                                     foundRows = myDataTableSkemaPresensi.Select("perusahaan='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("perusahaan")) & "' AND (departemen='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("departemen")) & "') AND (grup='DIVISI' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(arrGrup(1)) & "') AND kodewaktushift='" & myCStringManipulation.SafeSqlLiteral(arrUpdateValues(0)) & "' AND posisi=" & IIf(IsNothing(jabatan), "'-'", "'" & myCStringManipulation.SafeSqlLiteral(jabatan) & "'"))
                                     If (foundRows.Length > 0) Then
                                         arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                         arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
+                                        If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                            arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                        Else
+                                            arrUpdateValues(16) = Nothing
+                                        End If
                                     Else
                                         'TANPA JABATAN
                                         'BAGIAN
@@ -1042,20 +1063,32 @@
                                         If (foundRows.Length > 0) Then
                                             arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                             arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
+                                            If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                                arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                            Else
+                                                arrUpdateValues(16) = Nothing
+                                            End If
                                         Else
                                             'DIVISI
                                             foundRows = myDataTableSkemaPresensi.Select("perusahaan='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("perusahaan")) & "' AND (departemen='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("departemen")) & "')  AND (grup='DIVISI' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(arrGrup(1)) & "') AND kodewaktushift='" & arrUpdateValues(0) & "'")
                                             If (foundRows.Length > 0) Then
                                                 arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                                 arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
+                                                If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                                    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                                Else
+                                                    arrUpdateValues(16) = Nothing
+                                                End If
                                             Else
                                                 If (myDataTablePresensi.Rows(i).Item("lokasi") = "SIDOARJO") And (myDataTablePresensi.Rows(i).Item("kelompok") <> "OUTSOURCE") Then
                                                     arrUpdateValues(1) = "07:00:00"
                                                     arrUpdateValues(2) = "15:00:00"
+                                                    arrUpdateValues(16) = Nothing
                                                 Else
                                                     'yang selain kriteria di atas, SIDOARJO dan bukan OUTSOURCE, JADWAL MASUK DAN JADWAL KELUARNYA BERVARIASI
                                                     arrUpdateValues(1) = Nothing
                                                     arrUpdateValues(2) = Nothing
+                                                    arrUpdateValues(16) = Nothing
                                                 End If
                                             End If
                                         End If
@@ -1064,7 +1097,7 @@
                                 'End If
                             End If
                         End If
-                        updateString &= ",jadwalmasuk=" & IIf(IsNothing(arrUpdateValues(1)), "Null", "'" & arrUpdateValues(1) & "'") & ",jadwalkeluar=" & IIf(IsNothing(arrUpdateValues(2)), "Null", "'" & arrUpdateValues(2) & "'")
+                        updateString &= ",jadwalmasuk=" & IIf(IsNothing(arrUpdateValues(1)), "Null", "'" & arrUpdateValues(1) & "'") & ",jadwalkeluar=" & IIf(IsNothing(arrUpdateValues(2)), "Null", "'" & arrUpdateValues(2) & "'") & ",maxtoleransi=" & IIf(IsNothing(arrUpdateValues(16)), "Null", "'" & arrUpdateValues(16) & "'")
                         '===============================================================================================
 
                         '===============================================================================================
@@ -1115,8 +1148,8 @@
                                         'Cek jika selisih di bawah 15 menit, maka dianggap masih di jam yang sama
                                         'Setelah itu harus cek, apakah jam yang ada ini lebih dekat ke jam jadwal masuk atau jam jadwal keluar
                                         'Kalau acuan jadwal jam masuk dan jadwal jam keluarnya ada
-                                        strSelisihJamMasuk = CDate(arrUpdateValues(3)) - CDate(arrUpdateValues(1))
-                                        strSelisihJamKeluar = CDate(arrUpdateValues(3)) - CDate(arrUpdateValues(2))
+                                        strSelisihJamMasuk = TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(1))
+                                        strSelisihJamKeluar = TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(2))
                                         If (strSelisihJamMasuk.Duration <= strSelisihJamKeluar.Duration) Then
                                             'Kalau fp masuk lebih dekat ke jadwal masuk, maka fp masuk dianggap jam masuk
                                             'PERLU DICATAT BAHWA SELISIH FP MASUK DAN FP KELUAR HANYA KURANG DARI 15 MENIT
@@ -1139,8 +1172,8 @@
                                     Else
                                         'Kalau selisihnya di atas 15 menit, maka dianggap sendiri2
                                         'Ini nanti bisa disesuaikan, sesuai kebijakkan
-                                        strSelisihJamMasuk = CDate(arrUpdateValues(3)) - CDate(arrUpdateValues(1))
-                                        strSelisihJamKeluar = CDate(arrUpdateValues(4)) - CDate(arrUpdateValues(2))
+                                        strSelisihJamMasuk = TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(1))
+                                        strSelisihJamKeluar = TimeSpan.Parse(arrUpdateValues(4)) - TimeSpan.Parse(arrUpdateValues(2))
 
                                         arrUpdateValues(5) = arrUpdateValues(3)
                                         arrUpdateValues(6) = arrUpdateValues(4)
@@ -1155,8 +1188,8 @@
                                         'Kalau salah 1 kosong
                                         If Not IsNothing(arrUpdateValues(3)) Then
                                             'Kalau yang ada isi yang fp masuknya
-                                            strSelisihJamMasuk = CDate(arrUpdateValues(3)) - CDate(arrUpdateValues(1))
-                                            strSelisihJamKeluar = CDate(arrUpdateValues(3)) - CDate(arrUpdateValues(2))
+                                            strSelisihJamMasuk = TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(1))
+                                            strSelisihJamKeluar = TimeSpan.Parse(arrUpdateValues(3)) - TimeSpan.Parse(arrUpdateValues(2))
                                             If (strSelisihJamMasuk.Duration <= strSelisihJamKeluar.Duration) Then
                                                 'Kalau fp masuk lebih dekat ke jadwal masuk, maka fp masuk dianggap jam masuk
                                                 'PERLU DICATAT BAHWA SELISIH FP MASUK DAN FP KELUAR HANYA KURANG DARI 15 MENIT
@@ -1177,8 +1210,8 @@
                                             End If
                                         ElseIf Not IsNothing(arrUpdateValues(4)) Then
                                             'Kalau yang ada isi yang fp keluarnya
-                                            strSelisihJamMasuk = CDate(arrUpdateValues(4)) - CDate(arrUpdateValues(1))
-                                            strSelisihJamKeluar = CDate(arrUpdateValues(4)) - CDate(arrUpdateValues(2))
+                                            strSelisihJamMasuk = TimeSpan.Parse(arrUpdateValues(4)) - TimeSpan.Parse(arrUpdateValues(1))
+                                            strSelisihJamKeluar = TimeSpan.Parse(arrUpdateValues(4)) - TimeSpan.Parse(arrUpdateValues(2))
                                             If (strSelisihJamMasuk.Duration <= strSelisihJamKeluar.Duration) Then
                                                 'Kalau fp masuk lebih dekat ke jadwal masuk, maka fp masuk dianggap jam masuk
                                                 'PERLU DICATAT BAHWA SELISIH FP MASUK DAN FP KELUAR HANYA KURANG DARI 15 MENIT
@@ -1546,7 +1579,7 @@
                             'DATANG TERLAMBAT
                             batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='DT'")
                             If Not IsNothing(batasToleransi) Then
-                                'Jika jam terlambatnya kurang dari batas toleransinya
+                                'Jika jam terlambatnya lebih dari batas toleransinya
                                 If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
                                     Dim lebihanJamPulang As TimeSpan
                                     If Not IsNothing(_pulang) Then
@@ -1576,7 +1609,7 @@
                             batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='PC'")
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
-                                    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
+                                    'Jika jam pulangnya melebihi batas toleransinya
                                     If (TimeSpan.Parse(_pulangCepat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
                                         GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
                                     Else
@@ -1620,7 +1653,7 @@
                     End If
                 Else
                     'Untuk NON STAFF dan OUTSOURCING. Perlakuan terlambatnya berbeda, jadi harus dipisah
-                    'SEMENTARA TIDAK DIPAKAI DI MEDBOX
+                    'SEMENTARA TIDAK DIPAKAI DI MEDBOX!!
                     If (IsNothing(_terlambat) And IsNothing(_pulangCepat)) And (_terlambat = "" And _pulangCepat = "") Then
                         'Jika tidak terlambat dan pulang cepat, maka jam kerjanya full
                     Else

@@ -917,7 +917,7 @@
                             'DATANG TERLAMBAT
                             batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='DT'")
                             If Not IsNothing(batasToleransi) Then
-                                'Jika jam terlambatnya kurang dari batas toleransinya
+                                'Jika jam terlambatnya lebih dari batas toleransinya
                                 If (TimeSpan.Parse(_terlambat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
                                     Dim lebihanJamPulang As TimeSpan
                                     If Not IsNothing(_pulang) Then
@@ -947,7 +947,7 @@
                             batasToleransi = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "batastoleransi", tableName(12),, "lokasi='" & myCStringManipulation.SafeSqlLiteral(_lokasi) & "' and perusahaan='" & myCStringManipulation.SafeSqlLiteral(_perusahaan) & "' and kelompok='" & myCStringManipulation.SafeSqlLiteral(_kelompok) & "' and katpenggajian='" & myCStringManipulation.SafeSqlLiteral(_katpenggajian) & "' and leveljabatan=" & _levelJabatan & " and ijin='PC'")
                             If Not IsNothing(batasToleransi) Then
                                 If (TimeSpan.Parse(_pulangCepat) > batasToleransi) Then
-                                    'Jika jam pulangnya melebihi batas toleransinya, kalau untuk staff maka langsung dianggap tidak masuk kerja
+                                    'Jika jam pulangnya melebihi batas toleransinya
                                     If (TimeSpan.Parse(_pulangCepat) <= TimeSpan.Parse(GetJamKerjaNyata)) Then
                                         GetJamKerjaNyata = (TimeSpan.Parse(GetJamKerjaNyata) - TimeSpan.Parse(_pulangCepat)).ToString
                                     Else

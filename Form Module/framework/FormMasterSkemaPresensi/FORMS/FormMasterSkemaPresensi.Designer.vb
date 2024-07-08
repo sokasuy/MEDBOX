@@ -40,6 +40,9 @@ Partial Class FormMasterSkemaPresensi
         Me.cboKriteria = New System.Windows.Forms.ComboBox()
         Me.dgvView = New System.Windows.Forms.DataGridView()
         Me.gbDataEntry = New System.Windows.Forms.GroupBox()
+        Me.lblMenitToleransi = New System.Windows.Forms.Label()
+        Me.lblMaxToleransi = New System.Windows.Forms.Label()
+        Me.tbMaxToleransi = New System.Windows.Forms.TextBox()
         Me.gbKelompok = New System.Windows.Forms.GroupBox()
         Me.rbSpesifik = New System.Windows.Forms.RadioButton()
         Me.pnlUmum = New System.Windows.Forms.Panel()
@@ -79,9 +82,6 @@ Partial Class FormMasterSkemaPresensi
         Me.btnKeluar = New System.Windows.Forms.Button()
         Me.lblEntryType = New System.Windows.Forms.Label()
         Me.clbUserRight = New System.Windows.Forms.CheckedListBox()
-        Me.tbMaxToleransi = New System.Windows.Forms.TextBox()
-        Me.lblMaxToleransi = New System.Windows.Forms.Label()
-        Me.lblMenitToleransi = New System.Windows.Forms.Label()
         Me.gbView.SuspendLayout()
         Me.pnlNavigasi.SuspendLayout()
         CType(Me.dgvView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -295,6 +295,35 @@ Partial Class FormMasterSkemaPresensi
         Me.gbDataEntry.TabIndex = 193
         Me.gbDataEntry.TabStop = False
         Me.gbDataEntry.Text = "DATA ENTRY"
+        '
+        'lblMenitToleransi
+        '
+        Me.lblMenitToleransi.AutoSize = True
+        Me.lblMenitToleransi.Location = New System.Drawing.Point(192, 231)
+        Me.lblMenitToleransi.Name = "lblMenitToleransi"
+        Me.lblMenitToleransi.Size = New System.Drawing.Size(52, 15)
+        Me.lblMenitToleransi.TabIndex = 262
+        Me.lblMenitToleransi.Text = "ex: 00:30"
+        Me.lblMenitToleransi.Visible = False
+        '
+        'lblMaxToleransi
+        '
+        Me.lblMaxToleransi.AutoSize = True
+        Me.lblMaxToleransi.Location = New System.Drawing.Point(21, 231)
+        Me.lblMaxToleransi.Name = "lblMaxToleransi"
+        Me.lblMaxToleransi.Size = New System.Drawing.Size(59, 15)
+        Me.lblMaxToleransi.TabIndex = 261
+        Me.lblMaxToleransi.Text = "Toleransi :"
+        Me.lblMaxToleransi.Visible = False
+        '
+        'tbMaxToleransi
+        '
+        Me.tbMaxToleransi.Location = New System.Drawing.Point(86, 228)
+        Me.tbMaxToleransi.Name = "tbMaxToleransi"
+        Me.tbMaxToleransi.Size = New System.Drawing.Size(100, 23)
+        Me.tbMaxToleransi.TabIndex = 260
+        Me.tbMaxToleransi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tbMaxToleransi.Visible = False
         '
         'gbKelompok
         '
@@ -714,32 +743,6 @@ Partial Class FormMasterSkemaPresensi
         Me.clbUserRight.Name = "clbUserRight"
         Me.clbUserRight.Size = New System.Drawing.Size(100, 64)
         Me.clbUserRight.TabIndex = 199
-        '
-        'tbMaxToleransi
-        '
-        Me.tbMaxToleransi.Location = New System.Drawing.Point(86, 228)
-        Me.tbMaxToleransi.Name = "tbMaxToleransi"
-        Me.tbMaxToleransi.Size = New System.Drawing.Size(100, 23)
-        Me.tbMaxToleransi.TabIndex = 260
-        Me.tbMaxToleransi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'lblMaxToleransi
-        '
-        Me.lblMaxToleransi.AutoSize = True
-        Me.lblMaxToleransi.Location = New System.Drawing.Point(21, 231)
-        Me.lblMaxToleransi.Name = "lblMaxToleransi"
-        Me.lblMaxToleransi.Size = New System.Drawing.Size(59, 15)
-        Me.lblMaxToleransi.TabIndex = 261
-        Me.lblMaxToleransi.Text = "Toleransi :"
-        '
-        'lblMenitToleransi
-        '
-        Me.lblMenitToleransi.AutoSize = True
-        Me.lblMenitToleransi.Location = New System.Drawing.Point(192, 231)
-        Me.lblMenitToleransi.Name = "lblMenitToleransi"
-        Me.lblMenitToleransi.Size = New System.Drawing.Size(38, 15)
-        Me.lblMenitToleransi.TabIndex = 262
-        Me.lblMenitToleransi.Text = "Menit"
         '
         'FormMasterSkemaPresensi
         '
