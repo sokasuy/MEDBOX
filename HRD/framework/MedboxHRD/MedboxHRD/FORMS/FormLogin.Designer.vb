@@ -112,7 +112,6 @@ Partial Class FormLogin
         Me.tbPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.tbPassword.Size = New System.Drawing.Size(200, 20)
         Me.tbPassword.TabIndex = 2
-        Me.tbPassword.Text = "YusakOS"
         '
         'lblUserID
         '
@@ -129,7 +128,6 @@ Partial Class FormLogin
         Me.tbUserID.Name = "tbUserID"
         Me.tbUserID.Size = New System.Drawing.Size(200, 20)
         Me.tbUserID.TabIndex = 1
-        Me.tbUserID.Text = "Yusak"
         '
         'FormLogin
         '

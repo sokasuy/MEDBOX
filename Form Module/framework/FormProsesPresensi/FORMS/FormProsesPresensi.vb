@@ -1016,11 +1016,11 @@
                                 'Jika ada skema presensi yang spesifik untuk karyawan tersebut saja, maka pake data skema presensi yang spesifik ini
                                 arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                 arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
-                                If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
-                                    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
-                                Else
-                                    arrUpdateValues(16) = Nothing
-                                End If
+                                'If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                '    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                'Else
+                                '    arrUpdateValues(16) = Nothing
+                                'End If
                             Else
                                 'ambil jabatan dulu di table msposisikaryawan
                                 jabatan = myCDBOperation.GetSpecificRecord(CONN_.dbMain, CONN_.comm, CONN_.reader, "posisi", CONN_.schemaHRD & ".msposisikaryawan",, "nip='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("nip")) & "' AND untukskemafp='True'", CONN_.dbType)
@@ -1040,22 +1040,22 @@
                                 If (foundRows.Length > 0) Then
                                     arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                     arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
-                                    If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
-                                        arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
-                                    Else
-                                        arrUpdateValues(16) = Nothing
-                                    End If
+                                    'If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                    '    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                    'Else
+                                    '    arrUpdateValues(16) = Nothing
+                                    'End If
                                 Else
                                     'DIVISI
                                     foundRows = myDataTableSkemaPresensi.Select("perusahaan='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("perusahaan")) & "' AND (departemen='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("departemen")) & "') AND (grup='DIVISI' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(arrGrup(1)) & "') AND kodewaktushift='" & myCStringManipulation.SafeSqlLiteral(arrUpdateValues(0)) & "' AND posisi=" & IIf(IsNothing(jabatan), "'-'", "'" & myCStringManipulation.SafeSqlLiteral(jabatan) & "'"))
                                     If (foundRows.Length > 0) Then
                                         arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                         arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
-                                        If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
-                                            arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
-                                        Else
-                                            arrUpdateValues(16) = Nothing
-                                        End If
+                                        'If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                        '    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                        'Else
+                                        '    arrUpdateValues(16) = Nothing
+                                        'End If
                                     Else
                                         'TANPA JABATAN
                                         'BAGIAN
@@ -1063,32 +1063,32 @@
                                         If (foundRows.Length > 0) Then
                                             arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                             arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
-                                            If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
-                                                arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
-                                            Else
-                                                arrUpdateValues(16) = Nothing
-                                            End If
+                                            'If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                            '    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                            'Else
+                                            '    arrUpdateValues(16) = Nothing
+                                            'End If
                                         Else
                                             'DIVISI
                                             foundRows = myDataTableSkemaPresensi.Select("perusahaan='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("perusahaan")) & "' AND (departemen='" & myCStringManipulation.SafeSqlLiteral(myDataTablePresensi.Rows(i).Item("departemen")) & "')  AND (grup='DIVISI' and ketgrup='" & myCStringManipulation.SafeSqlLiteral(arrGrup(1)) & "') AND kodewaktushift='" & arrUpdateValues(0) & "'")
                                             If (foundRows.Length > 0) Then
                                                 arrUpdateValues(1) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jammasuk").ToString
                                                 arrUpdateValues(2) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("jamkeluar").ToString
-                                                If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
-                                                    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
-                                                Else
-                                                    arrUpdateValues(16) = Nothing
-                                                End If
+                                                'If Not IsDBNull(myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString) Then
+                                                '    arrUpdateValues(16) = myDataTableSkemaPresensi.Rows(myDataTableSkemaPresensi.Rows.IndexOf(foundRows(0))).Item("maxtoleransi").ToString
+                                                'Else
+                                                '    arrUpdateValues(16) = Nothing
+                                                'End If
                                             Else
                                                 If (myDataTablePresensi.Rows(i).Item("lokasi") = "SIDOARJO") And (myDataTablePresensi.Rows(i).Item("kelompok") <> "OUTSOURCE") Then
                                                     arrUpdateValues(1) = "07:00:00"
                                                     arrUpdateValues(2) = "15:00:00"
-                                                    arrUpdateValues(16) = Nothing
+                                                    'arrUpdateValues(16) = Nothing
                                                 Else
                                                     'yang selain kriteria di atas, SIDOARJO dan bukan OUTSOURCE, JADWAL MASUK DAN JADWAL KELUARNYA BERVARIASI
                                                     arrUpdateValues(1) = Nothing
                                                     arrUpdateValues(2) = Nothing
-                                                    arrUpdateValues(16) = Nothing
+                                                    'arrUpdateValues(16) = Nothing
                                                 End If
                                             End If
                                         End If
@@ -1097,7 +1097,8 @@
                                 'End If
                             End If
                         End If
-                        updateString &= ",jadwalmasuk=" & IIf(IsNothing(arrUpdateValues(1)), "Null", "'" & arrUpdateValues(1) & "'") & ",jadwalkeluar=" & IIf(IsNothing(arrUpdateValues(2)), "Null", "'" & arrUpdateValues(2) & "'") & ",maxtoleransi=" & IIf(IsNothing(arrUpdateValues(16)), "Null", "'" & arrUpdateValues(16) & "'")
+                        'updateString &= ",jadwalmasuk=" & IIf(IsNothing(arrUpdateValues(1)), "Null", "'" & arrUpdateValues(1) & "'") & ",jadwalkeluar=" & IIf(IsNothing(arrUpdateValues(2)), "Null", "'" & arrUpdateValues(2) & "'") & ",maxtoleransi=" & IIf(IsNothing(arrUpdateValues(16)), "Null", "'" & arrUpdateValues(16) & "'")
+                        updateString &= ",jadwalmasuk=" & IIf(IsNothing(arrUpdateValues(1)), "Null", "'" & arrUpdateValues(1) & "'") & ",jadwalkeluar=" & IIf(IsNothing(arrUpdateValues(2)), "Null", "'" & arrUpdateValues(2) & "'")
                         '===============================================================================================
 
                         '===============================================================================================
@@ -1917,6 +1918,7 @@
                                     WHERE (d.tanggal>='" & Format(dtpTanggalCetakAwal.Value, "dd-MMM-yyyy") & "' and d.tanggal<='" & Format(dtpTanggalCetakAkhir.Value, "dd-MMM-yyyy") & "') and d.kelompok='STAFF' and d.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasiCetak.SelectedValue) & "' 
                                     ORDER BY tanggal,nama,departemen,divisi,bagian;"
                         End If
+                        'InputBox("", "", stSQL)
                     Case "DataPresensi"
                         If (cboLokasiCetak.SelectedValue = "PANDAAN") Then
                             stSQL = Nothing

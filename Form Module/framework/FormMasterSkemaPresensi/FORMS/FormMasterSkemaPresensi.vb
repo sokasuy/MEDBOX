@@ -222,6 +222,7 @@
 
                 .Columns("rid").Visible = False
                 .Columns("kode_waktu_shift").Visible = False
+                .Columns("max_toleransi").Visible = False
 
                 .Columns("rid").Frozen = True
                 .Columns("lokasi").Frozen = True
