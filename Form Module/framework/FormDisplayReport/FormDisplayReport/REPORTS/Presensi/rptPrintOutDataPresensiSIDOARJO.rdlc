@@ -468,7 +468,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!jamkerja.Value</Value>
+                                                <Value>=Fields!jamkerjanyata.Value</Value>
                                                 <Style>
                                                   <FontSize>7pt</FontSize>
                                                 </Style>
@@ -893,8 +893,8 @@
           <DataField>fpkeluar</DataField>
           <rd:TypeName>System.TimeSpan</rd:TypeName>
         </Field>
-        <Field Name="jamkerja">
-          <DataField>jamkerja</DataField>
+        <Field Name="jamkerjanyata">
+          <DataField>jamkerjanyata</DataField>
           <rd:TypeName>System.TimeSpan</rd:TypeName>
         </Field>
         <Field Name="banyakjamkerjanyata">
