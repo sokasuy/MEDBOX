@@ -21,3 +21,4 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormPengalamanKerjaKaryawan\
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormPengalamanKerjaKaryawan\obj\Debug\FormPengalamanKerjaKaryawan.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormPengalamanKerjaKaryawan\obj\Debug\FormPengalamanKerjaKaryawan.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormPengalamanKerjaKaryawan\obj\Debug\FormPengalamanKerjaKaryawan.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormPengalamanKerjaKaryawan\obj\Debug\FormPengalamanKerjaKaryawan.vbproj.AssemblyReference.cache

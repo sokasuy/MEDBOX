@@ -71,34 +71,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CDataGridViewManipulation">
-      <HintPath>..\..\..\..\..\Class Module\framework\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\CDataGridViewManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\CDataGridViewManipulation.dll</HintPath>
     </Reference>
     <Reference Include="CDBConnection">
-      <HintPath>..\..\..\..\..\Class Module\framework\CDBConnection\CDBConnection\bin\Debug\CDBConnection.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CDBConnection\CDBConnection\bin\Debug\CDBConnection.dll</HintPath>
     </Reference>
     <Reference Include="CDBOperation">
-      <HintPath>..\..\..\..\..\Class Module\framework\CDBOperation\CDBOperation\bin\Debug\CDBOperation.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CDBOperation\CDBOperation\bin\Debug\CDBOperation.dll</HintPath>
     </Reference>
     <Reference Include="CFileIO">
-      <HintPath>..\..\..\..\..\Class Module\framework\CFileIO\CFileIO\bin\Debug\CFileIO.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CFileIO\CFileIO\bin\Debug\CFileIO.dll</HintPath>
     </Reference>
     <Reference Include="CFormManipulation">
-      <HintPath>..\..\..\..\..\Class Module\framework\CFormManipulation\CFormManipulation\bin\Debug\CFormManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CFormManipulation\CFormManipulation\bin\Debug\CFormManipulation.dll</HintPath>
     </Reference>
     <Reference Include="CManagementSystem">
-      <HintPath>..\..\..\..\..\Class Module\framework\CManagementSystem\CManagementSystem\bin\Debug\CManagementSystem.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CManagementSystem\CManagementSystem\bin\Debug\CManagementSystem.dll</HintPath>
     </Reference>
     <Reference Include="CMiscFunction">
-      <HintPath>..\..\..\..\..\Class Module\framework\CMiscFunction\CMiscFunction\bin\Debug\CMiscFunction.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CMiscFunction\CMiscFunction\bin\Debug\CMiscFunction.dll</HintPath>
     </Reference>
     <Reference Include="CNetworkOperation">
-      <HintPath>..\..\..\..\..\Class Module\framework\CNetworkOperation\CNetworkOperation\bin\Debug\CNetworkOperation.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CNetworkOperation\CNetworkOperation\bin\Debug\CNetworkOperation.dll</HintPath>
     </Reference>
     <Reference Include="CShowMessage">
-      <HintPath>..\..\..\..\..\Class Module\framework\CShowMessage\CShowMessage\bin\Debug\CShowMessage.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CShowMessage\CShowMessage\bin\Debug\CShowMessage.dll</HintPath>
     </Reference>
     <Reference Include="CStringManipulation">
-      <HintPath>..\..\..\..\..\Class Module\framework\CStringManipulation\CStringManipulation\bin\Debug\CStringManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\..\Class Module\framework\4.6.2\CStringManipulation\CStringManipulation\bin\Debug\CStringManipulation.dll</HintPath>
     </Reference>
     <Reference Include="FormAttachmentDokumen">
       <HintPath>..\..\..\..\Form Module\framework\FormAttachmentDokumen\bin\Debug\FormAttachmentDokumen.dll</HintPath>

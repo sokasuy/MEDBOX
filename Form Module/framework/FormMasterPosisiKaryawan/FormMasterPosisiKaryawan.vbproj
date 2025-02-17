@@ -50,27 +50,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CDataGridViewManipulation">
-      <HintPath>..\..\..\..\Class Module\framework\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\CDataGridViewManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CDataGridViewManipulation\CDataGridViewManipulation\bin\Debug\CDataGridViewManipulation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CDBConnection">
-      <HintPath>..\..\..\..\Class Module\framework\CDBConnection\CDBConnection\bin\Debug\CDBConnection.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CDBConnection\CDBConnection\bin\Debug\CDBConnection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CDBOperation">
-      <HintPath>..\..\..\..\Class Module\framework\CDBOperation\CDBOperation\bin\Debug\CDBOperation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CDBOperation\CDBOperation\bin\Debug\CDBOperation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CFormManipulation">
-      <HintPath>..\..\..\..\Class Module\framework\CFormManipulation\CFormManipulation\bin\Debug\CFormManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CFormManipulation\CFormManipulation\bin\Debug\CFormManipulation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CShowMessage">
-      <HintPath>..\..\..\..\Class Module\framework\CShowMessage\CShowMessage\bin\Debug\CShowMessage.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CShowMessage\CShowMessage\bin\Debug\CShowMessage.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CStringManipulation">
-      <HintPath>..\..\..\..\Class Module\framework\CStringManipulation\CStringManipulation\bin\Debug\CStringManipulation.dll</HintPath>
+      <HintPath>..\..\..\..\Class Module\framework\4.6.2\CStringManipulation\CStringManipulation\bin\Debug\CStringManipulation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FormAttachmentKaryawan">

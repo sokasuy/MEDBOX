@@ -207,3 +207,5 @@ G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\obj\Debug\Medbox
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\obj\Debug\MedboxHRD.exe
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\obj\Debug\MedboxHRD.xml
 G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\obj\Debug\MedboxHRD.pdb
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\BCrypt.Net-Next.dll
+G:\DESKTOP APPLICATION\MEDBOX\HRD\framework\MedboxHRD\MedboxHRD\bin\Debug\BCrypt.Net-Next.xml
