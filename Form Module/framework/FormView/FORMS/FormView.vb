@@ -31,7 +31,7 @@
 
     Private WithEvents tbCellText As New DataGridViewTextBoxEditingControl
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String, Optional _connFinger As Object = Nothing)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _contentView As String, _lokasi As String, Optional _connFinger As Object = Nothing)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -50,6 +50,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -90,7 +91,7 @@
                 tableName(12) = CONN_.schemaHRD & ".mstoleransimenit"
                 tableName(13) = CONN_.schemaHRD & ".msdefaultjamistirahat"
 
-                stSQL = "SELECT lokasi FROM " & tableName(0) & " " & IIf(USER_.lokasi = "ALL", "", "where upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
+                stSQL = "SELECT lokasi FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "lokasi", "lokasi", isCboPrepared)
 
                 stSQL = "SELECT kode,keterangan,(kode || '-' || keterangan) as ket FROM " & tableName(9) & " where kategori='mohonijin' order by keterangan;"
@@ -99,7 +100,7 @@
                 stSQL = "SELECT kode,keterangan,(kode || '-' || keterangan) as ket FROM " & tableName(9) & " where kategori='absen' order by keterangan;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboAbsen, myBindingAbsen, cboAbsen, "T_" & cboAbsen.Name, "kode", "ket", isCboPrepared)
 
-                stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' order by keterangan;"
+                stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' and keterangan like '%" & USER_.entityChose & "' order by keterangan;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboPerusahaan, myBindingFilterPerusahaan, cboFilterPerusahaan, "T_" & cboFilterPerusahaan.Name, "keterangan", "keterangan", isCboPrepared, True)
 
                 If (myDataTableCboLokasi.Rows.Count > 0) Then
@@ -160,11 +161,11 @@
                 dgvView.Location = New Point(dgvView.Location.X, clbUserRight.Location.Y + clbUserRight.Size.Height + 5)
                 dgvView.Size = New Size(dgvView.Size.Width, 465)
 
-                stSQL = "SELECT lokasi FROM " & tableName(8) & " " & IIf(USER_.lokasi = "ALL", "", "where upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
+                stSQL = "SELECT lokasi FROM " & tableName(8) & " where perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "lokasi", "lokasi", isCboPrepared)
 
                 lblKelompok.Text = "Mesin: "
-                stSQL = "SELECT ('(' || tbl2.nomer || ') ' || tbl.mesin) as mesinku,tbl.mesin FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi " & IIf(USER_.lokasi = "ALL", "", "where upper(tbl.lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by tbl2.nomer,tbl.mesin order by tbl2.nomer;"
+                stSQL = "SELECT ('(' || tbl2.nomer || ') ' || tbl.mesin) as mesinku,tbl.mesin FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi and tbl.perusahaan=tbl2.perusahaan where tbl.perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND upper(tbl.lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by tbl2.nomer,tbl.mesin order by tbl2.nomer;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboMesin, myBindingMesin, cboKelompok, "T_" & cboKelompok.Name, "mesin", "mesinku", isCboPrepared)
 
                 If (myDataTableCboLokasi.Rows.Count > 0) Then
@@ -196,7 +197,7 @@
                 dgvView.Location = New Point(dgvView.Location.X, clbUserRight.Location.Y + clbUserRight.Size.Height + 5)
                 dgvView.Size = New Size(dgvView.Size.Width, 465)
 
-                stSQL = "SELECT lokasi FROM " & tableName(8) & " " & IIf(USER_.lokasi = "ALL", "", "where upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
+                stSQL = "SELECT lokasi FROM " & tableName(8) & " where perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "and upper(lokasi)='" & USER_.lokasi.ToUpper & "'") & " group by lokasi order by lokasi;"
                 Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "lokasi", "lokasi", isCboPrepared)
 
                 If (myDataTableCboLokasi.Rows.Count > 0) Then
@@ -273,6 +274,8 @@
             If (_contentView = "Presensi") Then
                 If (cboFilterPerusahaan.SelectedIndex <> -1) Then
                     mGroupCriteria = " AND (tbl.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboFilterPerusahaan.SelectedValue) & "')"
+                Else
+                    mGroupCriteria = " AND (tbl.perusahaan like '%" & USER_.entityChose & "')"
                 End If
                 If (cboKelompok.SelectedIndex <> -1) Then
                     mGroupCriteria &= " AND (tbl.kelompok='" & myCStringManipulation.SafeSqlLiteral(cboKelompok.SelectedItem) & "')"
@@ -500,8 +503,8 @@
                 End If
 
                 stSQL = "SELECT tbl.mesin,tbl2.nomer,tbl.tanggal,tbl.fpid,tbl.nama,tbl.departemen,tbl.jammasuk,tbl.jamkeluar,tbl.lokasi,tbl.kodewaktushift,tbl.created_at,tbl.updated_at
-                        FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi
-                        WHERE (tbl.tanggal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' AND tbl.tanggal<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')" & mGroupCriteria & "
+                        FROM " & tableName(8) & " as tbl inner join " & CONN_.schemaHRD & ".msdaftarmesinpresensi as tbl2 on tbl.mesin=tbl2.mesin and tbl.lokasi=tbl2.lokasi and tbl.perusahaan=tbl2.perusahaan
+                        WHERE tbl.perusahaan like '%" & USER_.entityChose & "' AND (tbl.tanggal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' AND tbl.tanggal<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(cboLokasi.SelectedValue) & "') AND (upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')" & mGroupCriteria & "
                         ORDER BY tbl.lokasi ASC,tbl.nama ASC,tbl.tanggal ASC,tbl.mesin ASC;"
                 myDataTable = myCDBOperation.GetDataTableUsingReader(myConn, myComm, myReader, stSQL, "TBL " & lblTitle.Text)
                 myBindingTable.DataSource = myDataTable
@@ -1820,7 +1823,7 @@
                 Dim updateSukses As Byte = 0
                 Dim jamMasuk As String = Nothing
                 Dim jamKeluar As String = Nothing
-                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE cekfp='True';"
+                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND cekfp='True';"
                 hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                 If hitungCek > 0 Then
                     Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengisi jam masuk dan jam keluar " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "jam masuk dan pulang yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
@@ -1841,7 +1844,7 @@
                         Dim pulangCepat As String
                         Dim levelJabatan As Byte
 
-                        stSQL = "SELECT nip,tanggal,jadwalmasuk,jadwalkeluar,masuk,keluar,lokasi,perusahaan,kelompok,katpenggajian,departemen,divisi,bagian,kdr,terlambat,pulangcepat FROM " & tableName(0) & " WHERE cekfp='True' and (ijin<>'TM' or ijin is null) and absen is null;"
+                        stSQL = "SELECT nip,tanggal,jadwalmasuk,jadwalkeluar,masuk,keluar,lokasi,perusahaan,kelompok,katpenggajian,departemen,divisi,bagian,kdr,terlambat,pulangcepat FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' and cekfp='True' and (ijin<>'TM' or ijin is null) and absen is null;"
                         tmpDataPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_tmpDataPresensi")
                         For i As Integer = 0 To tmpDataPresensi.Rows.Count - 1
                             If (rbJamMasuk.Checked) Then
@@ -1908,14 +1911,14 @@
                     End If
                 End If
 
-                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE cekspk='True' and (ijin<>'TM' or ijin is null) and absen is null;"
+                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND cekspk='True' and (ijin<>'TM' or ijin is null) and absen is null;"
                 hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                 If hitungCek > 0 Then
                     Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengisi SPK masuk dan SPK keluar " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "spk mulai dan spk selesai yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
                     If (isConfirm = DialogResult.Yes) Then
                         'YES
                         Dim tmpDataPresensi As New DataTable
-                        stSQL = "SELECT tanggal,kdr FROM " & tableName(0) & " WHERE cekspk='True';"
+                        stSQL = "SELECT tanggal,kdr FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND cekspk='True';"
                         tmpDataPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_tmpDataPresensi")
 
                         For i As Integer = 0 To tmpDataPresensi.Rows.Count - 1
@@ -1937,7 +1940,7 @@
                     End If
                 End If
 
-                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE ceklembur='True' and (ijin<>'TM' or ijin is null) and absen is null;"
+                stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND ceklembur='True' and (ijin<>'TM' or ijin is null) and absen is null;"
                 hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                 If hitungCek > 0 Then
                     Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengisi mulai lembur dan selesai lembur " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "jam lembur, mulai lembur dan selesai lembur yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
@@ -1945,7 +1948,7 @@
                         'YES
                         Dim tmpDataPresensi As New DataTable
                         Dim jamlembur As String
-                        stSQL = "SELECT tanggal,kdr FROM " & tableName(0) & " WHERE ceklembur='True';"
+                        stSQL = "SELECT tanggal,kdr FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND ceklembur='True';"
                         tmpDataPresensi = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_tmpDataPresensi")
 
                         For i As Integer = 0 To tmpDataPresensi.Rows.Count - 1
@@ -1991,35 +1994,35 @@
                 Dim hitungCek As UShort
                 Dim updateSukses As Byte = 0
                 If (rbKosongkanFP.Checked) Then
-                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE cekfp='True';"
+                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND cekfp='True';"
                     hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                     If hitungCek > 0 Then
                         Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengosongkan jam masuk dan jam keluar " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "jam masuk dan pulang yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
                         If (isConfirm = DialogResult.Yes) Then
                             'YES
-                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "masuk=Null,keluar=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,terlambat=Null,pulangcepat=Null,shift=1,cekfp='False',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "cekfp='True'")
+                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "masuk=Null,keluar=Null,jamkerja=Null,banyakjamkerja=Null,jamkerjanyata=Null,banyakjamkerjanyata=Null,terlambat=Null,pulangcepat=Null,shift=1,cekfp='False',isfpmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "perusahaan like '%" & USER_.entityChose & "' AND cekfp='True'")
                             updateSukses = 1
                         End If
                     End If
                 ElseIf (rbKosongkanLembur.Checked) Then
-                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE ceklembur='True';"
+                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND ceklembur='True';"
                     hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                     If hitungCek > 0 Then
                         Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengosongkan lemburan " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "jam masuk dan pulang yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
                         If (isConfirm = DialogResult.Yes) Then
                             'YES
-                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamlembur=Null,mulailembur=Null,selesailembur=Null,ceklembur='False',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "ceklembur='True'")
+                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "jamlembur=Null,mulailembur=Null,selesailembur=Null,ceklembur='False',islemburmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "perusahaan like '%" & USER_.entityChose & "' AND ceklembur='True'")
                             updateSukses = 1
                         End If
                     End If
                 ElseIf (rbKosongkanSPK.Checked) Then
-                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE cekspk='True';"
+                    stSQL = "SELECT count(*) FROM " & tableName(0) & " WHERE perusahaan like '%" & USER_.entityChose & "' AND cekspk='True';"
                     hitungCek = myCDBOperation.GetDataIndividual(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL)
                     If hitungCek > 0 Then
                         Dim isConfirm = myCShowMessage.GetUserResponse("Apakah mau memproses cepat untuk mengosongkan SPK " & hitungCek & " records data presensi yang dicentang?" & ControlChars.NewLine & "jam masuk dan pulang yang lama akan ditumpuk dengan jam yang ditentukan di sini" & ControlChars.NewLine & "APAKAH MAU MEMPROSES CEPAT?", "PROSES INI TIDAK BISA DIKEMBALIKAN!!")
                         If (isConfirm = DialogResult.Yes) Then
                             'YES
-                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "spkmulai=Null,spkselesai=Null,cekspk='False',isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "cekspk='True'")
+                            Call myCDBOperation.UpdateData(CONN_.dbMain, CONN_.comm, tableName(0), "spkmulai=Null,spkselesai=Null,cekspk='False',isspkmanual='True',userid='" & USER_.username & "',userpc='" & myCManagementSystem.GetComputerName & "',updated_at=clock_timestamp()", "perusahaan like '%" & USER_.entityChose & "' AND cekspk='True'")
                             updateSukses = 1
                         End If
                     End If

@@ -39,7 +39,7 @@
 
     'Private WithEvents tbCellText As New DataGridViewTextBoxEditingControl
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -57,6 +57,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -86,7 +87,7 @@
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama,perusahaan,departemen,divisi,bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif " & IIf(USER_.lokasi = "ALL", "", "WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama,perusahaan,departemen,divisi,bagian ORDER BY karyawan;"
+            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama,perusahaan,departemen,divisi,bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif WHERE perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama,perusahaan,departemen,divisi,bagian ORDER BY karyawan;"
             'stSQL = "SELECT concat(tbl.nama,' || ',tbl.nip) as karyawan,tbl.idk,tbl.nip,tbl.nama,tbl.perusahaan,tbl.departemen,tbl.divisi,tbl.bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif as tbl " & IIf(USER_.lokasi = "ALL", "", "WHERE (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "' OR tbl.lokasi is null)") & " GROUP BY concat(tbl.nama,' || ',tbl.nip),tbl.idk,tbl.nip,tbl.nama,tbl.perusahaan,tbl.departemen,tbl.divisi,tbl.bagian ORDER BY karyawan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "nip", "karyawan", isCboPrepared)
 
@@ -183,7 +184,7 @@
                 banyakPages = 0
                 mKriteria = IIf(IsNothing(mKriteria), "", mKriteria)
 
-                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.nip=tbl2.nip WHERE (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
+                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.nip=tbl2.nip WHERE tbl2.perusahaan like '%" & USER_.entityChose & "' AND (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
                 mJumlah = Integer.Parse(myCDBOperation.GetDataIndividual(myConn, myComm, myReader, stSQL))
 
                 If (mJumlah > 10) Then
@@ -220,7 +221,7 @@
                         "FROM ( " &
                             "SELECT tbl.rid,tbl.kdr,tbl.tanggalpengajuan,tbl.tanggalmulai,tbl.tanggalselesai,tbl.darijam,tbl.sampaijam,tbl.idk,tbl.nip,tbl.nama,tbl.posisi,tbl.bagian,tbl.divisi,tbl.departemen,tbl.perusahaan,tbl.kodeijin,tbl.ketijin,tbl.kodeabsen,tbl.ketabsen,tbl.catatan,tbl.created_at,tbl.updated_at " &
                             "FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 on tbl.nip=tbl2.nip " &
-                            "WHERE (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " " &
+                            "WHERE  tbl2.perusahaan like '%" & USER_.entityChose & "' AND (tbl.tanggalmulai>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and tbl.tanggalselesai<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') AND " & mWhereString & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " " &
                             "ORDER BY " & IIf(IsNothing(sortingCols), "(case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC ", sortingCols & " " & sortingType) & " " &
                             "LIMIT " & offSet &
                             ") sub " &

@@ -1,5 +1,5 @@
 ﻿Public Class FormLogin
-    'Private isClose As Boolean
+    Private entityChose As String
 
     Public Sub New()
         ' This call is required by the designer.
@@ -7,7 +7,26 @@
 
         ' Add any initialization after the InitializeComponent() call.
         Try
-            Call myCStartup.StartUp("MAIN", COMPANY_.name, PROGRAM_.name, PROGRAM_.type, CONN_.dbMain, CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMySql)
+
+            'CONN_.dbType = CONN_.dbType.ToLower
+
+            'If (CONN_.dbType = "sqlsrv") Then
+            '    CONN_.dbType = "sql"
+            'End If
+        Catch ex As Exception
+            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "PROGRAM GAGAL DIJALANKAN!!")
+        End Try
+    End Sub
+
+    Private Sub SetConnection()
+        Try
+            If (rbMedbox.Checked) Then
+                entityChose = rbMedbox.Text
+            ElseIf (rbDiagonal.Checked) Then
+                entityChose = rbDiagonal.Text
+            End If
+            'Call myCStartup.StartUp("MAIN", COMPANY_.name, PROGRAM_.name, PROGRAM_.type, CONN_.dbMain, CONN_.dbLokal, CONN_.dbType, CONN_.schemaTmp, CONN_.schemaPublic, PERIODE)
+            Call myCStartup.StartUp("MAIN", COMPANY_.name, PROGRAM_.name, PROGRAM_.type, CONN_.dbMain, CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMySql, entityChose)
 
             CONN_.dbType = CONN_.dbType.ToLower
 
@@ -15,7 +34,7 @@
                 CONN_.dbType = "sql"
             End If
         Catch ex As Exception
-            Call myCShowMessage.ShowErrMsg("Pesan Error: " & ex.Message, "PROGRAM GAGAL DIJALANKAN!!")
+            Call myCShowMessage.ShowErrMsg("Pesan Error:  " & ex.Message, "SetConnection Error!!")
         End Try
     End Sub
 
@@ -75,6 +94,14 @@
 
     Private Sub btnMasuk_Click(sender As Object, e As EventArgs) Handles btnMasuk.Click
         Try
+            If (rbMedbox.Checked Or rbDiagonal.Checked) Then
+                Me.Cursor = Cursors.WaitCursor
+                Call SetConnection()
+            Else
+                Call myCShowMessage.ShowWarning("Silahkan tentukan dulu Entitasnya")
+                Exit Sub
+            End If
+
             If (Trim(tbUserID.Text).Length > 0 And Trim(tbPassword.Text).Length > 0) Then
                 Dim stSQL As String
                 Dim isExist As Boolean
@@ -93,11 +120,12 @@
                     myUserInformation = myCDBOperation.GetDataTableUsingReader(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, "T_UserInformation")
 
                     If (USER_.username <> "Olivia") Then
-                        Call myCStartup.SetDBAccess(CONN_.dbFinger)
+                        Call myCStartup.SetDBAccess(CONN_.dbFinger, entityChose)
                     End If
 
                     USER_.isSuperuser = myUserInformation.Rows(0).Item("superuser")
                     USER_.lokasi = myUserInformation.Rows(0).Item("lokasi")
+                    USER_.entityChose = entityChose
 
                     Call myCShowMessage.ShowInfo("SELAMAT DATANG " & USER_.username.ToUpper, "WELCOME")
 

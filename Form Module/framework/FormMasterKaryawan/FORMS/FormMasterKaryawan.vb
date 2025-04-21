@@ -45,7 +45,7 @@
     Private enableSubForm(1) As Boolean
     Private strStatusAktif As String
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -63,6 +63,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -702,7 +703,7 @@
                         Dim frmMasterTanggunganKaryawan As New FormMasterTanggunganKaryawan.FormMasterTanggunganKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, dgvView.CurrentRow.Cells("idk").Value, dgvView.CurrentRow.Cells("nama").Value)
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmMasterTanggunganKaryawan)
                     ElseIf (e.ColumnIndex = dgvView.Columns("attachment").Index) Then
-                        Dim frmAttachmentKaryawan As New FormAttachmentKaryawan.FormAttachmentKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, dgvView.CurrentRow.Cells("idk").Value, dgvView.CurrentRow.Cells("nama").Value)
+                        Dim frmAttachmentKaryawan As New FormAttachmentKaryawan.FormAttachmentKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, dgvView.CurrentRow.Cells("idk").Value, dgvView.CurrentRow.Cells("nama").Value)
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmAttachmentKaryawan)
                     ElseIf (e.ColumnIndex = dgvView.Columns("edit").Index) Then
                         isNew = False

@@ -21,3 +21,4 @@ G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterTunjanganMasaKerja
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterTunjanganMasaKerja\obj\Debug\FormMasterTunjanganMasaKerja.dll
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterTunjanganMasaKerja\obj\Debug\FormMasterTunjanganMasaKerja.xml
 G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterTunjanganMasaKerja\obj\Debug\FormMasterTunjanganMasaKerja.pdb
+G:\DESKTOP APPLICATION\MEDBOX\Form Module\framework\FormMasterTunjanganMasaKerja\obj\Debug\FormMasterTunjanganMasaKerja.vbproj.AssemblyReference.cache

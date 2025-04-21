@@ -47,7 +47,7 @@ Public Class FormProsesPayroll
         Dim extension As String
     End Structure
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String, _connMySql As Object)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String, _connMySql As Object)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -66,6 +66,7 @@ Public Class FormProsesPayroll
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -100,7 +101,7 @@ Public Class FormProsesPayroll
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboLokasi, myBindingLokasi, cboLokasi, "T_" & cboLokasi.Name, "keterangan", "keterangan", isCboPrepared)
             cboLokasi.SelectedIndex = 0
 
-            stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' order by keterangan;"
+            stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' and keterangan like '%" & USER_.entityChose & "' order by keterangan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboPerusahaan, myBindingPerusahaan, cboPerusahaan, "T_" & cboPerusahaan.Name, "keterangan", "keterangan", isCboPrepared)
 
             tableNameHeader = CONN_.schemaHRD & ".trpayrollheader"

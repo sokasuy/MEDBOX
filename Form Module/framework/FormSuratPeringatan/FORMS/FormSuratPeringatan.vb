@@ -40,7 +40,7 @@
     Private fileAttachment As fileTempel
     Const STR_MYCOMPUTER_CLSID As String = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -58,6 +58,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -84,10 +85,10 @@
             Me.Cursor = Cursors.WaitCursor
             Call myCDBConnection.OpenConn(CONN_.dbMain)
 
-            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama,perusahaan,departemen,divisi,bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif " & IIf(USER_.lokasi = "ALL", "", "WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama,perusahaan,departemen,divisi,bagian ORDER BY karyawan;"
+            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama,perusahaan,departemen,divisi,bagian FROM " & CONN_.schemaHRD & ".mskaryawanaktif WHERE perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama,perusahaan,departemen,divisi,bagian ORDER BY karyawan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "nip", "karyawan", isCboPrepared)
 
-            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama FROM " & CONN_.schemaHRD & ".mskaryawanaktif " & IIf(USER_.lokasi = "ALL", "", "WHERE (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama ORDER BY karyawan;"
+            stSQL = "SELECT concat(nama,' || ',nip) as karyawan,idk,nip,nama FROM " & CONN_.schemaHRD & ".mskaryawanaktif WHERE perusahaan like '%" & USER_.entityChose & "' " & IIf(USER_.lokasi = "ALL", "", "AND (lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(nama,' || ',nip),idk,nip,nama ORDER BY karyawan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKepala, myBindingKepala, cboKepala, "T_" & cboKepala.Name, "nip", "karyawan", isCboPrepared)
 
             Call myCFormManipulation.SetCheckListBoxUserRights(clbUserRight, USER_.isSuperuser, Me.Name, USER_.T_USER_RIGHT)
@@ -168,7 +169,7 @@
                 banyakPages = 0
                 mKriteria = IIf(IsNothing(mKriteria), "", mKriteria)
 
-                stSQL = "SELECT count(*) FROM " & mTableName & " WHERE ((upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%'));"
+                stSQL = "SELECT count(*) FROM " & mTableName & " WHERE perusahaan like '%" & USER_.entityChose & "' AND ((upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%'));"
                 mJumlah = Integer.Parse(myCDBOperation.GetDataIndividual(myConn, myComm, myReader, stSQL))
 
                 If (mJumlah > 10) Then
@@ -205,7 +206,7 @@
                         "FROM ( " &
                             "SELECT tbl.rid,tbl.kdr,tbl.tanggal,tbl.idk,tbl.nip,tbl.nama,tbl.bagian,tbl.divisi,tbl.departemen,tbl.perusahaan,tbl.idkkepala,tbl.nipkepala,tbl.namakepala,tbl.jenissp,tbl.kesalahan,tbl.keterangan,tbl.sanksi,tbl.spke,tbl.created_at,tbl.updated_at " &
                             "FROM " & mTableName & " as tbl " &
-                            "WHERE ((upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " &
+                            "WHERE perusahaan like '%" & USER_.entityChose & "' AND ((upper(" & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " &
                             "ORDER BY (case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC " &
                             "LIMIT " & offSet &
                             ") sub " &

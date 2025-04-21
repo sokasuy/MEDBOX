@@ -66,7 +66,7 @@
 
     Const STR_MYCOMPUTER_CLSID As String = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -84,6 +84,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -178,7 +179,7 @@
             stSQL = "SELECT concat(tbl.nama,' || ',tbl.idk) as karyawan,tbl.idk,tbl.nama FROM " & CONN_.schemaHRD & ".mskaryawan as tbl left join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.idk=tbl2.idk WHERE tbl.statusbekerja='AKTIF' " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "' OR tbl2.lokasi is null)") & " GROUP BY concat(tbl.nama,' || ',tbl.idk),tbl.idk,tbl.nama ORDER BY karyawan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "idk", "karyawan", isCboPrepared)
 
-            stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' order by keterangan;"
+            stSQL = "SELECT kode,keterangan FROM " & CONN_.schemaHRD & ".msgeneral where kategori='perusahaan' and keterangan like '%" & USER_.entityChose & "' order by keterangan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboPerusahaan, myBindingPerusahaan, cboPerusahaan, "T_" & cboPerusahaan.Name, "keterangan", "keterangan", isCboPrepared)
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboPerusahaan, myBindingFilterPerusahaan, cboFilterPerusahaan, "T_" & cboFilterPerusahaan.Name, "keterangan", "keterangan", isCboPrepared, True)
 
@@ -314,6 +315,8 @@
             mSelectedCriteria = cboKriteria.SelectedItem.ToString.Replace(" ", "")
             If (cboFilterPerusahaan.SelectedIndex <> -1) Then
                 mGroupCriteria = " AND (tbl.perusahaan='" & myCStringManipulation.SafeSqlLiteral(cboFilterPerusahaan.SelectedValue) & "')"
+            Else
+                mGroupCriteria = " AND (tbl.perusahaan like '%" & myCStringManipulation.SafeSqlLiteral(USER_.entityChose) & "')"
             End If
             If (cboKelompok.SelectedIndex <> -1) Then
                 mGroupCriteria &= " AND (tbl.kelompok='" & myCStringManipulation.SafeSqlLiteral(cboKelompok.SelectedItem) & "')"

@@ -39,7 +39,7 @@
 
     Const STR_MYCOMPUTER_CLSID As String = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _groupData As String, _jenis As String, _nomer As String, Optional _nip As String = "xxx", Optional _tanggal As String = "01-Jan-0001")
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _groupData As String, _jenis As String, _nomer As String, Optional _nip As String = "xxx", Optional _tanggal As String = "01-Jan-0001")
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -56,6 +56,7 @@
                 .username = _username
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues

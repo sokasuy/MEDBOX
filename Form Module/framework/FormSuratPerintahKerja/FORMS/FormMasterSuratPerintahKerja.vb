@@ -21,7 +21,7 @@
     Private isDataPrepared As Boolean
     Private enableSubForm(0) As Boolean
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -39,6 +39,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -442,7 +443,7 @@
                         Dim frmDetailSuratPerintahKerja As New FormDetailSuratPerintahKerja(myDataTableDGVHeader, myDataTableDGVDetail, tableNameHeader, tableNameDetail, tableKey, isNew, dgvHeader.CurrentRow.Cells("rid").Value, myDataTableDGVHeader.Rows.IndexOf(foundRows(0)), Me.Name)
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmDetailSuratPerintahKerja)
                     ElseIf (e.ColumnIndex = dgvHeader.Columns("attachment").Index) Then
-                        Dim frmAttachmentDokumen As New FormAttachmentDokumen.FormAttachmentDokumen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, Trim(lblTitle.Text.Replace("MASTER", "")), Trim(dgvHeader.CurrentRow.Cells("no_spk").Value))
+                        Dim frmAttachmentDokumen As New FormAttachmentDokumen.FormAttachmentDokumen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, Trim(lblTitle.Text.Replace("MASTER", "")), Trim(dgvHeader.CurrentRow.Cells("no_spk").Value))
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmAttachmentDokumen)
                     ElseIf (e.ColumnIndex = dgvHeader.Columns("cetak").Index) Then
                         stSQL = "SELECT h.perusahaan,h.lokasi,h.departemen as deptspk,h.periodemulai,h.periodeselesai,h." & tableKey & ",h.tanggalpengajuan,h.nipkepala,h.namakepala,h.jumlahpersonil,h.catatan as catheader,d.nip,d.nama,d.departemen,d.divisi,d.bagian,d.shift,d.mulai,d.selesai,d.pekerjaan,cast(d.mulai as time) as jammulai,cast(d.selesai as time) as jamselesai,to_char(cast(d.mulai as time),'HH24:MI') ||'-'|| to_char(cast(d.selesai as time),'HH24:MI') as jamspk,date(d.mulai) as tanggalshift, to_char(cast(d.selesai-d.mulai as time),'HH24:MI') as banyakjam

@@ -22,7 +22,7 @@
     Private isDataPrepared As Boolean
     Private enableSubForm(0) As Boolean
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -40,6 +40,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -697,7 +698,7 @@
                         Dim frmDetailScheduleShift As New FormDetailScheduleShift(myDataTableDGVHeader, myDataTableDGVDetail, dgvDetail, tableNameHeader, tableNameDetail, tableKey, isNew, dgvHeader.CurrentRow.Cells("rid").Value, myDataTableDGVHeader.Rows.IndexOf(foundRows(0)), Me.Name)
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmDetailScheduleShift)
                     ElseIf (e.ColumnIndex = dgvHeader.Columns("attachment").Index) Then
-                        Dim frmAttachmentDokumen As New FormAttachmentDokumen.FormAttachmentDokumen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, Trim(lblTitle.Text.Replace("MASTER", "")), Trim(dgvHeader.CurrentRow.Cells("no_schedule_shift").Value))
+                        Dim frmAttachmentDokumen As New FormAttachmentDokumen.FormAttachmentDokumen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, Me.Name, Trim(lblTitle.Text.Replace("MASTER", "")), Trim(dgvHeader.CurrentRow.Cells("no_schedule_shift").Value))
                         Call myCFormManipulation.GoToForm(Me.MdiParent, frmAttachmentDokumen)
                     ElseIf (e.ColumnIndex = dgvHeader.Columns("cetak").Index) Then
                         stSQL = "SELECT h.perusahaan,h." & tableKey & ",h.lokasi,h.departemen,h.grup,h.ketgrup,h.tanggalawal,h.tanggalakhir,h.catatan,d.tanggal,d.nip,d.nama,d.posisi,d.linenr,d.waktushift

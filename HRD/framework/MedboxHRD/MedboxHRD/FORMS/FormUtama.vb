@@ -117,62 +117,62 @@
     End Sub
 
     Private Sub mnMasterDataKaryawan_Click(sender As Object, e As EventArgs) Handles mnMasterDataKaryawan.Click
-        Dim frmMasterKaryawan As New FormMasterKaryawan.FormMasterKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmMasterKaryawan As New FormMasterKaryawan.FormMasterKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmMasterKaryawan)
     End Sub
 
     Private Sub mnMasterKaryawanAktif_Click(sender As Object, e As EventArgs) Handles mnMasterKaryawanAktif.Click
-        Dim frmMasterKaryawanAktif As New FormMasterKaryawanAktif.FormMasterKaryawanAktif(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmMasterKaryawanAktif As New FormMasterKaryawanAktif.FormMasterKaryawanAktif(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmMasterKaryawanAktif)
     End Sub
 
     Private Sub mnMasterRekeningKaryawan_Click(sender As Object, e As EventArgs) Handles mnMasterRekeningKaryawan.Click
-        Dim frmMasterRekeningKaryawan As New FormMasterRekeningKaryawan.FormMasterRekeningKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmMasterRekeningKaryawan As New FormMasterRekeningKaryawan.FormMasterRekeningKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmMasterRekeningKaryawan)
     End Sub
 
     Private Sub mnPengalamanKerjaKaryawan_Click(sender As Object, e As EventArgs) Handles mnPengalamanKerjaKaryawan.Click
-        Dim frmPengalamanKerjaKaryawan As New FormPengalamanKerjaKaryawan.FormPengalamanKerjaKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmPengalamanKerjaKaryawan As New FormPengalamanKerjaKaryawan.FormPengalamanKerjaKaryawan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmPengalamanKerjaKaryawan)
     End Sub
 
     Private Sub mnSuratPeringatan_Click(sender As Object, e As EventArgs) Handles mnSuratPeringatan.Click
-        Dim frmSuratPeringatan As New FormSuratPeringatan.FormSuratPeringatan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmSuratPeringatan As New FormSuratPeringatan.FormSuratPeringatan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmSuratPeringatan)
     End Sub
 
     Private Sub mnSuratIjinAbsen_Click(sender As Object, e As EventArgs) Handles mnSuratIjinAbsen.Click
-        Dim frmIjinAbsen As New FormIjinAbsen.FormIjinAbsen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmIjinAbsen As New FormIjinAbsen.FormIjinAbsen(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmIjinAbsen)
     End Sub
 
     Private Sub mnSuratPerintahLembur_Click(sender As Object, e As EventArgs) Handles mnSuratPerintahLembur.Click
-        Dim frmSuratPerintahLembur As New FormSuratPerintahLembur.FormMasterSuratPerintahLembur(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmSuratPerintahLembur As New FormSuratPerintahLembur.FormMasterSuratPerintahLembur(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmSuratPerintahLembur)
     End Sub
 
     Private Sub mnSuratPerintahKerja_Click(sender As Object, e As EventArgs) Handles mnSuratPerintahKerja.Click
-        Dim frmSuratPerintahKerja As New FormSuratPerintahKerja.FormMasterSuratPerintahKerja(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmSuratPerintahKerja As New FormSuratPerintahKerja.FormMasterSuratPerintahKerja(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmSuratPerintahKerja)
     End Sub
 
     Private Sub mnKalenderPerusahaan_Click(sender As Object, e As EventArgs) Handles mnKalenderPerusahaan.Click
-        Dim frmKalenderPerusahaan As New FormKalenderPerusahaan.FormKalenderPerusahaan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmKalenderPerusahaan As New FormKalenderPerusahaan.FormKalenderPerusahaan(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmKalenderPerusahaan)
     End Sub
 
     Private Sub mnImportData_Click(sender As Object, e As EventArgs) Handles mnImportData.Click
-        Dim frmImportData As New FormImportData.FormImportData(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString)
+        Dim frmImportData As New FormImportData.FormImportData(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString)
         Call myCFormManipulation.GoToForm(Me, frmImportData)
     End Sub
 
     Private Sub mnProsesPresensi_Click(sender As Object, e As EventArgs) Handles mnProsesPresensi.Click
-        Dim frmProsesPresensi As New FormProsesPresensi.FormProsesPresensi(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, CONN_.dbFinger, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmProsesPresensi As New FormProsesPresensi.FormProsesPresensi(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, CONN_.dbFinger, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmProsesPresensi)
     End Sub
 
     Private Sub mnViewDataPresensi_Click(sender As Object, e As EventArgs) Handles mnViewPresensi.Click
-        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Presensi", USER_.lokasi)
+        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Presensi", USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmView)
     End Sub
 
@@ -182,7 +182,7 @@
     End Sub
 
     Private Sub mnScheduleShift_Click(sender As Object, e As EventArgs) Handles mnScheduleShift.Click
-        Dim frmScheduleShift As New FormScheduleShift.FormMasterScheduleShift(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmScheduleShift As New FormScheduleShift.FormMasterScheduleShift(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmScheduleShift)
     End Sub
 
@@ -197,22 +197,22 @@
     End Sub
 
     Private Sub mnProsesPayroll_Click(sender As Object, e As EventArgs) Handles mnProsesPayroll.Click
-        Dim frmProsesPayroll As New FormProsesPayroll.FormProsesPayroll(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi, CONN_.dbMySql)
+        Dim frmProsesPayroll As New FormProsesPayroll.FormProsesPayroll(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi, CONN_.dbMySql)
         Call myCFormManipulation.GoToForm(Me, frmProsesPayroll)
     End Sub
 
     Private Sub mnTunjanganMasaKerja_Click(sender As Object, e As EventArgs) Handles mnTunjanganMasaKerja.Click
-        Dim frmMasterTunjanganMasaKerja As New FormMasterTunjanganMasaKerja.FormMasterTunjanganMasaKerja(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
+        Dim frmMasterTunjanganMasaKerja As New FormMasterTunjanganMasaKerja.FormMasterTunjanganMasaKerja(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmMasterTunjanganMasaKerja)
     End Sub
 
     Private Sub mnViewFingerprint_Click(sender As Object, e As EventArgs) Handles mnViewFingerprint.Click
-        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Fingerprint", USER_.lokasi)
+        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "Fingerprint", USER_.lokasi)
         Call myCFormManipulation.GoToForm(Me, frmView)
     End Sub
 
     Private Sub mnViewFPAccess_Click(sender As Object, e As EventArgs) Handles mnViewFPAccess.Click
-        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "FPAccess", USER_.lokasi, CONN_.dbFinger)
+        Dim frmView As New FormView.FormView(CONN_.dbType, CONN_.schemaTmp, CONN_.schemaHRD, CONN_.dbMain, USER_.username, USER_.isSuperuser, USER_.T_USER_RIGHT, USER_.entityChose, ADD_INFO_.newValues, ADD_INFO_.newFields, ADD_INFO_.updateString, "FPAccess", USER_.lokasi, CONN_.dbFinger)
         Call myCFormManipulation.GoToForm(Me, frmView)
     End Sub
 End Class

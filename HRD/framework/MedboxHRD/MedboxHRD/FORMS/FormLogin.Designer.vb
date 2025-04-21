@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormLogin
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,11 +20,13 @@ Partial Class FormLogin
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormLogin))
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.pnlLogin = New System.Windows.Forms.Panel()
+        Me.rbDiagonal = New System.Windows.Forms.RadioButton()
+        Me.rbMedbox = New System.Windows.Forms.RadioButton()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.btnKeluar = New System.Windows.Forms.Button()
         Me.btnMasuk = New System.Windows.Forms.Button()
@@ -51,6 +53,8 @@ Partial Class FormLogin
         '
         'pnlLogin
         '
+        Me.pnlLogin.Controls.Add(Me.rbDiagonal)
+        Me.pnlLogin.Controls.Add(Me.rbMedbox)
         Me.pnlLogin.Controls.Add(Me.PictureBox1)
         Me.pnlLogin.Controls.Add(Me.btnKeluar)
         Me.pnlLogin.Controls.Add(Me.btnMasuk)
@@ -62,6 +66,28 @@ Partial Class FormLogin
         Me.pnlLogin.Name = "pnlLogin"
         Me.pnlLogin.Size = New System.Drawing.Size(460, 160)
         Me.pnlLogin.TabIndex = 119
+        '
+        'rbDiagonal
+        '
+        Me.rbDiagonal.AutoSize = True
+        Me.rbDiagonal.Location = New System.Drawing.Point(13, 117)
+        Me.rbDiagonal.Name = "rbDiagonal"
+        Me.rbDiagonal.Size = New System.Drawing.Size(80, 17)
+        Me.rbDiagonal.TabIndex = 7
+        Me.rbDiagonal.TabStop = True
+        Me.rbDiagonal.Text = "DIAGONAL"
+        Me.rbDiagonal.UseVisualStyleBackColor = True
+        '
+        'rbMedbox
+        '
+        Me.rbMedbox.AutoSize = True
+        Me.rbMedbox.Location = New System.Drawing.Point(13, 94)
+        Me.rbMedbox.Name = "rbMedbox"
+        Me.rbMedbox.Size = New System.Drawing.Size(71, 17)
+        Me.rbMedbox.TabIndex = 6
+        Me.rbMedbox.TabStop = True
+        Me.rbMedbox.Text = "MEDBOX"
+        Me.rbMedbox.UseVisualStyleBackColor = True
         '
         'PictureBox1
         '
@@ -157,4 +183,6 @@ Partial Class FormLogin
     Friend WithEvents btnMasuk As Button
     Friend WithEvents btnKeluar As Button
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents rbMedbox As RadioButton
+    Friend WithEvents rbDiagonal As RadioButton
 End Class

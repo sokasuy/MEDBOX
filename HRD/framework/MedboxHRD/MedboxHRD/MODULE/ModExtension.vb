@@ -36,6 +36,7 @@
         Dim isFirstAccount As Boolean
         Dim isSuperuser As Boolean
         Dim T_USER_RIGHT As DataTable
+        Dim entityChose As String
     End Structure
 
     Public Structure ProgramInfo

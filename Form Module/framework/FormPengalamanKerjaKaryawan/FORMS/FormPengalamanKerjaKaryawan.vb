@@ -24,7 +24,7 @@
     Private isCboPrepared As Boolean
     Private enableSubForm(0) As Boolean
 
-    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
+    Public Sub New(_dbType As String, _schemaTmp As String, _schemaHRD As String, _connMain As Object, _username As String, _superuser As Boolean, _dtTableUserRights As DataTable, _entityChose As String, _addNewValues As String, _addNewFields As String, _addUpdateString As String, _lokasi As String)
         Try
             ' This call is required by the designer.
             InitializeComponent()
@@ -42,6 +42,7 @@
                 .lokasi = _lokasi
                 .isSuperuser = _superuser
                 .T_USER_RIGHT = _dtTableUserRights
+                .entityChose = _entityChose
             End With
             With ADD_INFO_
                 .newValues = _addNewValues
@@ -70,7 +71,7 @@
 
             'stSQL = "SELECT concat(nama,' || ',idk) as karyawan,idk,nama FROM " & CONN_.schemaHRD & ".mskaryawan WHERE statusbekerja='AKTIF' GROUP BY concat(nama,' || ',idk),idk,nama ORDER BY karyawan;"
             'stSQL = "SELECT concat(tbl.nama,' || ',tbl.idk) as karyawan,tbl.idk,tbl.nama FROM " & CONN_.schemaHRD & ".mskaryawan as tbl left join " & CONN_.schemaHRD & ".mskaryawanaktif as tbl2 ON tbl.idk=tbl2.idk WHERE tbl.statusbekerja='AKTIF' " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "' OR tbl2.lokasi is null)") & " GROUP BY concat(tbl.nama,' || ',tbl.idk),tbl.idk,tbl.nama ORDER BY karyawan;"
-            stSQL = "SELECT concat(tbl.nama,' || ',tbl.idk) as karyawan,tbl.idk,tbl.nama FROM " & CONN_.schemaHRD & ".mskaryawan as tbl WHERE tbl.statusbekerja='AKTIF' " & IIf(USER_.lokasi = "ALL", "", "AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(tbl.nama,' || ',tbl.idk),tbl.idk,tbl.nama ORDER BY karyawan;"
+            stSQL = "SELECT concat(tbl.nama,' || ',tbl.idk) as karyawan,tbl.idk,tbl.nama FROM " & CONN_.schemaHRD & ".mskaryawan as tbl WHERE tbl.statusbekerja='AKTIF' AND EXISTS(select 1 from " & CONN_.schemaHRD & ".mskaryawanaktif mk where tbl.idk=mk.idk and mk.perusahaan like '%" & USER_.entityChose & "') " & IIf(USER_.lokasi = "ALL", "", "AND (tbl.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & " GROUP BY concat(tbl.nama,' || ',tbl.idk),tbl.idk,tbl.nama ORDER BY karyawan;"
             Call myCDBOperation.SetCbo_(CONN_.dbMain, CONN_.comm, CONN_.reader, stSQL, myDataTableCboKaryawan, myBindingKaryawan, cboKaryawan, "T_" & cboKaryawan.Name, "idk", "karyawan", isCboPrepared)
 
             Call myCFormManipulation.SetCheckListBoxUserRights(clbUserRight, USER_.isSuperuser, Me.Name, USER_.T_USER_RIGHT)
@@ -149,7 +150,7 @@
                 banyakPages = 0
                 mKriteria = IIf(IsNothing(mKriteria), "", mKriteria)
 
-                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawan as tbl2 on tbl.idk=tbl2.idk WHERE ((upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
+                stSQL = "SELECT count(*) FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawan as tbl2 on tbl.idk=tbl2.idk WHERE ((upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) AND EXISTS(select 1 from " & CONN_.schemaHRD & ".mskaryawanaktif mk where tbl.idk=mk.idk and mk.perusahaan like '%" & USER_.entityChose & "') " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") & ";"
                 mJumlah = Integer.Parse(myCDBOperation.GetDataIndividual(myConn, myComm, myReader, stSQL))
 
                 If (mJumlah > 10) Then
@@ -186,7 +187,7 @@
                         "FROM ( " &
                             "SELECT tbl.rid,tbl.idk,tbl.nama,tbl.namatempatkerja,tbl.posisiterakhir,tbl.lamabekerja,tbl.tahunmasukkerja,tbl.tahunkeluarkerja,tbl.created_at,tbl.updated_at " &
                             "FROM " & tableName & " as tbl inner join " & CONN_.schemaHRD & ".mskaryawan as tbl2 on tbl.idk=tbl2.idk " &
-                            "WHERE ((upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") &
+                            "WHERE ((upper(tbl." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%')) AND EXISTS(select 1 from " & CONN_.schemaHRD & ".mskaryawanaktif mk where tbl.idk=mk.idk and mk.perusahaan like '%" & USER_.entityChose & "') " & IIf(USER_.lokasi = "ALL", "", "AND (tbl2.lokasi='" & myCStringManipulation.SafeSqlLiteral(USER_.lokasi) & "')") &
                             "ORDER BY (case when tbl.updated_at is null then tbl.created_at else tbl.updated_at end) DESC, tbl.rid DESC " &
                             "LIMIT " & offSet &
                             ") sub " &
