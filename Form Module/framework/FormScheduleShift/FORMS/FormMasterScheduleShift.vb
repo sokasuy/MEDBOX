@@ -63,7 +63,7 @@
             If (USER_.lokasi = "ALL") Then
                 arrCbo = {"LOKASI", "PERUSAHAAN", "DEPARTEMEN", "TANGGAL", "NIP", "NAMA"}
             Else
-                arrCbo = {"PERUSAHAAN", "DEPARTEMEN", "TANGGAL", "NIP", "NAMA"}
+                arrCbo = {"DEPARTEMEN", "TANGGAL", "NIP", "NAMA"}
             End If
             cboKriteria.Items.AddRange(arrCbo)
             cboKriteria.SelectedIndex = 0
@@ -174,6 +174,11 @@
                     mWhereString = "(upper(h." & mSelectedCriteria & ") LIKE '%" & mKriteria.ToUpper & "%') "
                 ElseIf (mSelectedCriteria = "TANGGAL") Then
                     mWhereString = "(h.tanggalawal>='" & Format(dtpAwal.Value.Date, "dd-MMM-yyyy") & "' and h.tanggalakhir<='" & Format(dtpAkhir.Value.Date, "dd-MMM-yyyy") & "') "
+                End If
+
+
+                If (USER_.lokasi <> "ALL") Then
+                    mWhereString = IIf(IsNothing(mWhereString), "", mWhereString & " AND ") & "(upper(h.PERUSAHAAN) LIKE '%" & USER_.entityChose & "') "
                 End If
 
                 If (gantiKriteria) Then

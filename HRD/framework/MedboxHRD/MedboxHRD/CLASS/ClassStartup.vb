@@ -24,7 +24,7 @@
                 Call myCDBConnection.SetDBParameter(_connMain, _dbType, "SERVER_NAME", "DB_NAME", "", pathFileSetting, "PORT", "postgres", "1234567", "")
 
                 'UNTUK DATABASE MYSQL -> UNTUK AMBIL DATA KOMISI DLL
-                Call myCDBConnection.SetDBParameter(_connMysql, "MYSQL", "SERVER_NAME", "DB_NAME", "", pathFileSetting, "PORT", "admin", "1234567", "")
+                Call myCDBConnection.SetDBParameter(_connMysql, "MYSQL", "SERVER_NAME", "DB_NAME", "", pathFileSetting, "PORT", "admin", "J4nganjangan_", "")
 
                 'UNTUK ACCESS, DATABASE PEMBANTU
                 '10 Maret 2022 Ditutup dulu, tidak dipakai untuk sekarang
